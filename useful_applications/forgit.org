@@ -1,0 +1,33 @@
+# -*- mode: org; -*-
+#+TITLE: forgit
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 23:33:52 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 23:33:56 EEST 2021>
+
+
+[[https://github.com/wfxr/forgit][forgit на github]]
+
+Этот инструмент разработан, чтобы помочь вам более эффективно использовать git. Он легкий и простой в использовании.
+
+Убедитесь, что у вас установлен fzf.
+
+#+BEGIN_SRC conf
+
+      git clone https://github.com/wfxr/forgit.git
+
+      #+END_SRC
+
+
+Добавляем в ~.bashrc~
+
+#+BEGIN_SRC conf
+
+      source /home/abunbux/opt/forgit/forgit.plugin.sh
+
+      #+END_SRC

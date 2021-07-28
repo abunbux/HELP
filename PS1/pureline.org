@@ -1,0 +1,68 @@
+# -*- mode: org; -*-
+#+TITLE: pureline
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jul 21 19:31:43 EEST 2021>
+# Time-stamp: <Последнее обновление -- Wednesday July 21 19:58:14 EEST 2021>
+
+
+[[https://github.com/chris-marsh/pureline][chris-marsh/pureline на github]]
+
+~PureLine~ - командная строка ~Powerline PS1~ на чистом ~Bash~.
+
+~Pureline~ был вдохновлен [[https://github.com/abhijitvalluri/bash-powerline-shell][Bash-Powerline-Shell]] и разработан, чтобы упростить
+настройку, используя либо полные 256 цветов, либо только базовые цвета
+терминала, что позволяет устанавливать цвета терминалом (например, ~Xresources~
+или ~profiles~).
+
+Некоторые символы Unicode требуют использования специального шрифта в вашем
+терминале. Используйте один из шрифтов ~Powerline~, доступных по адресу:
+https://github.com/Lokaltog/powerline-fonts.
+
+** Установка
+
+   #+begin_src shell
+
+     $ git clone https://github.com/chris-marsh/pureline.git
+     $ cp pureline/configs/powerline_full_256col.conf ~/.pureline.conf
+
+   #+end_src
+
+   В ~.bashrc~ или ~.profile~, в зависимости от того, что используется, создайте
+   сценарий ~pureline~ следующим образом:
+
+   #+begin_src conf
+
+         source ~/pureline/pureline ~/.pureline.conf
+
+   #+end_src
+
+   *Совет от разработчика*:
+   ~Powerline fonts~ требуют больше усилий для работы на экранах ~tty~, поэтому
+   полезный совет - использовать ~PureLine~ только в том случае, если вы используете
+   графический интерфейс:
+
+   #+begin_src conf
+
+         if [ "$TERM" != "linux" ]; then
+             source ~/pureline/pureline ~/.pureline.conf
+         fi
+
+   #+end_src
+
+   *PS.* Не знаю как у кого, а у меня в ~tty~ ~pureline~ отображается нормально
+   (abunbux).
+
+   На некоторых терминалах при прокрутке в нижней части экрана подсказки с
+   переносом длинной строки могут вызывать растекание цвета фона между строками.
+   Если вы столкнулись с этим, установите ~PL_ERASE_TO_EOL=true~.
+
+** Настройка
+
+   Открываем ~.pureline.conf~ и изучаем. За подробностями к разработчику - ссылка
+   вверху.

@@ -1,0 +1,47 @@
+# -*- mode: org; -*-
+#+TITLE: git_submodule
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 16:24:24 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 16:25:25 EEST 2021>
+
+
+]]                https://git-scm.com/book/ru/v2/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B-Git-%D0%9F%D0%BE%D0%B4%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B8    http://www.linuxcookbook.ru/books/progit/ch06s06.html   https://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule/16162000#16162000    https://coderoad.ru/23089518/%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83-git-submodule-init-%D0%B8-git-submodule-update-%D0%BD%D0%B5-%D1%8F%D0%B2%D0%BB%D1%8F%D1%8E%D1%82%D1%81%D1%8F-%D0%BE%D0%B4%D0%BD%D0%BE%D0%B9-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BE%D0%B9      http://najomi.org/git/submodule
+
+
+Как удалить сабмодуль в git?
+https://jeka.by/ask/111/delete-submodule-git/
+
+
+    Удалить секцию модуля из .gitmodules
+    Выполнить команду git add .gitmodules
+    Удалить модуль из .git/config
+    Выполнить команду git rm -rf --cached path_to_submodule чтобы удалить директорию из индекса
+    Выполнить команду rm -rf .git/modules/path_to_submodule
+    Выполнить коммит git commit -m "Removed submodule <name>"
+    Выполнить команду rm -rf path_to_submodule чтобы удалить "неотслеживаемые" файлы подмодуля
+
+
+Так же можно воспользоватся следующей командой
+
+git config -f .git/config --remove-section submodule.<submodule_path>
+git config -f .gitmodules --remove-section submodule.<submodule_path>
+
+
+
+обновить субмодули
+
+Если вы впервые берете репо, вам нужно использовать его в --initпервую очередь:
+
+git submodule update --init --recursive
+
+Для git 1.8.2 или выше --remote была добавлена опция для поддержки обновления до последних подсказок удаленных веток:
+
+git submodule update --recursive --remote
+
+git pull --recurse-submodules --jobs=10

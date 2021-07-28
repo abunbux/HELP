@@ -1,0 +1,150 @@
+# -*- mode: org; -*-
+#+TITLE: bat
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 22:54:47 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 22:54:51 EEST 2021>
+
+
+[[https://github.com/sharkdp/bat][sharkdp/bat на github]]
+
+Клон ~cat~ с подсветкой синтаксиса и интеграцией с ~Git~.
+
+~bat~ поддерживает подсветку синтаксиса для большого количества языков
+программирования и разметки.
+
+Его можно интегрировать с ~git~.
+
+Вы можете использовать параметр ~-A~ / ~--show-all~ для отображения и выделения
+непечатаемых символов.
+
+* Как использовать
+
+  #+BEGIN_SRC conf
+
+        bat README.md
+        bat src/*.rs
+        curl -s https://sh.rustup.rs | bat
+        yaml2json .travis.yml | json_pp | bat -l json
+        bat -A /etc/hosts
+        bat > note.md  # quickly create a new file
+
+        #+END_SRC
+
+
+*** fzf
+
+    Вы можете использовать ~bat~ в качестве средства предварительного просмотра для
+    ~fzf~. Для этого используйте параметр bats ~--color=always~ для принудительного
+    раскрашивания вывода. Вы также можете использовать параметр ~--line-range~, чтобы
+    ограничить время загрузки для длинных файлов:
+
+    #+BEGIN_SRC conf
+
+          fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'
+
+          # {} is replaced with the single-quoted string of the focused line
+          fzf --preview 'bat {}'
+
+          #+END_SRC
+
+*** find or fd
+
+    Вы можете использовать опцию -exec команды find для предварительного просмотра
+    всех результатов поиска с помощью bat:
+
+    #+BEGIN_SRC conf
+
+          find … -exec bat {} +
+          fd … -X bat
+
+          #+END_SRC
+
+*** tail -f
+
+    #+BEGIN_SRC conf
+
+          tail -f /var/log/emerge.log | bat --paging=never -l log
+
+          #+END_SRC
+
+    Обратите внимание, для того, чтобы это работало, мы должны отключить
+    пейджинг. Мы также явно указали синтаксис (~-l log~), так как в этом случае он не
+    может быть обнаружен автоматически.
+
+*** git
+
+    Вы можете комбинировать ~bat~ с ~git show~, чтобы просмотреть старую версию данного
+    файла с правильной подсветкой синтаксиса:
+
+    #+BEGIN_SRC conf
+
+          git show v0.6.0:src/main.rs | bat -l rs
+
+          #+END_SRC
+
+*** git diff
+
+    #+BEGIN_SRC conf
+
+          batdiff() {
+              git diff --name-only --diff-filter=d | xargs bat --diff
+          }
+
+          #+END_SRC
+
+*** man
+
+    ~bat~ можно использовать как раскрашивающий пейджер для человека, установив
+    переменную окружения ~MANPAGER~:
+
+    #+BEGIN_SRC conf
+
+          export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+          man 2 select
+
+          #+END_SRC
+
+
+* Установка
+
+  #+BEGIN_SRC conf
+
+        emerge sys-apps/bat
+
+        #+END_SRC
+
+* Файл конфигурации
+
+  ~bat~ также можно настроить с помощью файла конфигурации. Расположение файла
+  зависит от вашей операционной системы. Чтобы получить путь по умолчанию для
+  вашей системы, вызовите:
+
+  #+BEGIN_SRC conf
+
+        bat --config-file
+
+        #+END_SRC
+
+  В качестве альтернативы вы можете использовать переменную среды ~BAT_CONFIG_PATH~,
+  чтобы указать ~bat~ на нестандартное расположение файла конфигурации:
+
+  #+BEGIN_SRC conf
+
+        export BAT_CONFIG_PATH="/path/to/bat.conf"
+
+        #+END_SRC
+
+  Файл конфигурации по умолчанию можно создать с помощью опции
+  ~--generate-config-file~:
+
+  #+BEGIN_SRC conf
+
+        bat --generate-config-file
+
+        #+END_SRC

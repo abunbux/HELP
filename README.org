@@ -1,0 +1,94 @@
+# -*- mode: org; -*-
+#+TITLE: index
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 23:35:31 EEST 2021>
+
+
+** gentoo
+
+   [[file:gentoo/install_gentoo.org][gentoo-install]]
+
+   [[file:gentoo/portage.org][portage]]
+
+** emacs
+
+   [[file:emacs/README.org][README.org]]
+
+   [[file:emacs/keybindings.org][keybindings.org]]
+
+   [[file:emacs/literate-config_without_org-babel.org][literate-config без org-babel]]
+
+** emacs org-mode
+
+   [[file:emacs/org-babel.org][org-babel]]
+
+   [[file:emacs/images.org][iimage-mode (изображения в буфере)]]
+
+** search
+
+   [[file:search/grep.org][grep]]
+
+** прочее
+
+   [[file:other/scripts.org][скрипты для различных нужд]]
+
+   [[file:other/nerd-fonts.org][nerd-fonts]]
+
+** полезные приложения
+
+   [[file:useful_applications/fzf.org][fzf]]
+
+   [[file:useful_applications/marker.org][marker]]
+
+   [[file:useful_applications/bat.org][bat]] ([[https://github.com/sharkdp/bat][sharkdp/bat на github]])
+
+   [[file:useful_applications/fzf_bookmarks.org][Fuzzy bookmarks for your shell]]
+
+   [[file:useful_applications/forgit.org][forgit]]
+
+   [[file:useful_applications/delta.org][delta]]
+
+** PS1 and PROMT (приглашение командной строки)
+
+    [[file:PS1/up_your_own.org][настройка приглашения своими силами]]
+
+    [[file:PS1/powerline.org][powerline, powerline-gitstatus, powerline-symbols, powerline-fonts]]
+
+    [[file:PS1/simple_bash_prompt.org][SBP - Simple Bash Prompt]]
+
+    [[file:PS1/powerline-2column.org][powerline-2column.bash]]
+
+    [[file:PS1/liquidprompt.org][liquidprompt]]
+
+    [[file:PS1/bash-powerline-shell_(ps1_prompt).org][bash-powerline-shell (ps1_prompt)]]
+
+    [[file:PS1/pureline.org][pureline]]
+
+    Starship        https://starship.rs/
+
+    fishline        https://github.com/0rax/fishline
+
+    fancy-git       https://github.com/diogocavilha/fancy-git
+
+    silver          https://github.com/reujab/silver
+
+** terminal multiplexers (терминальные мультиплексоры)
+
+    [[file:terminal_multiplexers/tmux.org][tmux]] (https://man7.org/linux/man-pages/man1/tmux.1.html)
+
+    [[file:terminal_multiplexers/tmux-bash-completion.org][tmux-bash-completion]] ([[https://github.com/imomaliev/tmux-bash-completion][tmux-bash-completion на github]])
+
+    [[file:terminal_multiplexers/screen.org][screen]]
+
+** git
+
+   [[file:git/dotfiles.org][отслеживание dotfiles]]
+
+   [[file:git/git_submodule.org][git submodule]]

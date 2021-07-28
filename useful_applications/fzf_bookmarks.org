@@ -1,0 +1,119 @@
+# -*- mode: org; -*-
+#+TITLE: Fuzzy bookmarks for your shell
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun Jul 8 16:30:41 EEST 2021>
+# Time-stamp: <Последнее обновление -- Sunday July 25 16:31:20 EEST 2021>
+
+
+[[https://dmitryfrank.com/articles/shell_shortcuts][Fuzzy bookmarks for your shell]] (внешняя ссылка).
+
+Это не отдельная тулза, а совмещение нескольких скриптов для добавления в
+консоли закладок на каталоги и быстрый переход по ним с помощью ~fzf~.
+
+Нам понадобятся два простых файла с записями о путях, каждый на новой строке.
+Один общесистемный в каталоге ~/etc~, второй - в домашней директории.
+
+#+BEGIN_SRC conf
+
+      /path/to/first_bookmark    # probably some comment
+      /path/to/second_bookmark
+      /path/to/third_bookmark
+
+      #+END_SRC
+
+Создаем вспомогательный скрипт ~cdscuts_list_echo~, который
+отображает содержимое файлов с удаленными комментариями и пустыми
+строками и помещаем его в один из каталогов, где его
+может найти ~bash~, у меня это ~~/opt/bin~.
+
+#+BEGIN_SRC conf
+      fzf_bookmarks
+    #!/bin/bash
+    # cdscuts_list_echo
+
+        cat  | sed 's/#.*//g' | sed '/^\s*$/d'
+
+      #+END_SRC
+
+Делаем его исполняемым:
+
+#+BEGIN_SRC conf
+
+      chmod a+x cdscuts_list_echo
+
+      #+END_SRC
+
+Теперь создаём скрипт ~cdscuts_glob_echo~, который читает предопределённые файлы с
+закладками и отображает их содержимое вместе:
+
+#+BEGIN_SRC conf
+
+      #!/bin/bash
+      #  cdscuts_glob_echo
+      system_wide_filelist=''
+      user_filelist=''
+
+      if [ -r /etc/cdg_paths ]; then
+      system_wide_filelist=$(cdscuts_list_echo /etc/cdg_paths)
+      fi
+      if [ -r ~/.cdg_paths ]; then
+      user_filelist=$(cdscuts_list_echo ~/.cdg_paths)
+      fi
+
+      echo -e "$system_wide_filelist\n$user_filelist" | sed '/^\s*$/d'
+
+      #+END_SRC
+
+Общесистемные закладки хранятся в ~/etc/cdg_paths~, а пользовательские закладки -
+в ~~/.cdg_paths~.
+
+Делаем и этот скрипт исполняемым:
+
+#+BEGIN_SRC conf
+
+      chmod a+x cdscuts_glob_echo
+
+      #+END_SRC
+
+Прописываем в ~.bashrc~ функцию, которая будет добавлять текущий путь в файл закладок:
+
+#+BEGIN_SRC conf
+
+      cdg-add () {
+          local curr_dir="PWD # $*"
+          if ! grep -Fxq "$curr_dir" ~/.cdg_paths; then
+              echo "$curr_dir" >> ~/.cdg_paths
+          else
+          echo "Этот путь уже существует!"
+          fi
+      }
+
+      #+END_SRC
+
+В принципе, можно обойтись и без неё, прописал ручками и всё! Но так, я думаю,
+будет проще, да и она выполняет проверку на наличие пути и, если он уже
+существует, выдаст предупреждение.
+
+Пишем ещё одну функцию в ~.bashrc~, которая будет считывать файлы ~cdg_paths~,
+передавать их на ~fzf~ и при выборе (~ENTER~) переходить в выбранный каталог.
+
+#+BEGIN_SRC conf
+
+      # Setup cdg function
+      # ------------------
+      unalias cdg 2> /dev/null
+      cdg() {
+      local dest_dir=$(cdscuts_glob_echo | fzf )
+      if [[ $dest_dir != '' ]]; then
+          cd "$dest_dir"
+      fi
+      }
+      export -f cdg > /dev/null
+
+      #+END_SRC

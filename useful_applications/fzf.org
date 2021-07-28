@@ -1,0 +1,14 @@
+# -*- mode: org; -*-
+#+TITLE: fzf
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 22:55:41 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 22:55:46 EEST 2021>
+
+
+[[https://github.com/junegunn/fzf][fzf на github]]

@@ -1,0 +1,15 @@
+# -*- mode: org; -*-
+#+TITLE: nerd-fonts
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 16:29:33 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 16:29:41 EEST 2021>
+
+
+https://github.com/ryanoasis/nerd-fonts
+https://github.com/microcai/gentoo-zh   https://github.com/TheGreatMcPain/TheGreatMcPain-overlay

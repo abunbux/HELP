@@ -1,0 +1,117 @@
+# -*- mode: org; -*-
+#+TITLE: настройка приглашения своими силами
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jul 21 20:58:38 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 21:15:55 EEST 2021>
+
+
+** [[https://digitalfortress.tech/tips/setting-up-git-prompt-step-by-step/][Setup Git prompt step by step]]
+
+   /July 6, 2017 © Niket Pathak/
+
+   Привожу только конфигурацию, за чтением прошу по адресу в заголовке.
+
+   ~PS~. Немного подправил в месте определения ~PS1~ - сделал определение юзера и,
+   если это ~root~ - меняем цвета на *«вырвиглазные»*, дабы помнить под кем работаем
+   и не наделать глупостей.
+
+   #+begin_src conf
+
+     # https://digitalfortress.tech/tips/setting-up-git-prompt-step-by-step/
+     # Setup Git prompt step by step
+     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+     # store colors
+     MAGENTA="\[\033[0;35m\]"
+     YELLOW="\[\033[01;33m\]"
+     BLUE="\[\033[00;34m\]"
+     LIGHT_GRAY="\[\033[0;37m\]"
+     CYAN="\[\033[0;36m\]"
+     GREEN="\[\033[00;32m\]"
+     RED="\[\033[0;31m\]"
+     VIOLET='\[\033[01;35m\]'
+     THE_END='\e[m'              # окончание цветовой схемы
+
+
+     function color_my_prompt {
+         local __user="$GREEN\u"
+         local __user_root="$RED\u"
+         local __at="$YELLOW@"
+         local __host="$MAGENTA\h"
+         local __host_root="$RED\h"
+         local __cur_location="$BLUE\W"           # capital 'W': current directory, small 'w': full file path
+         local __cur_location_root="$RED\W"
+         local __git_branch_color="$GREEN"
+         local __prompt_tail="$VIOLET$"
+         local __prompt_tail_root="$RED#"
+         local __user_input_color="$GREEN"
+         local __git_branch=$(__git_ps1);
+
+         # colour branch name depending on state
+         if [[ "${__git_branch}" =~ "*" ]]; then     # if repository is dirty
+             __git_branch_color="$RED"
+         elif [[ "${__git_branch}" =~ "$" ]]; then   # if there is something stashed
+             __git_branch_color="$YELLOW"
+         elif [[ "${__git_branch}" =~ "%" ]]; then   # if there are only untracked files
+             __git_branch_color="$LIGHT_GRAY"
+         elif [[ "${__git_branch}" =~ "+" ]]; then   # if there are staged files
+             __git_branch_color="$CYAN"
+         fi
+
+         # Build the PS1 (Prompt String)
+
+         if [ $(id -u) != 0 ]; then
+             PS1="$__user$__host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$THE_END "
+         else
+             PS1="$__user_root$__at$__host_root $__cur_location_root$__git_branch_color$__git_branch $__prompt_tail_root$THE_END "
+         fi
+
+
+     }
+
+
+     # configure PROMPT_COMMAND which is executed each time before PS1
+     export PROMPT_COMMAND=color_my_prompt
+     PROMPT_COMMAND="$PROMPT_COMMAND;history -a"
+
+     # if .git-prompt.sh exists, set options and execute it
+     if [ -f /usr/share/git/git-prompt.sh ]; then
+         GIT_PS1_SHOWDIRTYSTATE=true
+         GIT_PS1_SHOWSTASHSTATE=true
+         GIT_PS1_SHOWUNTRACKEDFILES=true
+         GIT_PS1_SHOWUPSTREAM="auto"
+         GIT_PS1_HIDE_IF_PWD_IGNORED=true
+         GIT_PS1_SHOWCOLORHINTS=true
+         . /usr/share/git/git-prompt.sh
+     fi
+   #+end_src
+
+** Почти также, но короче
+
+   Создание функции ~color_my_prompt~ в предыдущем разделе излишне усложняет
+   ситуацию. Предполагая, что у вас уже есть ваша подсказка, окрашенная до всего
+   этого, просто установите ~PROMPT_COMMAND~, но вместо передачи '~\\ u @ \\ h:
+   \\ w~', передайте версию ~PS1~ в ~__git_ps1~ после того, как ваш ~.bashrc~ установил
+   ее. Не передавайте $ PS1 напрямую, иначе он будет установлен рекурсивно:
+
+   #+begin_src conf
+
+     if [ -f /usr/share/git/git-prompt.sh ]; then
+         source /usr/share/git/git-prompt.sh
+
+         export GIT_PS1_SHOWSTASHSTATE=1
+         export GIT_PS1_SHOWUNTRACKEDFILES=1
+         export GIT_PS1_SHOWCOLORHINTS=1
+         export GIT_PS1_SHOWDIRTYSTATE=1
+         export GIT_PS1_SHOWUPSTREAM=auto
+         export  GIT_PS1_HIDE_IF_PWD_IGNORED=1
+         export PS1='\u@\[\e[0;33m\]\h \[\e[38;05;68m\]\w$(__git_ps1 " \[\e[m\]*\[\e[1;32m\]%s")\[\e[m\] \$ '
+     fi
+
+   #+end_src

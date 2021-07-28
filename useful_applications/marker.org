@@ -1,0 +1,89 @@
+# -*- mode: org; -*-
+#+TITLE: marker
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun Jul 8 20:00:10 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 15:58:51 EEST 2021>
+
+
+
+https://github.com/pindexis/marker
+
+Marker - это командная палитра для терминала. Он позволяет добавлять закладки
+командам (или шаблоны команд) и легко извлекать их с помощью нечеткого поиска в
+реальном времени.
+
+Он также поставляется со многими общими командами (спасибо [[https://github.com/tldr-pages/tldr][tldr]]).
+
+* Usage
+
+  - ~Ctrl-space~: поиск команд, соответствующих текущей записи в командной строке;
+
+  - ~Ctrl-k~ (or ~marker mark~): добавить команду в закладки;
+
+  - ~Ctrl-t~: поместите курсор на следующий заполнитель, обозначенный как
+    '{{something}}';
+
+  - ~marker remove~: удалить закладку.
+
+  PS. Использовать в терминале ~C-k~ крайне неудобно, по-крайней мере для меня.
+  Эта комбинация привязана к функции - удалить текст от текущей позиции до конца
+  строки, а переучиваться мне уже поздно, поэтому всё можно изменить, используя
+  переменные среды, соответственно с ~MARKER_KEY_GET~, ~MARKER_KEY_MARK~ and
+  ~MARKER_KEY_NEXT_PLACEHOLDER~.
+
+  Пример, строку записываем в ~.local/share/marker/marker.sh~ перед ~source
+  ${MARKER_HOME}/bin/marker.sh~:
+
+  #+begin_src conf
+
+        export MARKER_KEY_MARK="\C-n"           # было «C-k»
+        source ${MARKER_HOME}/bin/marker.sh
+  #+end_src
+
+* Installation
+
+  #+BEGIN_SRC conf
+
+        git clone --depth=1 https://github.com/pindexis/marker ~/.marker && ~/.marker/install.py
+
+  #+END_SRC
+
+  Такой способ установки указан у разработчика.
+
+  Я делал проще. Либо сложнее. Кому как...
+
+  #+begin_src shell
+
+    git clone https://github.com/pindexis/marker
+    cd marker
+    python2.7 install.py
+
+  #+end_src
+
+  PS. У меня не получилось установить с помощью питона третьей версии, пришлось
+  ставить вторую.
+
+  Думаю, ещё проще, для тех, кто не любит запускать непонянтые скрипты, открываем
+  ~.local/share/marker/marker.sh~ и добавляем:
+
+  #+begin_src conf
+
+        export MARKER_DATA_HOME="/home/abunbux/.local/share/marker"
+        export MARKER_HOME="/home/abunbux/opt/marker"
+        export MARKER_KEY_MARK="\C-n"
+        source ${MARKER_HOME}/bin/marker.sh
+
+  #+end_src
+
+  Затем в ~.bashrc~ добавляем
+  #+BEGIN_SRC conf
+
+        [[ -s "$HOME/.local/share/marker/marker.sh" ]] && source "$HOME/.local/share/marker/marker.sh"
+
+  #+END_SRC

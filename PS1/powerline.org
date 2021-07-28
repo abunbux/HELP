@@ -1,0 +1,296 @@
+# -*- mode: org; -*-
+#+TITLE: powerline, powerline-gitstatus, powerline-symbols, powerline-fonts
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun Jul 18 22:12:13 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 21:11:47 EEST 2021>
+
+
+** powerline ([[https://github.com/powerline/powerline][powerline на github]])
+
+*** установка powerline
+**** из репозитория gentoo
+
+     В случае установки из репозитория ~gentoo~:
+
+     #+BEGIN_SRC shell
+
+       echo 'app-shells/powerline ~amd64' >> /etc/portage/package.accept_keywords/app-shells
+       emerge app-shells/powerline
+
+     #+END_SRC
+
+     Добавляем в ~.bashrc~
+
+     #+BEGIN_SRC conf
+
+           if [ -f Symbol’s value as variable is void: which ]; then
+               powerline-daemon -q
+               POWERLINE_BASH_CONTINUATION=1
+               POWERLINE_BASH_SELECT=1
+               . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+           fi
+
+     #+END_SRC
+
+**** из оверлея ~raiagent~
+
+     ~powerline~ можно также установить из оверлея ~raiagent~.
+
+     #+begin_src shell
+
+       eselect repository enable raiagent
+       emerge --sync raiagent
+       eix-sync
+       echo 'app-shells/powerline ~amd64' >> /etc/portage/package.accept_keywords/app-misc
+       emerge app-misc/powerline
+
+     #+end_src
+**** вариант третий - исходники
+
+     Ну и, понятное дело, третий вариант - из исходников, клонируем репозиторий и
+     далее по инстркукции ~производителя (то бишь, разработчика)~.
+
+*** powerline-symbols, powerline fonts ([[https://github.com/powerline/fonts][powerline fonts на github]])
+
+    ~powerline-symbols~ необходим для правильного отображения ~powerline~, некоторые
+    шрифты ~powerline-fonts~ нужны также для этого.
+
+    Здесь также в установке есть несколько путей.
+
+    И самый верный, в моём понимании, установка системными средствами - не нужно
+    думать об отдельном обновлении, обновил ~мир~ - обновил всё.
+
+**** emerge
+
+     #+begin_src shell
+
+       emerge media-fonts/powerline-symbols
+       eselect fontconfig list
+       eselect fontconfig enable 10-powerline-symbols.conf
+
+     #+end_src
+
+     можно также установить из оверлея ~raiagent~
+
+     #+begin_src shell
+
+       echo '=media-fonts/powerline-fonts-9999* ~amd64' >> /etc/portage/package.accept_keywords/media-fonts
+       echo 'media-fonts/powerline-fonts    3270 anonymouspro arimo cousine dejavusansmono droidsansmono droidsansmonodotted
+       droidsansmonoslashed firamono gomono hack inconsolata inconsolata-g inconsolatadz liberationmono meslodotted mesloslashed
+       monofur notomono novamono profont robotomono sourcecodepro spacemono symbolneu terminus_pcf tinos ubuntumono' >>       /etc/portage/package.use/media-fonts
+       emerge media-fonts/powerline-fonts
+
+     #+end_src
+
+**** git
+
+     #+BEGIN_SRC shell
+
+       git clone https://github.com/powerline/fonts.git --depth=1
+       cd fonts
+       ./install.sh       # ставятся в $HOME/.local/share/fonts
+       fc-cache -vf ~/.local/share/fonts/
+
+     #+END_SRC
+
+**** wget
+
+     #+begin_src shell
+
+       wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+       wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+       mv PowerlineSymbols.otf ~/.local/share/fonts/
+       fc-cache -vf ~/.local/share/fonts/
+       mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+
+     #+end_src
+
+*** настройка
+**** шрифты в консоли
+
+    Для установки шрифта в текстовой консоли (~tty~):
+
+     #+BEGIN_SRC shell
+
+       cp -r Terminus/PSF/*.psf.gz /usr/share/consolefonts
+
+     #+END_SRC
+
+     прописываем в nano ~/etc/conf.d/consolefont~:
+
+     #+BEGIN_SRC conf
+
+           consolefont="ter-powerline-v18b"
+
+     #+END_SRC
+
+     или что понравится, для выбора запускаем:
+
+     #+BEGIN_SRC shell
+
+       ls /usr/share/consolefonts/*powerline*
+
+     #+END_SRC
+
+     копируем любое название без ~.psf.gz~ и прописываем в том-же
+     ~/etc/conf.d/consolefont~.
+     Перезапускаем ~consolefont~:
+
+     #+BEGIN_SRC conf
+
+           /etc/init.d/consolefont restart
+
+     #+END_SRC
+
+**** .bashrc
+
+     Если ставили из репозитория ~gentoo~ , в ~.bashrc~ прописываем:
+
+     #+begin_src conf
+
+           if [ -f `which powerline-daemon` ]; then
+               powerline-daemon -q
+               POWERLINE_BASH_CONTINUATION=1
+               POWERLINE_BASH_SELECT=1
+               . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+           fi
+
+     #+end_src
+
+     Если сооблазнились оверлеем ~raiagent~, считая, по непонятным причинам, будто
+     здесь версия гораздо лучше, в ~.bashrc~ прописываем иные строки, вернее, иная строка
+     будет только одна:
+
+     #+begin_src conf
+
+           if [ -f `which powerline-daemon` ]; then
+               powerline-daemon -q
+               POWERLINE_BASH_CONTINUATION=1
+               POWERLINE_BASH_SELECT=1
+               source /usr/share/powerline/bash/powerline.sh
+           fi
+
+     #+end_src
+
+**** настройка внешнего вида
+***** файлы настроек
+
+      Дефолтные настройки лежат по адресу
+      ~/usr/lib/python3.9/site-packages/powerline/config_files/~.
+      Копируем их в ~$HOME/.config/powerline~
+
+      #+begin_src shell
+
+        mkdir ~/.config/powerline
+        cp -r /usr/lib/python3.9/site-packages/powerline/config_files/* ~/.config/powerline/
+
+      #+end_src
+
+***** можно и не делать, но хуже не будет
+
+      Файл ~.config/powerline/config.json~, меняем ~false~ на ~true~:
+
+      #+begin_src conf
+
+            "common": {
+                "term_truecolor": true
+            },
+
+      #+end_src
+
+***** отображение ветки git
+
+      Чтобы увидеть имя ветки ~git~ и выделенный цветом статус ~git~ в приглашении
+      в файле ~.config/powerline/config.json~ секцию
+
+      #+begin_src conf
+
+            "shell": {
+                        "colorscheme": "default",
+                        "theme": "default",
+                        "local_themes": {
+                            "continuation": "continuation",
+                            "select": "select"
+                        }
+                    },
+
+      #+end_src
+
+      приводим к виду
+
+      #+begin_src conf
+
+            "shell": {
+                        "colorscheme": "default",
+                        "theme": "default_leftonly",
+                        "local_themes": {
+                            "continuation": "continuation",
+                            "select": "select"
+                        }
+                    },
+
+      #+end_src
+
+      то есть строку ~"theme": "default",~ меняем на ~"theme": "default_leftonly",~.
+
+
+      В файле ~$HOME/.config/powerline/themes/shell/default_leftonly.json~ секцию
+
+      #+begin_src conf
+
+            {
+            "function": "powerline.segments.common.vcs.branch",
+            "priority": 40
+            },
+
+      #+end_src
+
+      приводим к виду
+
+      #+begin_src conf
+
+            {
+            "function": "powerline.segments.common.vcs.branch",
+            "priority": 40,
+            "args": {
+                "status_colors": true,
+                "ignore_statuses": ["U"]
+                }
+            },
+
+      #+end_src
+
+      Перезапускаем ~powerline-daemon~:
+
+      #+begin_src shell
+
+        powerline-daemon --replace
+
+      #+end_src
+
+      Во многих случаях этого будет достаточно.
+
+** powerline-gitstatus ([[https://github.com/jaspernbrouwer/powerline-gitstatus][powerline-gitstatus на github]])
+
+   Это простое дополнение к ~powerline~, которое добавляет несколько цветов и тем
+   для отображения различной информации о статусе ~git~.
+
+   #+begin_src shell
+
+     git clone https://github.com/jaspernbrouwer/powerline-gitstatus.git
+     cd powerline-gitstatus
+     python setup.py --help
+     python setup.py build
+     sudo python setup.py install
+
+   #+end_src
+
+   [[https://github.com/jaspernbrouwer/powerline-gitstatus#configuration][Инструкция на github от разработчиа по настройке powerline-gitstatus.]]
+
+   [[https://www.freecodecamp.org/news/jazz-up-your-bash-terminal-a-step-by-step-guide-with-pictures-80267554cb22/][Пошаговая инструкция на freecodecamp от rajaraodv.]]

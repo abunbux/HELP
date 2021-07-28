@@ -1,0 +1,15 @@
+# -*- mode: org; -*-
+#+TITLE: отслеживание dotfiles
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 16:27:09 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 16:27:35 EEST 2021>
+
+
+https://drewdevault.com/2019/12/30/dotfiles.html
+https://www.8host.com/blog/upravlenie-konfiguracionnymi-fajlami-s-pomoshhyu-git/

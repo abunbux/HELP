@@ -1,0 +1,121 @@
+# -*- mode: org; -*-
+#+TITLE: liquidprompt
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Tue Jul 20 19:16:21 EEST 2021>
+# Time-stamp: <Последнее обновление -- Tuesday July 20 22:38:18 EEST 2021>
+
+
+[[https://github.com/nojhan/liquidprompt][nojhan/liquidprompt на github]]
+
+[[https://liquidprompt.readthedocs.io/en/stable/][Детальная информация по установке и настройке на ~Read the Docs~.]]
+
+Liquid Prompt - полезная адаптивная подсказка для ~Bash~ и ~zsh~.
+
+** Установка
+
+   #+begin_src shell
+
+     git clone --branch stable https://github.com/nojhan/liquidprompt.git ~/liquidprompt
+
+     # Чтобы проверить приглашение сразу после загрузки, запустите:
+     source ~/liquidprompt/liquidprompt
+
+   #+end_src
+
+   Чтобы использовать ~Liquidprompt~ при каждом запуске оболочки, добавьте следующие
+   строки в свой ~.bashrc~ (если вы используете ~Bash~) или ~.zshrc~ (если вы используете
+   ~zsh~):
+
+   #+begin_src conf
+
+         # Only load Liquidprompt in interactive shells, not from a script or from scp
+         # Загружайте Liquidprompt только в интерактивных оболочках, а не из скрипта или scp
+         [[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+
+   #+end_src
+
+   Проверьте в своем ~.bashrc~, что переменная ~PROMPT_COMMAND~ не установлена, иначе
+   приглашение не будет доступно. Если вы должны установить его или использовать
+   надстройку, которая устанавливает его, обязательно установите ~PROMPT_COMMAND~
+   перед строкой ~[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt~, чтобы
+   избежать проблем с историей и синхронизацией. Не экспортируйте PROMPT_COMMAND.
+
+** Настройка
+
+   Почти все функции Liquidprompt можно включить или отключить в файлах
+   конфигурации. Их можно установить до ~source ~/liquidprompt/liquidprompt~ (в
+   ~.bashrc~ или ~.zshrc~) или в файле конфигурации:
+   - ~~/.liquidpromptrc~
+   - ~~/.config/.liquidpromptrc~
+   - ~/etc/liquidpromptrc~
+
+   ~Liquidprompt~ поставляется с примером файла конфигурации - ~liquidpromptrc-dist~.
+   Вы можете начать с этого файла для своей конфигурации:
+
+   #+begin_src shell
+
+     cp ~/liquidprompt/liquidpromptrc-dist ~/.config/liquidpromptrc
+
+   #+end_src
+
+   В случае, если вы синхронизируете файл конфигурации на нескольких компьютерах
+   или если у вас есть общесистемный ~/etc/liquidpromptrc~, из которого вы хотите
+   сделать незначительные отклонения в отдельной учетной записи пользователя, вы
+   можете расширить основную конфигурацию, чтобы добавить в нее любые локальные
+   изменения с использованием таких строк:
+
+   #+begin_src conf
+
+         LOCAL_RCFILE=$HOME/.liquidpromptrc.local
+         [ -f "$LOCAL_RCFILE" ] && source "$LOCAL_RCFILE"
+
+   #+end_src
+
+** Настройка тем
+
+   ~Liquidprompt~ может переключаться между темами на лету.
+
+   Чтобы загрузить (но не активировать) тему, просто создайте файл темы. Например,
+   чтобы загрузить включенную тему ~powerline~:
+
+   #+begin_src conf
+
+         source themes/powerline/powerline.theme
+
+   #+end_src
+
+   Чтобы показать, какие темы загружены и доступны, запустите ~lp_theme ()~:
+
+   #+begin_src shell
+
+     $ lp_theme --list
+
+     default
+     powerline_full
+     powerline
+
+   #+end_src
+
+   Чтобы переключиться на другую тему, вызовите ~lp_theme ()~ с именем темы в
+   качестве аргумента:
+
+   #+begin_src shell
+
+     $ lp_theme powerline
+
+   #+end_src
+
+
+   Чтобы установить эту тему по умолчанию, пишем в ~.liquidpromptrc~.
+
+   #+begin_src conf
+
+         source themes/powerline/powerline.theme
+         lp_theme powerline
+   #+end_src

@@ -1,0 +1,50 @@
+# -*- mode: org; -*-
+#+TITLE: delta
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 23:34:22 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 26 23:34:28 EEST 2021>
+
+
+[[https://github.com/dandavison/delta][dandavison/delta на github]]
+
+Средство просмотра для вывода git и diff.
+
+#+BEGIN_SRC conf
+
+      emerge dev-util/git-delta
+
+      #+END_SRC
+
+Установите ~delta~ в качестве пейджера для команд git в вашем ~.gitconfig~.
+У Delta есть много возможностей для изменения цветов и других деталей вывода;
+~delta --help~ показывает их все.
+
+Все команды git, отображающие вывод diff, теперь должны отображать вывод с
+выделенным синтаксисом. Например:
+
+
+#+BEGIN_SRC conf
+
+      git diff
+      git show
+      git log -p
+      git stash show -p
+      git reflog -p
+      git add -p
+
+      #+END_SRC
+
+~delta~ можно использовать в качестве замены ~diff~.
+
+
+#+BEGIN_SRC conf
+
+      delta a.txt b.txt
+
+      #+END_SRC

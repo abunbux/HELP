@@ -1,0 +1,33 @@
+# -*- mode: org; -*-
+#+TITLE: powerline-2column.bash
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 19 21:48:10 EEST 2021>
+# Time-stamp: <Последнее обновление -- Tuesday July 20 21:31:42 EEST 2021>
+
+
+[[https://github.com/victorbrca/powerline-2column][powerline-2column на github]]
+
+Простое приглашение ~Powerline~ для ~Bash~ с 2 столбцами (без ~Python~).
+
+** Установка
+
+   Установка проще простого.
+   Качаем файл ~powerline-2column.bash~, и делаем на него ссылку в ~.bashrc~.
+
+   #+begin_src conf
+
+         source ~/.bashrc.d/powerline-2column.bash
+
+   #+end_src
+
+   Понятное дело, файл ложим в домашнюю директорию или поддиректорию.
+
+** Настройка
+
+   Открываем файл ~powerline-2column.bash~ и редактируем по-своему усмотрению - добавить больше нечего.

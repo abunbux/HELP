@@ -1,0 +1,88 @@
+# -*- mode: org; -*-
+#+TITLE: SBP - Simple Bash Prompt
+#+DESCRIPTION:
+#+KEYWORDS: PS1, bash
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 19 17:25:22 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday July 19 19:42:42 EEST 2021>
+
+[[https://github.com/brujoand/sbp][brujoand/sbp на github]]
+
+** Краткое описание
+
+   ~Simple Bash Prompt~ (~SBP~) - это приглашение командной строки для ~bash~, которое
+   когда-то было простым. Это началось с ~powerline-shell~, что здорово, но написано
+   на ~python~. ~SBP~ - это сплошной ~bash~, что делает его быстрым и увлекательным.
+
+   Если вам нужны причудливые заостренные разделители сегментов, вам нужно
+   установить и включить шрифты ~Powerline~. Вы можете получить их [[https://github.com/powerline/fonts][здесь]], где
+   также есть инструкции по установке.
+   Следующее нужно чётко запомнить (~hard_to_remember~). Измените
+   настройки эмулятора вашего терминала. Что-то вроде «Настройки», а затем
+   «Шрифты», вероятно, будет правильным местом. Если вам не нравится ~Powerline~,
+   используйте тему ~plain~ или ~lines~ или создайте свою. Если вы используете
+   ~Kitty~ в качестве терминала, тогда все должно работать из коробки.
+
+** Установка
+
+   #+begin_src shell
+
+     cd ~/opt
+     git clone https://github.com/brujoand/sbp.git
+     cd ~/opt/sbp/bin/
+     ./install
+
+   #+end_src
+
+   Последняя команда (~./install~) добавит в файл ~.bashrc~ две строчки:
+
+   #+begin_src conf
+
+         SBP_PATH=~/opt/sbp
+         source ${SBP_PATH}/sbp.bash
+
+   #+end_src
+
+   Это можно сделать и вручную, кто его знает, что милые, добропорядочные
+   разработчики понапишут в своих исполняемых файлах? Правда, в этом случае будет
+   использоваться основная ветвь разработки - она менее стабильна.
+
+** Использование
+
+   #+begin_src shell
+
+     sbp edit config
+     sbp reload          # в основном изменения вступают в силу сразу же
+     sbp (+TAB)
+
+     Usage: sbp [command]
+
+     Commands:
+         reload            - Reload SBP and user settings
+         status            - Show the current configuration
+         help              - Show this help text
+     list
+         config          - List all current settings
+         segments        - List all available segments
+         hooks           - List all available hooks
+         themes          - List all available color themes and layouts
+     edit
+         config          - Opens the sbp config in $EDITOR
+         colors          - Opens the colors config in $EDITOR
+     set
+         color           - Set [color] for the current session
+         layout          - Set [layout] for the current session
+     toggle
+         peekaboo        - Toggle execution of [segment] or [hook]
+         debug           - Toggle debug mode
+
+   #+end_src
+
+** Совсем маленькая ложечка дёгтя
+
+По достижению определённой ширины (слишком узкой) некоторые сегменты пропадают.
+Это можно подредактировать в ~$HOME/.config/sbp/settings.conf~.
