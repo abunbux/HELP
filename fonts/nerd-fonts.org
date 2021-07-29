@@ -1,0 +1,23 @@
+# -*- mode: org; -*-
+#+TITLE: nerd-fonts
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jul 26 16:29:33 EEST 2021>
+# Time-stamp: <Последнее обновление -- Wednesday July 28 23:47:46 EEST 2021>
+
+
+https://github.com/ryanoasis/nerd-fonts
+https://github.com/microcai/gentoo-zh   https://github.com/TheGreatMcPain/TheGreatMcPain-overlay
+
+
+https://github.com/ryanoasis/nerd-fonts
+
+- ~media-fonts/nerd-fonts~ есть в оверлеях [[https://github.com/microcai/gentoo-zh][microcai/gentoo-zh]] и
+  [[https://gitlab.com/TheGreatMcPain/thegreatmcpain-overlay][TheGreatMcPain/thegreatmcpain-overlay]].
+
+- ~media-fonts/nerd-fonts-symbols~ можно найти в оверлее [[https://github.com/crocket/crocket-overlay][crocket/crocket-overlay]].

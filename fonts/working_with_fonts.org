@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: Работа со шрифтами в системе
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jul 28 23:46:31 EEST 2021>
+# Time-stamp: <Последнее обновление -- Wednesday July 28 23:46:54 EEST 2021>
