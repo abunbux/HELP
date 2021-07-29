@@ -8,12 +8,11 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Sun Jul 18 22:12:13 EEST 2021>
-# Time-stamp: <Последнее обновление -- Monday July 26 21:11:47 EEST 2021>
+# Time-stamp: <Последнее обновление -- Thursday July 29 0:13:54 EEST 2021>
 
 
-** powerline ([[https://github.com/powerline/powerline][powerline на github]])
-
-*** установка powerline
+** powerline
+*** установка powerline  (https://github.com/powerline/powerline)
 **** из репозитория gentoo
 
      В случае установки из репозитория ~gentoo~:
@@ -56,7 +55,7 @@
      Ну и, понятное дело, третий вариант - из исходников, клонируем репозиторий и
      далее по инстркукции ~производителя (то бишь, разработчика)~.
 
-*** powerline-symbols, powerline fonts ([[https://github.com/powerline/fonts][powerline fonts на github]])
+*** powerline-symbols, powerline fonts (https://github.com/powerline/fonts)
 
     ~powerline-symbols~ необходим для правильного отображения ~powerline~, некоторые
     шрифты ~powerline-fonts~ нужны также для этого.
@@ -68,6 +67,14 @@
 
 **** emerge
 
+     Нужное нам можно найти:
+
+     - ~media-fonts/powerline-fonts~ - в оверлеях [[https://gitlab.com/TheGreatMcPain/thegreatmcpain-overlay][TheGreatMcPain/thegreatmcpain-overlay]]
+       и [[https://github.com/leycec/raiagent][leycec/raiagent]].
+
+     - ~media-fonts/powerline-symbol~ - стандартный репозиторий ~gentoo~ и оверлей
+       [[https://github.com/leycec/raiagent][leycec/raiagent]].
+
      #+begin_src shell
 
        emerge media-fonts/powerline-symbols
@@ -76,7 +83,7 @@
 
      #+end_src
 
-     можно также установить из оверлея ~raiagent~
+     Из оверлея ~raiagent~:
 
      #+begin_src shell
 
@@ -114,7 +121,7 @@
 *** настройка
 **** шрифты в консоли
 
-    Для установки шрифта в текстовой консоли (~tty~):
+     Для установки шрифта в текстовой консоли (~tty~):
 
      #+BEGIN_SRC shell
 
@@ -276,7 +283,7 @@
 
       Во многих случаях этого будет достаточно.
 
-** powerline-gitstatus ([[https://github.com/jaspernbrouwer/powerline-gitstatus][powerline-gitstatus на github]])
+** powerline-gitstatus (https://github.com/jaspernbrouwer/powerline-gitstatus)
 
    Это простое дополнение к ~powerline~, которое добавляет несколько цветов и тем
    для отображения различной информации о статусе ~git~.
