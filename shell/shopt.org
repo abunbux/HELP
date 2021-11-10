@@ -1,0 +1,14 @@
+# -*- mode: org; -*-
+#+TITLE: shopt
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Fri Jul 30 21:24:33 EEST 2021>
+# Time-stamp: <Последнее обновление -- Friday July 30 21:24:52 EEST 2021>
+
+
+http://xgu.ru/wiki/shopt

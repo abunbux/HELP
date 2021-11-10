@@ -1,0 +1,15 @@
+# -*- mode: org; -*-
+#+TITLE: quotes
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun Aug 22 14:12:44 EEST 2021>
+# Time-stamp: <Последнее обновление -- Sunday August 22 14:14:35 EEST 2021>
+
+
+«Вся проблема этого мира в том, что глупцы и фанатики всегда уверены в себе, а
+умные люди полны сомнений» (Рассел Бертран)

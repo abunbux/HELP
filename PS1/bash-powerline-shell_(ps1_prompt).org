@@ -8,7 +8,8 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Sun Jul 25 12:44:39 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday July 28 19:36:12 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday October 4 5:25:22 EEST 2021>
+
 
 
 

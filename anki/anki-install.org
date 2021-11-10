@@ -1,0 +1,45 @@
+# -*- mode: org; -*-
+#+TITLE: anki - установка
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Oct 04 05:10:46 EEST 2021>
+# Time-stamp: <Последнее обновление -- Wednesday November 10 19:54:1 EET 2021>
+
+
+В последнее время разработчики ~anki~ решили, что для успешной работы их детища
+требуется ~systemd~, в результате чего на системах с отличной от оной системой
+инициализации обычным путём, то бишь через пакетный менеджер системы, она не
+ставится. А, если и ставится - не запускается. Вот часть выхлопа в терминале:
+
+#+begin_src shell
+  ImportError: libsystemd.so.0: cannot open shared object file: No such file ordirectory
+#+end_src
+
+При установке из архива, скачанного с сайта https://apps.ankiweb.net/, а именно
+эту установку и рекомендуют разработчики, происходит то же самое.
+
+Но не всё настолько плохо.
+Идём в репо ~anki~ на github
+(https://github.com/ankitects/anki/blob/main/docs/development.md), где печатным
+по фону расписаны следующие шаги:
+
+#+begin_src shell
+
+  $ python3.8 -m venv ~/pyenv
+  $ ~/pyenv/bin/pip install --upgrade pip
+  $ ~/pyenv/bin/pip install aqt
+
+  # Then to run Anki:
+
+  $ ~/pyenv/bin/anki
+
+#+end_src
+
+Можно также ставить из исходников, инструкции в репо
+(https://github.com/ankitects/anki), но у меня посыпались ошибки и разбиратья я
+пока не стал - нашёл путь гораздо проще, то есть описанный выше.

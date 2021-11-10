@@ -1,5 +1,5 @@
 # -*- mode: org; -*-
-#+TITLE: install_gentoo
+#+TITLE: Установка и настройка gentoo
 #+DESCRIPTION: моя шпаргалка по установке «gentoo».
 #+KEYWORDS: gentoo
 #+AUTHOR:
@@ -8,261 +8,267 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Sun Feb 17 16:59:08 EEST 2021>
-# Time-stamp: <Последнее обновление -- Sunday July 18 17:6:34 EEST 2021>
+# Time-stamp: <Последнее обновление -- Friday July 30 15:34:33 EEST 2021>
 
 
 * Создание папок и монтирование дисков
 
-  mkdir /mnt/gentoo
-
-  mount /dev/sda3 /mnt/gentoo/ (диск, ясное дело, указать свой)
-
-  mkdir -p /mnt/gentoo/{boot,home,var}
-
-  mount /dev/sda{1-9} /mnt/gentoo/{boot,home,var} (здесь, опять же, у каждого своё)
+  #+begin_src shell
+    mkdir /mnt/gentoo
+    mount /dev/sda3 /mnt/gentoo/ (диск, ясное дело, указать свой)
+    mkdir -p /mnt/gentoo/{boot,home,var}
+    mount /dev/sda{1-9} /mnt/gentoo/{boot,home,var} (здесь, опять же, у каждого своё)
+  #+end_src
 
 * Время и дата
 
-  date
+  #+begin_src shell
+    date
+  #+end_src
 
   В случае необходимости
-  date 090615302018 (месяц, число, час, минута, год)
+
+  #+begin_src shell
+    date 090615302018 (месяц, число, час, минута, год)
+  #+end_src
 
 * Скачивание архива с системой
 
-  cd /mnt/gentoo
-  links gentoo.org/downloads/mirrors
+  #+begin_src shell
+    cd /mnt/gentoo
+    links gentoo.org/downloads/mirrors
+  #+end_src
 
   Выбираем зеркало из ближайшей по списку страны и далее
   ~releases > amd64 > autobuilds > current-stage3-amd64 > stage3-amd64-*.tar.xz~ .
   Скачивание происходит по клавише «D» или «Enter».
 
-  tar xJvpf stage3-*.tar.xz --xattrs --numeric-owner
+  Распаковываем:
+
+  #+begin_src shell
+    tar xJvpf stage3-*.tar.xz --xattrs --numeric-owner
+  #+end_src
 
 * Первое редактирование make.conf
 
   # nano /mnt/gentoo/etc/portage/make.conf
 
-  #+BEGIN_SRC shell
+  #+BEGIN_SRC conf
 
-    # These settings were set by the catalyst build script that automatically
-    # built this stage.
-    # Please consult /usr/share/portage/config/make.conf.example for a more
-    # detailed example.
+        # These settings were set by the catalyst build script that automatically
+        # built this stage.
+        # Please consult /usr/share/portage/config/make.conf.example for a more
+        # detailed example.
 
-    COMMON_FLAGS="-O2 -march=native -pipe"
-    CHOST="x86_64-pc-linux-gnu"
-    CFLAGS="COMMON_FLAGS"
-    CXXFLAGS="COMMON_FLAGS"
-    FCFLAGS="COMMON_FLAGS"
-    FFLAGS="COMMON_FLAGS"
-
-
-    USE="mmx sse sse2 ssse3 sse4 sse4_1 sse4_2"
-    USE="USE bash-completion emacs python vim-syntax"
-    USE="USE -cups -libav -3dnow"
+        COMMON_FLAGS="-O2 -march=native -pipe"
+        CHOST="x86_64-pc-linux-gnu"
+        CFLAGS="COMMON_FLAGS"
+        CXXFLAGS="COMMON_FLAGS"
+        FCFLAGS="COMMON_FLAGS"
+        FFLAGS="COMMON_FLAGS"
 
 
-    MAKEOPTS="-j5"
-    EMERGE_DEFAULT_OPTS="EMERGE_DEFAULT_OPTS --jobs=2 --ask --verbose --usepkg --usepkg-exclude 'sys-kernel/gentoo-sources virtual/* */*-bin'"
-    FEATURES="FEATURES parallel-fetch buildpkg"
-    PORTAGE_NICENESS="15"
+        USE="mmx sse sse2 ssse3 sse4 sse4_1 sse4_2"
+        USE="USE bash-completion emacs python vim-syntax"
+        USE="USE -cups -libav -3dnow"
 
 
-    # NOTE: This stage was built with the bindist Use flag enabled
-    PORTDIR="/var/db/repos/gentoo"
-    DISTDIR="/var/cache/distfiles"
-    PKGDIR="/var/cache/binpkgs"
+        MAKEOPTS="-j5"
+        EMERGE_DEFAULT_OPTS="EMERGE_DEFAULT_OPTS --jobs=2 --ask --verbose --usepkg --usepkg-exclude 'sys-kernel/gentoo-sources virtual/* */*-bin'"
+        FEATURES="FEATURES parallel-fetch buildpkg"
+        PORTAGE_NICENESS="15"
 
-    GRUB_PLATFORMS="pc"
-    VIDEO_CARDS="intel i915 i965"
-    INPUT_DEVICES="keyboard mouse evdev synaptics libinput"
 
-    AUTOCLEAN="yes"
-    LINGUAS="ru en ru_RU"
-    L10N="ru"
-    ACCEPT_LICENSE="*"
-    PORTAGE_ELOG_SYSTEM="save"
-    PORTAGE_ELOG_CLASSES="warn error info log qa"
+        # NOTE: This stage was built with the bindist Use flag enabled
+        PORTDIR="/var/db/repos/gentoo"
+        DISTDIR="/var/cache/distfiles"
+        PKGDIR="/var/cache/binpkgs"
 
-    # This sets the language of build output to English.
-    # Please keep this setting intact when reporting bugs.
-    LC_MESSAGES=C
+        GRUB_PLATFORMS="pc"
+        VIDEO_CARDS="intel i915 i965"
+        INPUT_DEVICES="keyboard mouse evdev synaptics libinput"
 
-    #+END_SRC
+        AUTOCLEAN="yes"
+        LINGUAS="ru en ru_RU"
+        L10N="ru"
+        ACCEPT_LICENSE="*"
+        PORTAGE_ELOG_SYSTEM="save"
+        PORTAGE_ELOG_CLASSES="warn error info log qa"
+
+        # This sets the language of build output to English.
+        # Please keep this setting intact when reporting bugs.
+        LC_MESSAGES=C
+
+  #+END_SRC
 
 * repos.conf
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC shell
 
-          mkdir /mnt/gentoo/etc/portage/repos.conf
-          cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+    mkdir /mnt/gentoo/etc/portage/repos.conf
+    cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
 
-          #+END_SRC
+  #+END_SRC
 
 * resolv.conf
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC shell
 
-          cp -L /etc/resolv.conf /mnt/gentoo/etc/
+        cp -L /etc/resolv.conf /mnt/gentoo/etc/
 
-          #+END_SRC
+  #+END_SRC
 
 * mount {proc,dev,sys}
 
-    #+BEGIN_SRC conf
-
-          mount -t proc /proc /mnt/gentoo/proc
-          mount --rbind /sys /mnt/gentoo/sys
-          mount --make-rslave /mnt/gentoo/sys
-          mount --rbind /dev /mnt/gentoo/dev
-          mount --make-rslave /mnt/gentoo/dev
-
-          #+END_SRC
+  #+BEGIN_SRC shell
+    mount -t proc /proc /mnt/gentoo/proc
+    mount --rbind /sys /mnt/gentoo/sys
+    mount --make-rslave /mnt/gentoo/sys
+    mount --rbind /dev /mnt/gentoo/dev
+    mount --make-rslave /mnt/gentoo/dev
+  #+END_SRC
 
 * Переходим в CHROOT
 
-    #+BEGIN_SRC conf
-
-          cd /mnt/gentoo/
-          chroot /mnt/gentoo /bin/bash
-          source /etc/profile
-          export PS1="(chroot) $PS1"
-
-          #+END_SRC
+  #+BEGIN_SRC conf
+        cd /mnt/gentoo/
+        chroot /mnt/gentoo /bin/bash
+        source /etc/profile
+        export PS1="(chroot) $PS1"
+  #+END_SRC
 
 * Синхронизируем дерево PORTAGE
 
   Одной из следующих команд достаточно для синхронизации.
   Для более подробной информации смотрите статью [[https://wiki.gentoo.org/wiki/Project:Portage/Sync][Portage sync]] на wiki gentoo.
 
-    #+BEGIN_SRC conf
-
-          emerge --sync
-          emaint sync -a
-          emaint sync --repo gentoo
-          emerge-webrsync
-
-          #+END_SRC
+  #+BEGIN_SRC conf
+        emerge --sync
+        emaint sync -a
+        emaint sync --repo gentoo
+        emerge-webrsync
+  #+END_SRC
 
 * Выбираем PROFILE
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC shell
+    eselect profile list
+    eselect profile set {ставим нужное}
+  #+END_SRC
 
-          eselect profile list
-          eselect profile set {ставим нужное}
-
-          #+END_SRC
-
-Но на данном этапе этого, пожалуй, делать ещё не нужно - оставляем как есть.
+  Но на данном этапе этого, пожалуй, делать ещё не нужно - оставляем как есть.
 
 * Устанавливаем часовой пояс
 
-    #+BEGIN_SRC conf
-
-          ls /usr/share/zoneinfo
-          echo "Europe/Zaporozhye" > /etc/timezone
-          emerge --config sys-libs/timezone-data
-
-          #+END_SRC
+  #+BEGIN_SRC conf
+        ls /usr/share/zoneinfo
+        echo "Europe/Zaporozhye" > /etc/timezone
+        emerge --config sys-libs/timezone-data
+  #+END_SRC
 
 * Создаём локали
 
-    #+BEGIN_SRC conf
-
-          nano -w /etc/locale.gen
-
-          en_US.UTF-8 UTF-8
-          ru_RU.UTF-8 UTF-8
-
-          #+END_SRC
-
   #+BEGIN_SRC conf
 
+        nano -w /etc/locale.gen
+
+        en_US.UTF-8 UTF-8
+        ru_RU.UTF-8 UTF-8
+
+  #+END_SRC
+
+  #+BEGIN_SRC conf
         locale-gen
         eselect locale list
         eselect locale set {нужно установить en_US.UTF-8 UTF-8} (всё-равно кириллица пока отображаться не будет)
         env-update && source /etc/profile && export PS1="(chroot) $PS1"
-
-        #+END_SRC
+  #+END_SRC
 
 * Время
 
-  nano /etc/conf.d/hwclock
+  #+BEGIN_SRC conf
 
-    #+BEGIN_SRC conf
-          clock="UTC"
-          clock_systohc="YES"
-          clock_args=""
+        nano /etc/conf.d/hwclock
 
-          #+END_SRC
+        clock="UTC"
+        clock_systohc="YES"
+        clock_args=""
+
+  #+END_SRC
 
 * cpuid2cpuflags
 
-  emerge --ask app-portage/cpuid2cpuflags
-  cpuid2cpuflags
+  #+begin_src shell
+    emerge --ask app-portage/cpuid2cpuflags
+    cpuid2cpuflags
+  #+end_src
+
   Полученную строку вставляем в /etc/portage/make.conf
 
-  nano /etc/portage/make.conf
+  #+BEGIN_SRC conf
 
-    #+BEGIN_SRC conf
-          CPU_FLAGS_X86="aes avx mmx mmxext popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3" (у каждого свой вывод этой команды)
-          #+END_SRC
+        nano /etc/portage/make.conf
+
+        CPU_FLAGS_X86="aes avx mmx mmxext popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3" (у каждого свой вывод этой команды)
+
+  #+END_SRC
 
 * Обновим сразу мир (в принципе это можно сделать позже)
 
-  emerge --update --deep --with-bdeps=y --newuse @world -av --keep-going
+  #+begin_src shell
+    emerge --update --deep --with-bdeps=y --newuse @world -av --keep-going
+  #+end_src
 
 * Ставим первый необходимый набор программ
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC shell
 
-          echo "net-misc/ntp    caps" >> /etc/portage/package.use/net-misc
+    echo "net-misc/ntp    caps" >> /etc/portage/package.use/net-misc
 
-          emerge app-admin/logrotate app-admin/syslog-ng app-editors/nano app-portage/eix app-portage/gentoolkit app-portage/portage-utils net-misc/dhcpcd net-misc/ntp sys-apps/mlocate sys-fs/udev sys-process/cronie app-shells/bash-completion app-shells/gentoo-bashcomp app-eselect/eselect-repository dev-vcs/git
+    emerge app-admin/logrotate app-admin/syslog-ng app-editors/nano app-portage/eix app-portage/gentoolkit app-portage/portage-utils net-misc/dhcpcd net-misc/ntp sys-apps/mlocate sys-fs/udev sys-process/cronie app-shells/bash-completion app-shells/gentoo-bashcomp app-eselect/eselect-repository dev-vcs/git
 
 
-          updatedb
-          eix-update
-          eix-remote update1
-          rc-update add cronie default
-          rc-update add sshd default (при необходимости)
-          rc-update add syslog-ng boot
-          rc-update add ntp-client default
-          rc-update add udev sysinit
+    updatedb
+    eix-update
+    eix-remote update1
+    rc-update add cronie default
+    rc-update add sshd default (при необходимости)
+    rc-update add syslog-ng boot
+    rc-update add ntp-client default
+    rc-update add udev sysinit
 
-          #+END_SRC
+  #+END_SRC
 
 * Ставим исходники ядра и grub
 
   Добавить флаг ~mount~ для ~grub2~ (требует ~os-prober~)
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          nano /etc/portage/package.use/sys-boot
+        nano /etc/portage/package.use/sys-boot
 
-          sys-boot/grub   mount
+        sys-boot/grub   mount
 
 
-          emerge -av sys-kernel/genkernel sys-kernel/gentoo-sources sys-boot/grub sys-boot/os-prober
+        emerge -av sys-kernel/genkernel sys-kernel/gentoo-sources sys-boot/grub sys-boot/os-prober
 
-          nano /etc/genkernel.conf
+        nano /etc/genkernel.conf
 
-          INSTALL="yes"
-          OLDCONFIG="yes"
-          MENUCONFIG="yes"
-          MRPROPER="yes"
-          MOUNTBOOT="yes"
-          SAVE_CONFIG="yes"
-          NOCOLOR="false"
-          MAKEOPTS="$(portageq envvar MAKEOPTS)"
-          NICE=10
+        INSTALL="yes"
+        OLDCONFIG="yes"
+        MENUCONFIG="yes"
+        MRPROPER="yes"
+        MOUNTBOOT="yes"
+        SAVE_CONFIG="yes"
+        NOCOLOR="false"
+        MAKEOPTS="$(portageq envvar MAKEOPTS)"
+        NICE=10
 
-          eselect kernel list
-          eselect kernel set {}
-          genkernel all
+        eselect kernel list
+        eselect kernel set {}
+        genkernel all
 
-          #+END_SRC
+  #+END_SRC
 
 
   #+BEGIN_SRC conf
@@ -284,26 +290,26 @@
 
         grub-mkconfig -o /boot/grub/grub.cfg
 
-        #+END_SRC
+  #+END_SRC
 
 * Ставим второй необходимый набор программ
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          # Включаем репозиторий «raiagent» для получения «media-fonts/powerline-fonts».
-          eselect repository enable raiagent
-          emerge --sync raiagent
-          eix-sync
-          echo '=media-fonts/powerline-fonts-9999* ~amd64' >> /etc/portage/package.accept_keywords/media-fonts
-          echo 'media-fonts/powerline-fonts    3270 anonymouspro arimo cousine dejavusansmono droids ansmono droidsansmonodotted droidsansmonoslashed firamono gomono hack inconsolata in consolata-g inconsolatadz liberationmono meslodotted mesloslashed monofur notomono n ovamono profont robotomono sourcecodepro spacemono symbolneu terminus_pcf tinos ubun tumono' >> /etc/portage/package.use/media-fonts
+        # Включаем репозиторий «raiagent» для получения «media-fonts/powerline-fonts».
+        eselect repository enable raiagent
+        emerge --sync raiagent
+        eix-sync
+        echo '=media-fonts/powerline-fonts-9999* ~amd64' >> /etc/portage/package.accept_keywords/media-fonts
+        echo 'media-fonts/powerline-fonts    3270 anonymouspro arimo cousine dejavusansmono droids ansmono droidsansmonodotted droidsansmonoslashed firamono gomono hack inconsolata in consolata-g inconsolatadz liberationmono meslodotted mesloslashed monofur notomono n ovamono profont robotomono sourcecodepro spacemono symbolneu terminus_pcf tinos ubun tumono' >> /etc/portage/package.use/media-fonts
 
-          echo "app-shells/fzf ~amd64" >> /etc/portage/package.accept_keywords/app-shells
-          echo "app-shells/powerline ~amd64" >> /etc/portage/package.accept_keywords/app-shells
-          echo 'sys-apps/bat ~amd64' >> /etc/portage/package.accept_keywords/sys-apps
+        echo "app-shells/fzf ~amd64" >> /etc/portage/package.accept_keywords/app-shells
+        echo "app-shells/powerline ~amd64" >> /etc/portage/package.accept_keywords/app-shells
+        echo 'sys-apps/bat ~amd64' >> /etc/portage/package.accept_keywords/sys-apps
 
-          emerge -av app-portage/elogv app-portage/genlop sys-apps/most sys-apps/pciutils sys-apps/usbutils sys-fs/ntfs3g sys-fs/ncdu sys-apps/the_silver_searcher sys-apps/ripgrep sys-apps/inxi app-admin/pydf app-admin/ccze app-shells/powerline app-misc/tmux app-misc/screen app-shells/fzf media-fonts/powerline-symbols sys-apps/bat media-fonts/powerline-fonts media-fonts/corefonts media-fonts/cronyx-fonts media-fonts/fira-code media-fonts/freefonts media-fonts/inconsolata media-fonts/terminus-font
+        emerge -av app-portage/elogv app-portage/genlop sys-apps/most sys-apps/pciutils sys-apps/usbutils sys-fs/ntfs3g sys-fs/ncdu sys-apps/the_silver_searcher sys-apps/ripgrep sys-apps/inxi app-admin/pydf app-admin/ccze app-shells/powerline app-misc/tmux app-misc/screen app-shells/fzf media-fonts/powerline-symbols sys-apps/bat media-fonts/powerline-fonts media-fonts/corefonts media-fonts/cronyx-fonts media-fonts/fira-code media-fonts/freefonts media-fonts/inconsolata media-fonts/terminus-font
 
-          #+END_SRC
+  #+END_SRC
 
 
   #+BEGIN_SRC conf
@@ -316,121 +322,122 @@
         if [ -f /usr/bin/bat ]; then
             alias cat="bat"
         fi
-        #+END_SRC
+
+  #+END_SRC
 
 * Редактируем fstab
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          nano -w /etc/fstab
+            nano -w /etc/fstab
 
-      /d  ev/sda5	    /                   ext4        noatime    0 1
-      /d  ev/sda3	    /boot               ext2        noatime    0 0
-          /dev/sda7       /var                ext4        noatime    0 0
-          /dev/sda12      /home               ext4        noatime    0 0
+        /dev/sda5	    /                   ext4        noatime    0 1
+        /dev/sda3	    /boot               ext2        noatime    0 0
+        /dev/sda7       /var                ext4        noatime    0 0
+        /dev/sda12      /home               ext4        noatime    0 0
 
-      /d  ev/sda2	    /home/windows       ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
-      /d  ev/sda9	    /home/media         ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
-          /dev/sda10      /home/buffer        ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
+        /dev/sda2	    /home/windows       ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
+        /dev/sda9	    /home/media         ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
+        /dev/sda10      /home/buffer        ntfs-3g     defaults,noatime,locale=ru_RU.utf8,uid=abunbux,gid=abunbux      0 0
 
-          /dev/sda6       none                swap        sw                                                      0 0
-          /dev/cdrom      /mnt/cdrom          auto        noauto,ro                                               0 0
-          tmpfs           /tmp                tmpfs       rw,mode=01777,size=3G,nr_inodes=1m,nosuid               0 0
+        /dev/sda6       none                swap        sw                                                      0 0
+        /dev/cdrom      /mnt/cdrom          auto        noauto,ro                                               0 0
+        tmpfs           /tmp                tmpfs       rw,mode=01777,size=3G,nr_inodes=1m,nosuid               0 0
 
-          #+END_SRC
+  #+END_SRC
 
 * Имя компьютера
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          nano /etc/conf.d/hostname
+        nano /etc/conf.d/hostname
 
-          # Set to the hostname of this machine
-          hostname="pasha"
-          rc_before="net.lo"
+        # Set to the hostname of this machine
+        hostname="pasha"
+        rc_before="net.lo"
 
-          #+END_SRC
+  #+END_SRC
 
 * Настраиваем сеть
 
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          nano /etc/conf.d/net
+        nano /etc/conf.d/net
 
-          dns_domain_lo="ix"
-          dns_domain_enp3s0="ix"
-          dns_domain_wlp2s0="ix"
+        dns_domain_lo="ix"
+        dns_domain_enp3s0="ix"
+        dns_domain_wlp2s0="ix"
 
-          modules_wlp2s0f0="wpa_supplicant"
-          wpa_supplicant_wlp2s0f0="-Dnl80211"
-          config_wlp2s0f0="dhcp"
-          dns_servers_wlp2s0f0="8.8.8.8 8.8.4.4"
-          dns_search="ix"
+        modules_wlp2s0f0="wpa_supplicant"
+        wpa_supplicant_wlp2s0f0="-Dnl80211"
+        config_wlp2s0f0="dhcp"
+        dns_servers_wlp2s0f0="8.8.8.8 8.8.4.4"
+        dns_search="ix"
 
-          modules_wlp0s20u1="wpa_supplicant"
-          wpa_supplicant_wlp0s20u1="-Dnl80211"
-          config_wlp0s20u1="dhcp"
-          dns_servers_wlp0s20u1="8.8.8.8 8.8.4.4"
-          dns_search="ix"
+        modules_wlp0s20u1="wpa_supplicant"
+        wpa_supplicant_wlp0s20u1="-Dnl80211"
+        config_wlp0s20u1="dhcp"
+        dns_servers_wlp0s20u1="8.8.8.8 8.8.4.4"
+        dns_search="ix"
 
-          config_enp3s0="192.168.0.103 netmask 255.255.255.0 brd 192.168.0.255"
-          dns_servers_enp3s0="8.8.8.8 8.8.4.4"
-          routes_enp3s0="default via 192.168.0.1"
-          dns_search="ix"
+        config_enp3s0="192.168.0.103 netmask 255.255.255.0 brd 192.168.0.255"
+        dns_servers_enp3s0="8.8.8.8 8.8.4.4"
+        routes_enp3s0="default via 192.168.0.1"
+        dns_search="ix"
 
 
 
-          cd /etc/init.d
-          ln -s net.lo net.enp3s0
-          rc-update add net.enp3s0 default
+        cd /etc/init.d
+        ln -s net.lo net.enp3s0
+        rc-update add net.enp3s0 default
 
-          #+END_SRC
+  #+END_SRC
 
 * Пароль root и новый пользователь
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          passwd
-          useradd -m -G users,wheel,audio,video -s /bin/bash {name}
-          passwd {name}
+        passwd
+        useradd -m -G users,wheel,audio,video -s /bin/bash {name}
+        passwd {name}
 
-          #+END_SRC
+  #+END_SRC
 
 * Локализация консоли (русификация)
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          nano /etc/conf.d/consolefont
+        nano /etc/conf.d/consolefont
 
-          consolefont="ter-v18n"
-
-
-          rc-update add consolefont boot
-
-          nano /etc/conf.d/keymaps
-
-          keymap="-u ru"
-          windowkeys="YES"
-          extended_keymaps=""
-          dumpkeys_charset=""
-          fix_euro="NO"
-
-          nano /etc/env.d/02locale
-
-          # Configuration file for eselect
-          # This file has been automatically generated.
-          # LC_ALL=""
-
-          LANG="ru_RU.utf8"
-          LC_NUMERIC=POSIX
-          LC_COLLATE="C"
+        consolefont="ter-v18n"
 
 
-          eselect locale list
-          eselect locale set {можно ставить кириллицу}
+        rc-update add consolefont boot
 
-          #+END_SRC
+        nano /etc/conf.d/keymaps
+
+        keymap="-u ru"
+        windowkeys="YES"
+        extended_keymaps=""
+        dumpkeys_charset=""
+        fix_euro="NO"
+
+        nano /etc/env.d/02locale
+
+        # Configuration file for eselect
+        # This file has been automatically generated.
+        # LC_ALL=""
+
+        LANG="ru_RU.utf8"
+        LC_NUMERIC=POSIX
+        LC_COLLATE="C"
+
+
+        eselect locale list
+        eselect locale set {можно ставить кириллицу}
+
+  #+END_SRC
 
 * Подчищаем за собой
 
@@ -441,12 +448,12 @@
   emerge -av app-arch/lbzip2
   и добавляем в make.conf
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          PORTAGE_BUNZIP2_COMMAND="lbunzip2 -n4"
-          PORTAGE_BZIP2_COMMAND="lbzip2 -n4"
+        PORTAGE_BUNZIP2_COMMAND="lbunzip2 -n4"
+        PORTAGE_BZIP2_COMMAND="lbzip2 -n4"
 
-          #+END_SRC
+  #+END_SRC
 
 * Немножко безопасности при работе с portage
 
@@ -455,31 +462,31 @@
 
   Если userfetch установлена в ~FEATURES~, убедитесь, что изменили владельца у всех файлов в ~/var/db/repos/gentoo~ с помощью команды chown, запущенной с правами root:
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          chown --recursive --verbose portage:portage /var/db/repos/gentoo
+        chown --recursive --verbose portage:portage /var/db/repos/gentoo
 
-          #+END_SRC
+  #+END_SRC
 
 * Ставим xorg-server ,plasma и сопутствующий софт
 
   Сперва выбираем профайл:
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          eselect profile list
-          eselect profile set {ставим нужное}
+        eselect profile list
+        eselect profile set {ставим нужное}
 
-          # и обновляем мир
-          emerge --update --deep --with-bdeps=y --newuse @world -av --keep-going
+        # и обновляем мир
+        emerge --update --deep --with-bdeps=y --newuse @world -av --keep-going
 
-          # «dbus» должен установиться после смены профиля и обновления мира,
-          # так-как входит в «global USE flags»
-          rc-update add dbus default
+        # «dbus» должен установиться после смены профиля и обновления мира,
+        # так-как входит в «global USE flags»
+        rc-update add dbus default
 
-          #+END_SRC
+  #+END_SRC
 
-Затем ставим необходимый софт:
+  Затем ставим необходимый софт:
 
   #+BEGIN_SRC conf
 
@@ -489,19 +496,19 @@
 
         emerge app-arch/rar kde-apps/ark kde-apps/gwenview kde-apps/kcharselect kde-apps/kcron kde-apps/kompare kde-misc/kdiff3 kde-plasma/breeze-gtk media-video/smplayer www-client/firefox-bin www-client/google-chrome
 
-        #+END_SRC
+  #+END_SRC
 
-Как альтернативу ~x11-misc/lightdm~ можно использовать ~x11-misc/sddm~.
-Если по какой-либо причине ~/etc/init.d/display-manager~ отсутствует (должен был
-подтянуться как зависимость) запускаем:
+  Как альтернативу ~x11-misc/lightdm~ можно использовать ~x11-misc/sddm~.
+  Если по какой-либо причине ~/etc/init.d/display-manager~ отсутствует (должен был
+  подтянуться как зависимость) запускаем:
 
   #+BEGIN_SRC conf
 
         emerge -av gui-libs/display-manager-init
 
-        #+END_SRC
+  #+END_SRC
 
-и затем
+  и затем
 
   #+BEGIN_SRC conf
 
@@ -512,12 +519,12 @@
 
         rc-update add display-manager default
 
-        #+END_SRC
+  #+END_SRC
 
-Так-как я являюсь единственным пользователем своего ~ящика сказок~ - настроим
-автовход в графическое окружение.
+  Так-как я являюсь единственным пользователем своего ~ящика сказок~ - настроим
+  автовход в графическое окружение.
 
-для ~lightdm~:
+  для ~lightdm~:
 
   #+BEGIN_SRC conf
 
@@ -533,9 +540,9 @@
         groupadd -r autologin
         gpasswd -a username autologin
 
-        #+END_SRC
+  #+END_SRC
 
-или для ~sddm~:
+  или для ~sddm~:
 
   #+BEGIN_SRC conf
 
@@ -545,58 +552,58 @@
         User={username}
         Session=plasma.desktop
 
-        #+END_SRC
+  #+END_SRC
 
 * Настройка nfs
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          # nano /etc/exports
-      /h  ome		192.168.0.101(rw,sync,fsid=0,crossmnt,no_subtree_check)
-      /h  ome		192.168.0.103(rw,sync,fsid=0,crossmnt,no_subtree_check)
+            # nano /etc/exports
+        /h  ome		192.168.0.101(rw,sync,fsid=0,crossmnt,no_subtree_check)
+        /h  ome		192.168.0.103(rw,sync,fsid=0,crossmnt,no_subtree_check)
 
-      #+END_SRC
+  #+END_SRC
 
-Подключение
-mount -t nfs 192.168.0.100:/home /mnt/
+  Подключение
+  mount -t nfs 192.168.0.100:/home /mnt/
 
 * Подключение nfs с помощью autofs
 
   emerge -av net-fs/autofs
 
-    #+BEGIN_SRC conf
+  #+BEGIN_SRC conf
 
-          # nano /etc/autofs/auto.master
-          /net    /etc/autofs/auto.net --timeout=15
+        # nano /etc/autofs/auto.master
+        /net    /etc/autofs/auto.net --timeout=15
 
-          # nano /etc/autofs/auto.net
-          opts="-fstype=nfs,soft,rsize=8192,wsize=8192,nodev,nosuid"
+        # nano /etc/autofs/auto.net
+        opts="-fstype=nfs,soft,rsize=8192,wsize=8192,nodev,nosuid"
 
-          # nano /etc/conf.d/autofs
-          MOUNT_WAIT=5
+        # nano /etc/conf.d/autofs
+        MOUNT_WAIT=5
 
-          #+END_SRC
+  #+END_SRC
 
-mkdir /net
+  mkdir /net
 
-rc-update add autofs default
-/etc/init.d/autofs start
+  rc-update add autofs default
+  /etc/init.d/autofs start
 
-Переход в папку делается командой
-cd /net/192.168.0.100(server)/home
+  Переход в папку делается командой
+  cd /net/192.168.0.100(server)/home
 
 * Дополнительные плюшки
 
 ** powerline ([[https://github.com/powerline/powerline][powerline на github]])
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            echo 'app-shells/powerline ~amd64' >> /etc/portage/package.accept_keywords/app-shells
-            emerge app-shells/powerline
+         echo 'app-shells/powerline ~amd64' >> /etc/portage/package.accept_keywords/app-shells
+         emerge app-shells/powerline
 
-            #+END_SRC
+   #+END_SRC
 
-Добавляем в ~.bashrc~
+   Добавляем в ~.bashrc~
 
    #+BEGIN_SRC conf
 
@@ -607,57 +614,57 @@ cd /net/192.168.0.100(server)/home
              . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
          fi
 
-         #+END_SRC
+   #+END_SRC
 
 ** powerline fonts ([[https://github.com/powerline/fonts][powerline fonts на github]])
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            # clone
-            git clone https://github.com/powerline/fonts.git --depth=1
-            # install
-            cd fonts
-            ./install.sh       # ставятся в $HOME/.local/share/fonts
-            fc-cache -vf ~/.local/share/fonts/
+         # clone
+         git clone https://github.com/powerline/fonts.git --depth=1
+         # install
+         cd fonts
+         ./install.sh       # ставятся в $HOME/.local/share/fonts
+         fc-cache -vf ~/.local/share/fonts/
 
-            #+END_SRC
+   #+END_SRC
 
-Можно вместо запуска ~./install.sh~, создать в ~$HOME/.local/share/fonts~ каталог
-~powerline~ и переместить всё ручками.
+   Можно вместо запуска ~./install.sh~, создать в ~$HOME/.local/share/fonts~ каталог
+   ~powerline~ и переместить всё ручками.
 
-Для установки шрифта в текстовой консоли (~tty~):
+   Для установки шрифта в текстовой консоли (~tty~):
 
    #+BEGIN_SRC conf
 
          cp -r Terminus/PSF/*.psf.gz /usr/share/consolefonts
 
-         #+END_SRC
+   #+END_SRC
 
 
-прописываем в nano ~/etc/conf.d/consolefont~:
+   прописываем в nano ~/etc/conf.d/consolefont~:
    #+BEGIN_SRC conf
 
          consolefont="ter-powerline-v18b"
 
-         #+END_SRC
+   #+END_SRC
 
-или что понравится, для выбора запускаем:
+   или что понравится, для выбора запускаем:
 
    #+BEGIN_SRC conf
 
          ls /usr/share/consolefonts/*powerline*
 
-         #+END_SRC
+   #+END_SRC
 
-копируем любое название без ~.psf.gz~ и прописываем в том-же
-~/etc/conf.d/consolefont~.
-Перезапускаем ~consolefont~:
+   копируем любое название без ~.psf.gz~ и прописываем в том-же
+   ~/etc/conf.d/consolefont~.
+   Перезапускаем ~consolefont~:
 
    #+BEGIN_SRC conf
 
          /etc/init.d/consolefont restart
 
-         #+END_SRC
+   #+END_SRC
 
    #+BEGIN_SRC conf
 
@@ -665,67 +672,67 @@ cd /net/192.168.0.100(server)/home
          cd ..
          rm -rf fonts
 
-         #+END_SRC
+   #+END_SRC
 
 ** tmux ([[https://github.com/tmux/tmux][tmux на github]])
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            emerge app-misc/tmux
+         emerge app-misc/tmux
 
-            #+END_SRC
+   #+END_SRC
 
 ** tmux-bash-completion ([[https://github.com/imomaliev/tmux-bash-completion][tmux-bash-completion на github]])
 
    Requires ~bash-completion~ 1.2 or higher.
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            git clone https://github.com/imomaliev/tmux-bash-completion.git
+         git clone https://github.com/imomaliev/tmux-bash-completion.git
 
-            #+END_SRC
+   #+END_SRC
 
 
-Добавляем в ~.bashrc~
+   Добавляем в ~.bashrc~
 
    #+BEGIN_SRC conf
 
          source /home/abunbux/opt/tmux-bash-completion/completions/tmux
 
-         #+END_SRC
+   #+END_SRC
 
 ** marker ([[https://github.com/pindexis/marker][marker на github]])
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            git clone --depth=1 https://github.com/pindexis/marker ~/.marker && ~/.marker/install.py
+         git clone --depth=1 https://github.com/pindexis/marker ~/.marker && ~/.marker/install.py
 
-            #+END_SRC
+   #+END_SRC
 
 ** forgit ([[https://github.com/wfxr/forgit][forgit на github]])
 
    Предварительно нужно установить ~fzf~.
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            git clone https://github.com/wfxr/forgit.git
+         git clone https://github.com/wfxr/forgit.git
 
-            #+END_SRC
+   #+END_SRC
 
    #+BEGIN_SRC conf
 
          source /home/abunbux/opt/forgit/forgit.plugin.sh
 
-         #+END_SRC
+   #+END_SRC
 
 ** delta ([[https://github.com/dandavison/delta][delta на github]])
 
-      #+BEGIN_SRC conf
+   #+BEGIN_SRC conf
 
-            emerge dev-util/git-delta
+         emerge dev-util/git-delta
 
-            #+END_SRC
+   #+END_SRC
 
-Дальше правим ~.gitconfig~.
-Если не работает - смотрим, что стоит в переменной ~PAGER~, у меня был ~most~ -
-закомментировал, всё работает.
+   Дальше правим ~.gitconfig~.
+   Если не работает - смотрим, что стоит в переменной ~PAGER~, у меня был ~most~ -
+   закомментировал, всё работает.

@@ -8,12 +8,12 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Thursday July 29 9:23:35 EEST 2021>
+# Time-stamp: <Последнее обновление -- Monday October 4 5:25:46 EEST 2021>
 
 
 ** gentoo
 
-   [[file:gentoo/install_gentoo.org][gentoo-install]]
+   [[file:gentoo/install_gentoo.org][установка и настройка gentoo]]
 
    [[file:gentoo/portage.org][portage]]
 
@@ -24,6 +24,12 @@
    [[file:emacs/keybindings.org][keybindings.org]]
 
    [[file:emacs/literate-config_without_org-babel.org][literate-config без org-babel]]
+
+   [[file:emacs/emacs-daemon.org][emacs-daemon]]
+
+   https://smartparens.readthedocs.io/en/latest/pair-management.html
+
+   [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (Обсуждение того, как добиться быстрой инициализации Emacs с помощью ~melpa~ и ~use-package~.)
 
 ** emacs org-mode
 
@@ -40,7 +46,6 @@
    вас подтвердить местоположение и затем ввести имя ссылки - вы можете просто
    нажать Enter, чтобы принять значения по умолчанию. Будет создана ссылка типа
    [[file: foo.org :: * bar] [link-name]], которая отображается как link-name.
-
 
 ** search
 
@@ -78,6 +83,29 @@
 
    [[file:useful_applications/delta.org][delta]]
 
+** terminal multiplexers (терминальные мультиплексоры)
+
+   [[file:terminal_multiplexers/tmux.org][tmux]] (https://man7.org/linux/man-pages/man1/tmux.1.html)
+
+   [[file:terminal_multiplexers/tmux-bash-completion.org][tmux-bash-completion]] ([[https://github.com/imomaliev/tmux-bash-completion][tmux-bash-completion на github]])
+
+   [[file:terminal_multiplexers/screen.org][screen]]
+
+** git
+
+   [[file:git/dotfiles.org][отслеживание dotfiles]]
+
+   [[file:git/git_submodule.org][git submodule]]
+
+** shell
+
+   [[file:shell/shopt.org][shopt]]
+
+   настройка bash
+   (https://www.freecodecamp.org/news/bashrc-customization-guide/)
+
+   https://tldp.org/HOWTO/Bash-Prompt-HOWTO/index.html
+
 ** PS1 and PROMT (приглашение командной строки)
 
    [[file:PS1/up_your_own.org][настройка приглашения своими силами]]
@@ -102,16 +130,17 @@
 
    silver          https://github.com/reujab/silver
 
-** terminal multiplexers (терминальные мультиплексоры)
+   https://coelhorjc.wordpress.com/2015/01/13/how-to-change-bash-prompt-using-ps1-git-prompt-sh-liquid-prompt-bash-it-and-powerline/
 
-   [[file:terminal_multiplexers/tmux.org][tmux]] (https://man7.org/linux/man-pages/man1/tmux.1.html)
 
-   [[file:terminal_multiplexers/tmux-bash-completion.org][tmux-bash-completion]] ([[https://github.com/imomaliev/tmux-bash-completion][tmux-bash-completion на github]])
+   trueline         https://github.com/petobens/trueline
 
-   [[file:terminal_multiplexers/screen.org][screen]]
 
-** git
+   bashgit         https://github.com/oyvindstegard/bashgit
 
-   [[file:git/dotfiles.org][отслеживание dotfiles]]
+   *prompt*  /нужно попробовать/  https://github.com/automotiveMastermind/prompt
 
-   [[file:git/git_submodule.org][git submodule]]
+** [[file:quotes.org][Цитаты]]
+** anki
+
+   [[file:anki/anki-install.org][anki-install]]
