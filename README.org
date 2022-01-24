@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Monday October 4 5:25:46 EEST 2021>
+# Time-stamp: <Последнее обновление -- Friday January 21 15:38:8 EET 2022>
 
 
 ** gentoo
@@ -122,6 +122,8 @@
 
    [[file:PS1/pureline.org][pureline]]
 
+   [[file:PS1/trueline.org][trueline]]
+
    Starship        https://starship.rs/
 
    fishline        https://github.com/0rax/fishline
@@ -132,10 +134,6 @@
 
    https://coelhorjc.wordpress.com/2015/01/13/how-to-change-bash-prompt-using-ps1-git-prompt-sh-liquid-prompt-bash-it-and-powerline/
 
-
-   trueline         https://github.com/petobens/trueline
-
-
    bashgit         https://github.com/oyvindstegard/bashgit
 
    *prompt*  /нужно попробовать/  https://github.com/automotiveMastermind/prompt
@@ -144,3 +142,78 @@
 ** anki
 
    [[file:anki/anki-install.org][anki-install]]
+
+** kodi
+
+   [[https://seo-michael.co.uk/best-xxx-add-ons-for-kodi/][Best Adult XXX AddOns for Kodi]]
+   [[https://seo-michael.co.uk/how-to-install-xxx-o-dus-or-youporn-kodi-krypton-jarvis/][How to Install XXX-O-DUS Kodi]]
+   [[https://seo-michael.co.uk/how-to-install-fap-zone-kodi/][How to Install Fap Zone Kodi]]
+   [[https://seo-michael.co.uk/how-to-install-the-crew-addon-kodi/][How to Install The Crew Kodi 19]]
+
+** boot system (uefi, grub, gpt, mbr etc.)
+
+   Статья на Хабр - [[https://habr.com/ru/post/404511/][Что такое UEFI, и чем он отличается от BIOS?]]
+
+   Статья на Хабр - [[https://habr.com/ru/post/394005/][Настройка UEFI Dual Boot системы, приправленной rEFInd]].
+
+   ArchWiki[[https://wiki.archlinux.org/title/GRUB_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_GRUB2-BIOS_%D0%BA_GPT][ GRUB (Русский).
+   ]]
+   *** Требования GRUB2-BIOS к GPT ([[https://wiki.archlinux.org/title/GRUB_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_GRUB2-BIOS_%D0%BA_GPT][отрывок из статьи ArchWiki]])
+
+   Начальный сектор диска с разметкой GPT зарезервирован, как ни странно, для
+   MBR, которая обычно используется для совместимости, но точно так же оставляет
+   в секторе те же 442 байта, достаточные для встраивания кода загрузчика из
+   boot.img. Сама GPT располагается на следующих секторах.
+
+   В отличии от MBR, GPT предусматривает возможность создания на диске
+   специального раздела для встраивания BIOS-загрузчика. Раздел BIOS boot
+   partition имеет GUID=21686148-6449-6e6f-744e656564454649, и может быть создан
+   в fdisk как раздел типа 4, или в gdisk как раздел типа EF02. Этот раздел не
+   должен содержать никакой файловой системы, иначе она будет затёрта при
+   установке загрузчика. Номер раздела может быть любым, расположение также
+   практически любым. На больших дисках рекомендуется располагать BIOS boot
+   partition в пределах первых 2ТБ, поскольку средства BIOS, скорей всего, не
+   позволят прочесть более дальние сектора.
+
+   Если такой раздел на диске с GPT создан, программа установки GRUB2
+   автоматически найдёт его и использует для встраивания стартового образа
+   BIOS-версии загрузчика. Минимальные требования к размеру раздела те же, что и
+   для просвета перед первым разделом в случае MBR – на это место должен
+   поместиться образ core.img. Так как расположение BIOS boot partition не
+   привязано к началу диска, создать его с размером порядка 1МБ будет несложно,
+   и более чем достаточно в любом случае.
+
+   *** Мои мучения и решения
+
+   Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
+   Ни о каком UEFI не знает.
+
+   Система ставилась gentoo - январь 2022 года. Установка происходила из под
+   загрузочного диска Calculate Linux того-же года, диск, на который ставится
+   система, имеет тип метки GPT. Как обычно создал /boot раздел, сделал его
+   загрузочным. При установке grub досадная неприятность. Ошибка показана ниже:
+
+   #+BEGIN_SRC conf
+
+         grub-install /dev/sda
+         Installing for i386-pc platform.
+         ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
+         grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.  However, blocklists are UNRELIABLE and their use is discouraged..
+         ,**grub-install: error: will not proceed with blocklists.**
+
+   #+END_SRC
+
+   Опишу действия без демонстрации кода - пишу не по горячим следам.
+
+   В конце диска каким-то чудом остался раздел в 1,1 Мб. Создал раздел и присвоил
+   флаг bios_grub. Всё!!!
+
+   Таки образом - для загрузки понадобился первый загрузочный раздел с флагами
+   (метками):
+
+   - загрузочный,
+   - legacy_boot,
+   - esp
+
+   и последний (но может быть в любом месте) малюсенький с флагом (меткой):
+   - bios_grub.
