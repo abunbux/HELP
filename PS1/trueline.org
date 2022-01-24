@@ -1,0 +1,13 @@
+# -*- mode: org; -*-
+#+TITLE: trueline
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun Jan 16 20:20:19 EET 2022>
+# Time-stamp: <Последнее обновление -- Sunday January 16 20:21:37 EET 2022>
+
+https://github.com/petobens/trueline
