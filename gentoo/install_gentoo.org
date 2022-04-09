@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Sun Feb 17 16:59:08 EEST 2021>
-# Time-stamp: <Последнее обновление -- Tuesday January 25 1:26:19 EET 2022>
+# Time-stamp: <Последнее обновление -- Tuesday January 25 22:31:55 EET 2022>
 
 
 * Создание папок и монтирование дисков
@@ -540,6 +540,12 @@
 
 * Локализация консоли (русификация)
 
+  Варианты смотрим в //usr/share/consolefonts/.
+  Шрифт записывается без суффикса ~.psfu.gz~.
+  Если нужны более крупные и более современные шрифты для HD-экранов, следует
+  установить ~media-fonts/terminus-font~. Имеет шрифты размером от 12 до 32
+  пикселей.
+
   #+BEGIN_SRC conf
         nano /etc/conf.d/consolefont
 
@@ -553,7 +559,7 @@
   #+BEGIN_SRC conf
         nano /etc/conf.d/keymaps
 
-        keymap="-u ru"
+        keymap="-u ru"  # другие варианты: ls /usr/share/keymaps/i386/qwerty/
         windowkeys="YES"
         extended_keymaps=""
         dumpkeys_charset=""
@@ -567,12 +573,11 @@
 
         # Configuration file for eselect
         # This file has been automatically generated.
-        # LC_ALL=""
 
+        LC_ALL=""
         LANG="ru_RU.utf8"
         LC_NUMERIC=POSIX
         LC_COLLATE="C"
-
 
         eselect locale list
         eselect locale set {можно ставить кириллицу}

@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Friday January 21 15:38:8 EET 2022>
+# Time-stamp: <Последнее обновление -- Saturday April 9 22:45:24 EEST 2022>
 
 
 ** gentoo
@@ -217,3 +217,21 @@
 
    и последний (но может быть в любом месте) малюсенький с флагом (меткой):
    - bios_grub.
+
+** бэкап всей системы
+
+   tar cfzpv /mnt/gentoo/home/collection/server.tar.gz \
+   --exclude=/mnt/gentoo/home --exclude=/lost+found --exclude=/dev \
+   --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/mnt/gentoo/usr/src \
+   /mnt/gentoo
+
+** VM
+
+   eselect java-vm list
+   eselect java-vm set user 2
+   eselect java-vm set system openjdk-bin-11
+
+** vpn
+
+   [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]]
+   (внешняя ссылка)
