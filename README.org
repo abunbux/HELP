@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Saturday April 9 22:45:24 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday April 13 19:45:55 EEST 2022>
 
 
 ** gentoo
@@ -235,3 +235,38 @@
 
    [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]]
    (внешняя ссылка)
+
+** python
+
+*** Автономный (оффлаййн) просмотр документации python:
+
+**** pydoc
+
+     Утилита ~pydoc~ устанавливается вместе с ~dev-lang/python-exec~.
+
+     в терминале
+     pydoc -n 127.0.0.1
+     Server ready at http://127.0.0.1:34553/
+     Server commands: [b]rowser, [q]uit
+     >
+
+     В браузере набираем адрес http://127.0.0.1:34553/,
+     изучаем
+**** В интерактивной консоли
+
+     В терминале запускаем интерактивную оболочку python - ~python~ или ~ipython~
+     и там вводим функцию ~help()~ или вы можете вызвать её с параметром, о
+     котором вы хотите что-то узнать. Это может быть что угодно (модуль, класс,
+     функция, объект...), например - ~help(os)~, понятное дело, модуль ~os~ нужно
+     сперва импортировать.
+
+     Изучаем.
+
+**** Загрузка документации в PDF или HTML формате
+
+     Идём по адресу [[https://docs.python.org/3/download.html][Download Python 3.10.4 Documentation]] (внешняя ссылка) и выбираем
+     нужный формат.
+
+*** Виртуальное окружение:
+
+[[https://docs.python-guide.org/dev/virtualenvs/][Pipenv & Virtual Environments]] (на английском) (внешняя ссылка)
