@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday April 13 19:45:55 EEST 2022>
+# Time-stamp: <Последнее обновление -- Thursday April 14 18:37:14 EEST 2022>
 
 
 ** gentoo
@@ -158,7 +158,7 @@
 
    ArchWiki[[https://wiki.archlinux.org/title/GRUB_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_GRUB2-BIOS_%D0%BA_GPT][ GRUB (Русский).
    ]]
-   *** Требования GRUB2-BIOS к GPT ([[https://wiki.archlinux.org/title/GRUB_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_GRUB2-BIOS_%D0%BA_GPT][отрывок из статьи ArchWiki]])
+*** Требования GRUB2-BIOS к GPT ([[https://wiki.archlinux.org/title/GRUB_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_GRUB2-BIOS_%D0%BA_GPT][отрывок из статьи ArchWiki]])
 
    Начальный сектор диска с разметкой GPT зарезервирован, как ни странно, для
    MBR, которая обычно используется для совместимости, но точно так же оставляет
@@ -183,7 +183,7 @@
    привязано к началу диска, создать его с размером порядка 1МБ будет несложно,
    и более чем достаточно в любом случае.
 
-   *** Мои мучения и решения
+*** Мои мучения и решения
 
    Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
    Ни о каком UEFI не знает.
