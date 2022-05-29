@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Sunday May 29 12:57:21 EEST 2022>
+# Time-stamp: <Последнее обновление -- Sunday May 29 13:25:3 EEST 2022>
 
 
 ** gentoo
@@ -293,5 +293,5 @@
 
 *** Ведение логов в Python
 
-    [[file:python/module_logging.org][модуль logging]]
-    [[file:python/module_loguru.org][модуль loguru]]
+    - [[file:python/module_logging.org][модуль logging]]
+    - [[file:python/module_loguru.org][модуль loguru]]
