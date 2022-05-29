@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Thursday May 12 22:14:30 EEST 2022>
+# Time-stamp: <Последнее обновление -- Sunday May 29 12:57:21 EEST 2022>
 
 
 ** gentoo
@@ -27,9 +27,11 @@
 
    [[file:emacs/emacs-daemon.org][emacs-daemon]]
 
-   https://smartparens.readthedocs.io/en/latest/pair-management.html
+   [[https://smartparens.readthedocs.io/en/latest/pair-management.html][Pair management]] (внешняя ссылка)
 
-   [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (Обсуждение того, как добиться быстрой инициализации Emacs с помощью ~melpa~ и ~use-package~.)
+   [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (внешняя ссылка) Обсуждение того, как добиться быстрой инициализации Emacs
+   с помощью ~melpa~ и ~use-package~.
+
 
 ** emacs org-mode
 
@@ -61,9 +63,9 @@
 
    [[file:fonts/nerd-fonts.org][nerd-fonts]]
 
-   et-book (https://github.com/edwardtufte/et-book)
+   [[https://github.com/edwardtufte/et-book][et-book ]] (внешняя ссылка)
 
-   [[file:PS1/powerline.org::*powerline-symbols, powerline fonts (\[\[https://github.com/powerline/fonts\]\[powerline fonts на github\]\])][powerline-fonts]] (ссылка на раздел в этой справочной системе)
+   [[file:PS1/powerline.org::*powerline-symbols, powerline fonts (\[\[https://github.com/powerline/fonts\]\[powerline fonts на github\]\])][powerline, powerline-gitstatus, powerline-symbols, powerline-fonts]]
 
 ** прочее
 
@@ -101,10 +103,9 @@
 
    [[file:shell/shopt.org][shopt]]
 
-   настройка bash
-   (https://www.freecodecamp.org/news/bashrc-customization-guide/)
+   [[https://www.freecodecamp.org/news/bashrc-customization-guide/][bashrc customization guide]] (внешняя ссылка)
 
-   https://tldp.org/HOWTO/Bash-Prompt-HOWTO/index.html
+   [[https://tldp.org/HOWTO/Bash-Prompt-HOWTO/index.html][Bash Prompt HOWTO]] (внешняя ссылка)
 
 ** PS1 and PROMT (приглашение командной строки)
 
@@ -124,17 +125,17 @@
 
    [[file:PS1/trueline.org][trueline]]
 
-   Starship        https://starship.rs/
+   [[https://starship.rs/][Starship]] (внешняя ссылка)
 
-   fishline        https://github.com/0rax/fishline
+   [[https://github.com/0rax/fishline][fishline]] (внешняя ссылка)
 
-   fancy-git       https://github.com/diogocavilha/fancy-git
+   [[https://github.com/diogocavilha/fancy-git][fancy-git]] (внешняя ссылка)
 
-   silver          https://github.com/reujab/silver
+   [[https://github.com/reujab/silver][silver]] (внешняя ссылка)
 
-   https://coelhorjc.wordpress.com/2015/01/13/how-to-change-bash-prompt-using-ps1-git-prompt-sh-liquid-prompt-bash-it-and-powerline/
+   [[https://coelhorjc.wordpress.com/2015/01/13/how-to-change-bash-prompt-using-ps1-git-prompt-sh-liquid-prompt-bash-it-and-powerline/][HOW TO CHANGE BASH PROMPT (USING PS1, GIT-PROMPT.SH, LIQUID-PROMPT, BASH-IT AND POWERLINE)]] (внешняя ссылка)
 
-   bashgit         https://github.com/oyvindstegard/bashgit
+   [[https://github.com/oyvindstegard/bashgit][bashgit]]  (внешняя ссылка)
 
    *prompt*  /нужно попробовать/  https://github.com/automotiveMastermind/prompt
 
@@ -144,10 +145,10 @@
 
 ** kodi
 
-   [[https://seo-michael.co.uk/best-xxx-add-ons-for-kodi/][Best Adult XXX AddOns for Kodi]]
-   [[https://seo-michael.co.uk/how-to-install-xxx-o-dus-or-youporn-kodi-krypton-jarvis/][How to Install XXX-O-DUS Kodi]]
-   [[https://seo-michael.co.uk/how-to-install-fap-zone-kodi/][How to Install Fap Zone Kodi]]
-   [[https://seo-michael.co.uk/how-to-install-the-crew-addon-kodi/][How to Install The Crew Kodi 19]]
+   [[https://seo-michael.co.uk/best-xxx-add-ons-for-kodi/][Best Adult XXX AddOns for Kodi]]  (внешняя ссылка)
+   [[https://seo-michael.co.uk/how-to-install-xxx-o-dus-or-youporn-kodi-krypton-jarvis/][How to Install XXX-O-DUS Kodi]] (внешняя ссылка)
+   [[https://seo-michael.co.uk/how-to-install-fap-zone-kodi/][How to Install Fap Zone Kodi]] (внешняя ссылка)
+   [[https://seo-michael.co.uk/how-to-install-the-crew-addon-kodi/][How to Install The Crew Kodi 19]] (внешняя ссылка)
 
 ** boot system (uefi, grub, gpt, mbr etc.)
 
@@ -184,45 +185,49 @@
 
 *** Мои мучения и решения
 
-    Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
-    Ни о каком UEFI не знает.
+     Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
+     Ни о каком UEFI не знает.
 
-    Система ставилась gentoo - январь 2022 года. Установка происходила из под
-    загрузочного диска Calculate Linux того-же года, диск, на который ставится
-    система, имеет тип метки GPT. Как обычно создал /boot раздел, сделал его
-    загрузочным. При установке grub досадная неприятность. Ошибка показана ниже:
+     Система ставилась gentoo - январь 2022 года. Установка происходила из под
+     загрузочного диска Calculate Linux того-же года, диск, на который ставится
+     система, имеет тип метки GPT. Как обычно создал /boot раздел, сделал его
+     загрузочным. При установке grub досадная неприятность. Ошибка показана ниже:
 
-    #+BEGIN_SRC conf
+     #+BEGIN_SRC shell
 
-          grub-install /dev/sda
-          Installing for i386-pc platform.
-          ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
-          grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.  However, blocklists are UNRELIABLE and their use is discouraged..
-          ,**grub-install: error: will not proceed with blocklists.**
+       grub-install /dev/sda
+       Installing for i386-pc platform.
+       ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
+                 grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.
+       However, blocklists are UNRELIABLE and their use is discouraged..
+                 ,**grub-install: error: will not proceed with blocklists.**
 
-    #+END_SRC
+     #+END_SRC
 
-    Опишу действия без демонстрации кода - пишу не по горячим следам.
+     Опишу действия без демонстрации кода - пишу *не по горячим следам*.
 
-    В конце диска каким-то чудом остался раздел в 1,1 Мб. Создал раздел и присвоил
-    флаг bios_grub. Всё!!!
+     В конце диска каким-то чудом остался раздел в 1,1 Мб. Создал раздел и присвоил флаг bios_grub.
+     *Всё!!!*
 
-    Таки образом - для загрузки понадобился первый загрузочный раздел с флагами
-    (метками):
+     Таки образом - для загрузки понадобился первый загрузочный раздел с флагами (метками):
 
-    - загрузочный,
-    - legacy_boot,
-    - esp
+     - загрузочный,
+     - legacy_boot,
+     - esp
 
-    и последний (но может быть в любом месте) малюсенький с флагом (меткой):
-    - bios_grub.
+     и последний (но может быть в любом месте) малюсенький с флагом (меткой):
+     - bios_grub.
 
 ** бэкап всей системы
 
-   tar cfzpv /mnt/gentoo/home/collection/server.tar.gz \
-   --exclude=/mnt/gentoo/home --exclude=/lost+found --exclude=/dev \
-   --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/mnt/gentoo/usr/src \
-   /mnt/gentoo
+   #+BEGIN_SRC shell
+
+     tar cfzpv /mnt/gentoo/home/collection/server.tar.gz \
+         --exclude=/mnt/gentoo/home --exclude=/lost+found --exclude=/dev \
+         --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/mnt/gentoo/usr/src \
+         /mnt/gentoo
+
+   #+END_SRC
 
 ** VM
 
@@ -236,8 +241,7 @@
 
 ** vpn
 
-   [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]]
-   (внешняя ссылка)
+   [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]] (внешняя ссылка)
 
 ** python
 
@@ -282,7 +286,12 @@
 
 *** Некоторые ссылки для изучения
 
-    [[https://pyneng.readthedocs.io/ru/latest/contents.html][Python для сетевых инженеров]]
-    [[https://python-course.readthedocs.io/projects/year1/en/latest/index.html][Программирование на языке Python: год 1]]
-    [[https://python-course.readthedocs.io/projects/year2/en/latest/][Программирование на языке Python: год 2]]
-    [[https://ps.readthedocs.io/ru/latest/index.html][Конспект по языку программирования Python]]
+    [[https://pyneng.readthedocs.io/ru/latest/contents.html][Python для сетевых инженеров]] (внешняя ссылка)
+    [[https://python-course.readthedocs.io/projects/year1/en/latest/index.html][Программирование на языке Python: год 1]] (внешняя ссылка)
+    [[https://python-course.readthedocs.io/projects/year2/en/latest/][Программирование на языке Python: год 2]] (внешняя ссылка)
+    [[https://ps.readthedocs.io/ru/latest/index.html][Конспект по языку программирования Python]] (внешняя ссылка)
+
+*** Ведение логов в Python
+
+    [[file:python/module_logging.org][модуль logging]]
+    [[file:python/module_loguru.org][модуль loguru]]

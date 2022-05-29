@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: модуль loguru
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Sun May 29 12:26:25 EEST 2022>
+# Time-stamp: <Последнее обновление -- Sunday May 29 12:27:6 EEST 2022>
