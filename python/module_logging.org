@@ -8,4 +8,22 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Sun May 29 12:25:18 EEST 2022>
-# Time-stamp: <Последнее обновление -- Sunday May 29 12:27:29 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday May 31 19:46:48 EEST 2022>
+
+Сперва несколько ссылок:
+
+- [[https://docs.python.org/3.9/library/logging.html][logging — Logging facility for Python]] (ссылка на официальную документацию на ~docs.python.org~)
+- [[https://docs.python.org/3.9/howto/logging.html#logging-basic-tutorial][Logging HOWTO -> Basic Logging Tutorial]]
+- [[https://docs.python.org/3.9/howto/logging.html#logging-advanced-tutorial][Logging HOWTO -> Advanced Logging Tutorial]]
+- [[https://docs.python.org/3.9/howto/logging-cookbook.html#logging-cookbook][Logging Cookbook]]
+
+- [[https://python-scripts.com/logging-python][Логирование в Python]] (очень неплохая статья на ~python-scripts.com~)
+- [[https://dev-gang.ru/article/modul-logging-v-python-sugk5e4d8u/][Модуль Logging в Python]] (07.02.2019, перевод статьи [[https://realpython.com/python-logging/][Logging in Python]] с ~realpython.com~)
+- [[https://www.russianblogs.com/article/119631121/][Использование модуля логирования в python]] (статья на ~russianblogs.com~)
+- [[https://www.russianblogs.com/article/42791359944/][Python-логирование]] (статья на ~russianblogs.com~)
+- [[https://www.russianblogs.com/article/5998388449/][Самообучающийся Python - логирование модуля логирования]] (статья на ~russianblogs.com~)
+- [[https://developpaper.com/loguru-the-ultimate-python-log-solution/][Loguru: the ultimate Python log solution]] (2022-3-21, статья на инглиш - и ~logging~, и ~loguru~)
+- [[https://russianblogs.com/article/3938558268/][Более элегантная схема регистрации в Python]] (нормальная статья с описанием и ~logging~, и ~loguru~)
+- [[https://alimbekov.com/%D0%B2%D1%8B%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D0%BB%D0%BE%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-python-logging-vs-loguru/][Выбираем логирование в Python: logging vs loguru]] (5 февраля, 2021, внешняя ссылка)
+
+- [[https://github.com/Adeon18/Youtube_templates/tree/main/logging][некоторые примеры с использование logging]] (ссылка на ~github.com~)
