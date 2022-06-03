@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Sunday May 29 13:25:3 EEST 2022>
+# Time-stamp: <Последнее обновление -- Friday June 3 15:34:42 EEST 2022>
 
 
 ** gentoo
@@ -31,7 +31,6 @@
 
    [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (внешняя ссылка) Обсуждение того, как добиться быстрой инициализации Emacs
    с помощью ~melpa~ и ~use-package~.
-
 
 ** emacs org-mode
 
@@ -185,38 +184,38 @@
 
 *** Мои мучения и решения
 
-     Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
-     Ни о каком UEFI не знает.
+    Дано - материнка MSI P35 NEO (куплена в далёком то ли 2008, то ли 2009 году),
+    Ни о каком UEFI не знает.
 
-     Система ставилась gentoo - январь 2022 года. Установка происходила из под
-     загрузочного диска Calculate Linux того-же года, диск, на который ставится
-     система, имеет тип метки GPT. Как обычно создал /boot раздел, сделал его
-     загрузочным. При установке grub досадная неприятность. Ошибка показана ниже:
+    Система ставилась gentoo - январь 2022 года. Установка происходила из под
+    загрузочного диска Calculate Linux того-же года, диск, на который ставится
+    система, имеет тип метки GPT. Как обычно создал /boot раздел, сделал его
+    загрузочным. При установке grub досадная неприятность. Ошибка показана ниже:
 
-     #+BEGIN_SRC shell
+    #+BEGIN_SRC shell
 
-       grub-install /dev/sda
-       Installing for i386-pc platform.
-       ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
-                 grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.
-       However, blocklists are UNRELIABLE and their use is discouraged..
-                 ,**grub-install: error: will not proceed with blocklists.**
+      grub-install /dev/sda
+      Installing for i386-pc platform.
+      ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
+                grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.
+      However, blocklists are UNRELIABLE and their use is discouraged..
+                ,**grub-install: error: will not proceed with blocklists.**
 
-     #+END_SRC
+    #+END_SRC
 
-     Опишу действия без демонстрации кода - пишу *не по горячим следам*.
+    Опишу действия без демонстрации кода - пишу *не по горячим следам*.
 
-     В конце диска каким-то чудом остался раздел в 1,1 Мб. Создал раздел и присвоил флаг bios_grub.
-     *Всё!!!*
+    В конце диска каким-то чудом остался раздел в 1,1 Мб. Создал раздел и присвоил флаг bios_grub.
+    *Всё!!!*
 
-     Таки образом - для загрузки понадобился первый загрузочный раздел с флагами (метками):
+    Таки образом - для загрузки понадобился первый загрузочный раздел с флагами (метками):
 
-     - загрузочный,
-     - legacy_boot,
-     - esp
+    - загрузочный,
+    - legacy_boot,
+    - esp
 
-     и последний (но может быть в любом месте) малюсенький с флагом (меткой):
-     - bios_grub.
+      и последний (но может быть в любом месте) малюсенький с флагом (меткой):
+      - bios_grub.
 
 ** бэкап всей системы
 
@@ -244,7 +243,6 @@
    [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]] (внешняя ссылка)
 
 ** python
-
 *** Автономный (оффлаййн) просмотр документации python:
 
 **** pydoc
@@ -291,7 +289,8 @@
     [[https://python-course.readthedocs.io/projects/year2/en/latest/][Программирование на языке Python: год 2]] (внешняя ссылка)
     [[https://ps.readthedocs.io/ru/latest/index.html][Конспект по языку программирования Python]] (внешняя ссылка)
 
-*** Ведение логов в Python
+*** Модули
 
-    - [[file:python/module_logging.org][модуль logging]]
-    - [[file:python/module_loguru.org][модуль loguru]]
+    - [[file:python/modules/module_logging.org][модуль logging]] (ведение логов в python)
+    - [[file:python/modules/module_loguru.org][модуль loguru]] (ведение логов в python)
+    - [[file:python/modules/watchdog.org][модуль watchdog]] (мониторинг событий файловой системы)
