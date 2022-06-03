@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Friday June 3 15:59:2 EEST 2022>
+# Time-stamp: <Последнее обновление -- Friday June 3 16:4:59 EEST 2022>
 
 
 ** Несколько полезных ссылок
@@ -17,5 +17,5 @@
    - [[https://pythonhosted.org/watchdog/index.html][watchdog 0.8.2 documentation]] (внешняя ссылка на документацию)
 
    - [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (статья о ~watchdog~ на ~habr.com~.)
-   - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]]
- (13.06.2021, перевод с английского статьи [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]] от Jun 8, 2020)
+   - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (13.06.2021, перевод с английского статьи [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How
+     to Monitor File System Events in Python]] от Jun 8, 2020)
