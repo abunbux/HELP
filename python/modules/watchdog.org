@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Saturday June 4 21:10:31 EEST 2022>
+# Time-stamp: <Последнее обновление -- Saturday June 4 21:11:39 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -123,9 +123,10 @@
     каталоге и просто выводить их на консоль:
 
     - После запуска в первозданно-скопированном виде выдаёт
+
     ~AttributeError: 'InotifyObserver' object has no attribute 'isAlive'~
-    копаться и разбираться не стал -
-    в цикле ~while~ заменил ~observer.isAlive()~ на ~True~;
+
+    копаться и разбираться не стал - в цикле ~while~ заменил ~observer.isAlive()~ на ~True~;
 
     - Далее вместо принятия аргументов через ~sys.argv[1]~ лучше было бы осуществить это, импортировав
       ~argparse~;
