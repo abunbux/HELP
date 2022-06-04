@@ -8,14 +8,127 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Friday June 3 16:4:59 EEST 2022>
+# Time-stamp: <Последнее обновление -- Saturday June 4 14:45:57 EEST 2022>
 
+
+** Для чего нужен модуль watchdog?
+
+   Первая строка из репозитория модуля - ~Python API and shell utilities to monitor file system
+   events~ (Python API и утилиты оболочки для мониторинга событий файловой системы).
+
+   Например:
+
+   - Программа управления файлами для загрузки и обработки файлов, таких как изображения с SD-карты,
+     или в папке ~загрузки~, например.
+   - Среда разработки генератора статических сайтов следит за изменениями в исходном коде и
+     перестраивает сайт при сохранении.
+   - Различные задачи автоматизации дома и на рабочем месте
 
 ** Несколько полезных ссылок
 
    - [[https://github.com/gorakhargosh/watchdog][gorakhargosh/watchdog]] (ссылка на репозиторий разработчика на github)
    - [[https://pythonhosted.org/watchdog/index.html][watchdog 0.8.2 documentation]] (внешняя ссылка на документацию)
 
+
    - [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (статья о ~watchdog~ на ~habr.com~.)
    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (13.06.2021, перевод с английского статьи [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How
      to Monitor File System Events in Python]] от Jun 8, 2020)
+
+
+   - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
+   - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
+
+
+   И наконец видео с сопутствующей статьёй:
+   - [[https://www.youtube.com/watch?v=uFzNc7D44HI][Python на практике / Пишем 3 программы на Питон за 5 минут]] (ссылка на ~youtube~ + статья по этому
+     видео [[https://itproger.com/news/pishem-3-programmi-na-python-za-paru-minut][Пишем 3 программы на Python за пару минут]])
+
+** Послание
+
+   Послание ~себе~ будущему и ~тебе~, мой друг, который с некоторой долей вероятности всё-таки может
+   сюда попасть и прочитать, и посмеяться с моего неумелого описания:
+   Некоторые термины я сейчас, возможно, употребляю неправильно. Не суди меня строго. Мне всего лишь
+   48 и я ещё только учусь.
+
+** Кратенькое руководство для моей памяти
+
+   Для начала, конечно же, библиотеку нужно установить:
+
+   #+BEGIN_SRC shell
+
+     pip install watchdog
+
+   #+END_SRC
+
+   По сути ~watchdog~ состоит из двух частей:
+
+   - Наблюдатель (~Observer~). Это класс, который отслеживает любое изменение файловой системы, а
+     затем отправляет событие обработчику ~event handler~. Он контролирует файловую систему и ищет
+     любые изменения;
+
+   - Обработчик событий (~Event handler~). Это объект, который будет уведомлён, когда что-то случится
+     с файловой системой и нужно произвести какое-либо действие, пусть даже и не с самим объектом
+     наблюдения, можно просто сделать запись в журнал. Действие, понятное дело, нужно прописать в
+     коде.
+
+   И, следовательно, реализация состоит в следующем:
+
+   - Создаём экземпляр класса потока watchdog.observers.Observer;
+
+   - Реализуем подкласс watchdog.events.FileSystemEventHandler (или можно использовать встроенный
+     watchdog.events.LoggingEventHandler);
+
+   - Запланируем мониторинг нескольких путей с экземпляром наблюдателя, присоединяющим обработчик событий.
+
+   - Запустим поток наблюдателя и подождём, пока он сгенерирует события, не блокируя наш основной
+     поток.
+
+*** [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (пример кода из официальной документации разработчика):
+
+    Следующий пример программы будет рекурсивно отслеживать изменения файловой системы в текущем
+    каталоге и просто выводить их на консоль, здесь используется ~встроенный
+    watchdog.events.LoggingEventHandler~, и сразу несколько поправок в коде от меня (abunbux):
+
+    - После запуска выдаёт *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
+      копаться и разбираться не стал -  в цикле ~while~ заменил ~observer.isAlive()~ на ~True~;
+
+    - Далее вместо принятия аргументов через ~sys.argv[1]~ лучше было бы осуществить это, импортировав
+      ~argparse~;
+
+    - Добавил ~except KeyboardInterrupt:~;
+
+      Ну, да это всего лишь пример!
+
+      #+BEGIN_SRC python
+
+        import sys
+        import logging
+        from watchdog.observers import Observer
+        from watchdog.events import LoggingEventHandler
+
+        if __name__ == "__main__":
+            logging.basicConfig(level=logging.INFO,
+                                format='%(asctime)s - %(message)s',
+                                datefmt='%Y-%m-%d %H:%M:%S')
+            path = sys.argv[1] if len(sys.argv) > 1 else '.'
+
+            # Создаём экземпляр класса обработчика:
+            event_handler = LoggingEventHandler()
+
+            # Создаём экземпляр класса обозревателя:
+            observer = Observer()
+
+            observer.schedule(event_handler, path, recursive=True)
+            observer.start()
+            try:
+                while True:
+                    observer.join(1)
+            except KeyboardInterrupt:
+                print('Операция завершена пользователем.')
+            finally:
+                observer.stop()
+                observer.join()
+
+      #+END_SRC
+
+      Для остановки нужно нажать ~Control-c~.
