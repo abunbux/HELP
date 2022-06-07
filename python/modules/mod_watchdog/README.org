@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Tuesday June 7 23:41:51 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 7 23:47:49 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -372,8 +372,12 @@
       event_handler = MyHandler()
       observer = Observer()
 
+      # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+      # передавая в неё экземпляр класса FileSystemEventHandler(), он сопоставлен с переменной
+      # MyHandler.
       # Назначим выбранный путь для процесса отслеживания.
-      # В данном случае это текущая папка, откуда запускается скрипт:
+      # В данном случае это текущая папка, откуда запускается скрипт,
+      # И просим не работать рекурсивно:
       observer.schedule(event_handler, path='.', recursive=False)
 
       # Вызов «start» запустит поток, и при внесении изменений
