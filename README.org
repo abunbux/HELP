@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Friday June 3 16:3:19 EEST 2022>
+# Time-stamp: <Последнее обновление -- Monday June 6 19:50:14 EEST 2022>
 
 
 ** gentoo
@@ -291,6 +291,7 @@
 
 *** Модули
 
-    - [[file:python/modules/module_logging.org][модуль logging]] (ведение логов в python)
-    - [[file:python/modules/module_loguru.org][модуль loguru]] (ведение логов в python)
-    - [[file:python/modules/watchdog.org][модуль watchdog]] (мониторинг событий файловой системы)
+    - [[file:python/modules/mod_logging/README.org][модуль logging]] (ведение логов в python)
+    - [[file:python/modules/mod_loguru/README.org][модуль loguru]] (ведение логов в python)
+    - [[file:python/modules/mod_watchdog/README.org][модуль watchdog]] (мониторинг событий файловой системы)
+    - [[file:python/modules/mod_argparse/README.org][модуль argparse]] (обработка аргументов командной строки)
