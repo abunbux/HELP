@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Tuesday June 7 17:3:19 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 7 22:56:5 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -26,12 +26,18 @@
 
 ** Несколько полезных ссылок
 
-   - [[https://github.com/gorakhargosh/watchdog][gorakhargosh/watchdog]] (ссылка на репозиторий разработчика на github)
-   - [[https://pythonhosted.org/watchdog/index.html][watchdog 0.8.2 documentation]] (внешняя ссылка на документацию)
+   - [[https://github.com/gorakhargosh/watchdog][gorakhargosh/watchdog]] (ссылка на репозиторий разработчика на github).
+   - [[https://pythonhosted.org/watchdog/index.html][watchdog 0.8.2 documentation]] (внешняя ссылка на документацию).
+   - [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка на пример в документации разработчика).
+
+   - [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка на habr.com).
+
+   - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]] (ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на инглиш).
+    и ниже ссылка на её перевод от 13.06.2021
+   - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (ссылка на nuancesprog.ru).
 
    - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
    - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
-
 
    И наконец видео с сопутствующей статьёй:
    - [[https://www.youtube.com/watch?v=uFzNc7D44HI][Python на практике / Пишем 3 программы на Питон за 5 минут]] (ссылка на ~youtube~ + статья по этому
@@ -168,21 +174,24 @@
 
 *** Пример кода из официальной документации разработчика с моими микро-правками:
 
-    [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка).
+    [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка на пример в документации разработчика).
 
     Следующий пример программы будет рекурсивно отслеживать изменения файловой системы в текущем
     каталоге и просто выводить их на консоль.
 
+    Сразу же небольшое пояснение:
+
     - После запуска в первозданно-скопированном виде выдаёт
 
-    ~AttributeError: 'InotifyObserver' object has no attribute 'isAlive'~
+    *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
 
-    копаться и разбираться не стал - в цикле ~while~ заменил ~observer.isAlive()~ на ~True~;
+    в документации указано - ~This method is deprecated, use is_alive() instead.~ - делаем как
+    советуют и меняем ~observer.isAlive()~ на ~observer.is_alive()~;
 
-    - Далее вместо принятия аргументов через ~sys.argv[1]~ лучше было бы осуществить это, импортировав
+    - Далее вместо принятия аргументов через ~sys.argv[1]~ следовало бы осуществить это, импортировав
       ~argparse~;
 
-    - Добавил ~except KeyboardInterrupt:~;
+    - Добавил ~except KeyboardInterrupt~;
 
       Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
 
@@ -222,7 +231,7 @@
             # Запускаем обозреватель:
             observer.start()
             try:
-                while True:
+                while observer.is_alive():
                     observer.join(1)
             except KeyboardInterrupt:
                 print('Операция завершена пользователем.')
@@ -276,12 +285,12 @@
 
 *** Следующий пример:
 
-    Ссылка на статью от Jun 8, 2020 на английском языке -
+    Ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на английском языке -
     - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]]
 
     и ниже ссылка на её перевод от 13.06.2021
 
-    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]]
+    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (ссылка на nuancesprog.ru)
 
       #+BEGIN_SRC python
 
@@ -298,7 +307,6 @@
     - ~on_deleted~ - вызывается при удалении файла или каталога;
     - ~on_modified~ - вызывается при изменении файла или каталога;
     - ~on_moved~ - вызывается при перемещении или переименовании файла или каталога.
-
 
     #+BEGIN_SRC python
 
@@ -347,7 +355,6 @@
 
     #+END_SRC
 
-
     Назначим выбранный путь для процесса отслеживания. В данном случае проверим недавно созданную папку под названием ~json~.
 
     #+BEGIN_SRC python
@@ -368,7 +375,6 @@
       observer.start()
 
     #+END_SRC
-
 
     Чтобы протестировать написанный код, надо реализовать цикл выполнения и предотвратить выход из него. На выходе при возникновении исключения KeyboardInterrupt вызываем функцию ~stop~ для очистки ресурсов.
 
