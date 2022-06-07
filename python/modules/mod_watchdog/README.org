@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Tuesday June 7 22:56:5 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 7 22:58:10 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -32,9 +32,14 @@
 
    - [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка на habr.com).
 
-   - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]] (ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на инглиш).
-    и ниже ссылка на её перевод от 13.06.2021
+
+   - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]] (ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на
+     инглиш)
+
+     и ниже ссылка на её перевод от 13.06.2021
+
    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (ссылка на nuancesprog.ru).
+
 
    - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
    - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
