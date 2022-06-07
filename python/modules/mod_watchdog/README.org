@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Saturday June 4 21:11:39 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 7 15:14:45 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -28,12 +28,6 @@
 
    - [[https://github.com/gorakhargosh/watchdog][gorakhargosh/watchdog]] (ссылка на репозиторий разработчика на github)
    - [[https://pythonhosted.org/watchdog/index.html][watchdog 0.8.2 documentation]] (внешняя ссылка на документацию)
-
-
-   - [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (статья о ~watchdog~ на ~habr.com~.)
-   - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (13.06.2021, перевод с английского статьи [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How
-     to Monitor File System Events in Python]] от Jun 8, 2020)
-
 
    - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
    - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
@@ -77,11 +71,56 @@
 
     И, следовательно, реализация состоит в следующем:
 
-    - Создаём экземпляр класса потоков ~watchdog.observers.Observer~;
+    - Во-первых, конечно же это импорт:
+
+    #+BEGIN_SRC python
+
+      from watchdog.observers import Observer
+      from watchdog.events import LoggingEventHandler
+      # (или FileSystemEventHandler, или PatternMatchingEventHandler, или RegexMatchingEventHandler)
+
+    #+END_SRC
 
     - Определяем подкласс обработчика событий (~Event handler~) с собственной реализацией и создаём из
-      него экземпляр, но справедливости ради стоит сказать, что можно обойтись и встроенной
-      реализацией обработчика;
+      него экземпляр:
+
+    #+NAME: создание экземпляра класса FileSystemEventHandler() с собственной реализацией:
+    #+BEGIN_SRC python
+
+      from watchdog.events import FileSystemEventHandler
+
+      class Handler(FileSystemEventHandler):
+          def on_created(self, event):
+              print event
+
+          def on_deleted(self, event):
+              print event
+
+          def on_moved(self, event):
+              print event
+
+
+    #+END_SRC
+
+    но справедливости ради стоит сказать, что можно обойтись и встроенной
+    реализацией обработчика:
+
+    #+NAME: создание экземпляра класса LoggingEventHandler() без дополнительных настроек:
+    #+BEGIN_SRC python
+
+      from watchdog.events import LoggingEventHandler
+
+      event_handler = LoggingEventHandler()
+
+    #+END_SRC
+
+    - Создаём экземпляр класса потоков ~watchdog.observers.Observer~:
+
+      #+BEGIN_SRC python
+
+        observer = Observer()
+
+      #+END_SRC
 
     - Вызываем функцию расписания через экземпляр наблюдателя (~observer.schedule()~), прикрепляя
       обработчик событий. Функция принимает несколько других входных параметров, таких как путь к
@@ -114,13 +153,12 @@
      - ~on_modified~ - вызывается при изменении файла или каталога;
      - ~on_moved~ - вызывается при перемещении или переименовании файла или каталога.
 
-
 *** Пример кода из официальной документации разработчика с моими микро-правками:
 
     [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка).
 
     Следующий пример программы будет рекурсивно отслеживать изменения файловой системы в текущем
-    каталоге и просто выводить их на консоль:
+    каталоге и просто выводить их на консоль.
 
     - После запуска в первозданно-скопированном виде выдаёт
 
@@ -135,7 +173,7 @@
 
       Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
 
-      Ну, да это всего лишь пример!
+      Ну, да это всего лишь пример:
 
       #+BEGIN_SRC python
 
@@ -185,7 +223,7 @@
 
 *** Далее небольшой пример с Хабра:
 
-    [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка, она также присутствует в тексте выше.
+    [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка).
 
     Здесь импортируется класс ~FileSystemEventHandler~ - базовый класс обработчика событий файловой
     системы, методы которого можно переопределить. Сам он мало, что умеет, но можно научить его
@@ -220,5 +258,153 @@
       except KeyboardInterrupt:
           observer.stop()
           observer.join()
+
+    #+END_SRC
+
+*** Следующий пример:
+
+    Ссылка на статью от Jun 8, 2020 на английском языке -
+    - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]]
+
+    и ниже ссылка на её перевод от 13.06.2021
+
+    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]]
+
+      #+BEGIN_SRC python
+
+        from watchdog.observers import Observer
+        from watchdog.events import FileSystemEventHandler
+
+      #+END_SRC
+
+    Создаём новый класс, который наследуется от FileSystemEventHandler. Напомню, что
+    ~FileSystemEventHandler~ предоставляет следующие функции, которые можно переопределить:
+
+    - ~on_any_event~ - обработчик для всех событий;
+    - ~on_created~ - вызывается при создании файла или каталога;
+    - ~on_deleted~ - вызывается при удалении файла или каталога;
+    - ~on_modified~ - вызывается при изменении файла или каталога;
+    - ~on_moved~ - вызывается при перемещении или переименовании файла или каталога.
+
+
+    #+BEGIN_SRC python
+
+      class MyHandler(FileSystemEventHandler):
+          def on_any_event(self, event):
+              print(event.event_type, event.src_path)
+
+          def on_created(self, event):
+              print("on_created", event.src_path)
+
+          def on_deleted(self, event):
+              print("on_deleted", event.src_path)
+
+          def on_modified(self, event):
+              print("on_modified", event.src_path)
+
+          def on_moved(self, event):
+              print("on_moved", event.src_path)
+
+    #+END_SRC
+
+    Принты (print) можно заменить своей логикой.
+
+    Для каждой из функций представлен входной параметр ~event~, который содержит следующие переменные:
+    - ~event_type~ - тип события в виде строки. По умолчанию значение ~None~;
+    - ~is_directory~ - ~true~, если событие было выдано для каталога. В противном случае - ~false~;
+    - ~src_path~ - исходный путь объекта файловой системы, вызвавшего это событие.
+
+    Наиболее полезный параметр здесь - ~src_path~.
+    Им можно воспользоваться, чтобы определить, какой файл был изменен, прежде чем запускать
+    соответствующую логику.
+
+    #+BEGIN_SRC python
+
+      if(event.src_path == "./path/file.txt"):
+          print("Execute your logic here!")
+
+    #+END_SRC
+
+    После добавления подкласса можно безопасно создать его экземпляр вместе с классом Observer:
+
+    #+BEGIN_SRC python
+
+      event_handler = MyHandler()
+      observer = Observer()
+
+    #+END_SRC
+
+
+    Назначим выбранный путь для процесса отслеживания. В данном случае проверим недавно созданную папку под названием ~json~.
+
+    #+BEGIN_SRC python
+
+      observer.schedule(event_handler, path='./json/', recursive=False)
+
+    #+END_SRC
+
+    Можно также установить рекурсивный параметр, но настоятельно рекомендуется предварительно
+    определить иерархию и установить для нее значение ~false~, чтобы предотвратить проблемы с
+    недостатком разрешений или доступом к подпапке.
+
+    Вызов ~start~ запустит поток, и при внесении изменений в соответствующий путь будет сгенерировано
+    событие.
+
+    #+BEGIN_SRC python
+
+      observer.start()
+
+    #+END_SRC
+
+
+    Чтобы протестировать написанный код, надо реализовать цикл выполнения и предотвратить выход из него. На выходе при возникновении исключения KeyboardInterrupt вызываем функцию ~stop~ для очистки ресурсов.
+
+    #+BEGIN_SRC python
+
+      while True:
+          try:
+              pass
+          except KeyboardInterrupt:
+              observer.stop()
+
+    #+END_SRC
+
+    Ниже идёт код целиком без комментариев:
+
+    #+BEGIN_SRC python
+
+      from watchdog.observers import Observer
+      from watchdog.events import FileSystemEventHandler
+
+
+      class MyHandler(FileSystemEventHandler):
+          def on_any_event(self, event):
+              print(event.event_type, event.src_path)
+
+          def on_created(self, event):
+              print("on_created", event.src_path)
+
+          def on_deleted(self, event):
+              print("on_deleted", event.src_path)
+
+          def on_modified(self, event):
+              print("on_modified", event.src_path)
+
+          def on_moved(self, event):
+              print("on_moved", event.src_path)
+
+
+      event_handler = MyHandler()
+      observer = Observer()
+
+      observer.schedule(event_handler, path='./json/', recursive=False)
+
+      observer.start()
+
+      while True:
+          try:
+              pass
+          except KeyboardInterrupt:
+              observer.stop()
 
     #+END_SRC
