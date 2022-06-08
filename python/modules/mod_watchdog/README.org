@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Tuesday June 7 23:47:49 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 8 14:7:46 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -44,9 +44,18 @@
    - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
    - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
 
-   И наконец видео с сопутствующей статьёй:
+   И наконец видео с сопутствующими статьями:
    - [[https://www.youtube.com/watch?v=uFzNc7D44HI][Python на практике / Пишем 3 программы на Питон за 5 минут]] (ссылка на ~youtube~ + статья по этому
-     видео [[https://itproger.com/news/pishem-3-programmi-na-python-za-paru-minut][Пишем 3 программы на Python за пару минут]])
+     видео [[https://itproger.com/news/pishem-3-programmi-na-python-za-paru-minut][Пишем 3 программы на Python за пару минут]]).
+
+
+   - [[https://www.youtube.com/watch?v=6o8ck1eIReU][Python project - File Organization with Watchdog | Part-1]] (ссылка на ~youtube~ - говорят не по-нашенски),
+   - [[https://www.youtube.com/watch?v=AxxZL6Qpx0c][Python Project - File organization using Watchdog | Part-2]] (вторая часть видео +
+     [[https://github.com/bharath2438/Watchdog_project/blob/master/watchdog_example.py][watchdog_example.py]] пример кода на github).
+
+
+   - [[https://www.youtube.com/watch?v=geCx-psFOcs][Monitor MULTIPLE folders with Python Watchdog and Multiprocessing]] (ссылка на ~youtube~ +
+     [[https://github.com/bjone6/WatchdogFilesChecker][bjone6/WatchdogFilesChecker]] пример кода на github).
 
 ** Послание
 
@@ -55,9 +64,7 @@
    Некоторые термины я сейчас, возможно, употребляю неправильно. Не суди меня строго. Мне всего лишь
    48 и я ещё только учусь.
 
-** Кратенькое руководство для моей памяти
-
-*** Установка:
+** Установка:
 
     Для начала, конечно же, библиотеку нужно установить:
 
@@ -67,7 +74,7 @@
 
     #+END_SRC
 
-*** Устройство модуля:
+** Устройство модуля:
 
     По сути ~watchdog~ состоит из двух частей:
 
@@ -152,6 +159,7 @@
 
     #+END_SRC
 
+** TODO Разобрать observer.is_alive(), observer.join().
 
 **** Обработчик событий (Event Handler)
 
@@ -210,7 +218,7 @@
 
      #+END_SRC
 
-*** Пример кода из официальной документации разработчика с моими микро-правками:
+** Пример кода из официальной документации разработчика с моими микро-правками:
 
     [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка на пример в документации разработчика).
 
@@ -281,7 +289,9 @@
 
       Для остановки нужно нажать ~Control-c~.
 
-*** Далее небольшой пример с Хабра:
+** TODO Переписать код с использованием argparse и изменить настройки logging.
+
+** Далее небольшой пример с Хабра:
 
     [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка).
 
@@ -320,7 +330,7 @@
 
     #+END_SRC
 
-*** Следующий пример и опять с моими микро-правками:
+** Следующий пример и опять с моими микро-правками:
 
 
     Ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на английском языке -
