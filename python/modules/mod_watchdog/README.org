@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Wednesday June 8 21:29:49 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 8 22:22:57 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -290,7 +290,7 @@
 
       Для остановки нужно нажать ~Control-c~.
 
-** DONE Переписать код с использованием argparse.
+** DONE @todo Переписать код с использованием argparse.
    CLOSED: [2022-06-08 Wed 21:22] DEADLINE: <2022-06-12 Sun>
 
   результат [[file:watchdog_of_doc.py][watchdog_of_doc.py]]
