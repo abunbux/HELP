@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Wednesday June 8 14:7:46 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 8 21:24:19 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -159,7 +159,8 @@
 
     #+END_SRC
 
-** TODO Разобрать observer.is_alive(), observer.join().
+** TODO Разобрать observer.is_alive(), observer.join()
+   DEADLINE: <2022-06-12 Sun>
 
 **** Обработчик событий (Event Handler)
 
@@ -289,7 +290,10 @@
 
       Для остановки нужно нажать ~Control-c~.
 
-** TODO Переписать код с использованием argparse и изменить настройки logging.
+** DONE Переписать код с использованием argparse.
+   CLOSED: [2022-06-08 Wed 21:22] DEADLINE: <2022-06-12 Sun>
+
+   [[file:watchdog_of_doc.py][watchdog_of_doc.py]]
 
 ** Далее небольшой пример с Хабра:
 
