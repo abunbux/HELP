@@ -6,9 +6,8 @@
 # и просто выводить их на консоль.
 
 
-# TODO Переписать код с использованием argparse и изменить настройки logging.
-#    DEADLINE: <2022-06-12 Sun>
-
+# TODO Переписать код с использованием argparse.
+# CLOSED: [2022-06-08 Wed 21:22] DEADLINE: <2022-06-12 Sun>
 
 import logging
 import argparse
