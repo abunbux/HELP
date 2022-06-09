@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Thursday June 9 18:50:59 EEST 2022>
+# Time-stamp: <Последнее обновление -- Thursday June 9 21:18:48 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -66,101 +66,127 @@
 
 ** Установка:
 
-    Для начала, конечно же, библиотеку нужно установить:
+   Для начала, конечно же, библиотеку нужно установить:
 
-    #+BEGIN_SRC shell
+   #+BEGIN_SRC shell
 
-      pip install watchdog
+     pip install watchdog
 
-    #+END_SRC
+   #+END_SRC
 
 ** Устройство модуля:
 
-    По сути ~watchdog~ состоит из двух частей:
+   По сути ~watchdog~ состоит из двух частей:
 
-    - Наблюдатель (~Observer~). Это класс, который отслеживает любое изменение файловой системы, а
-      затем отправляет событие обработчику ~event handler~. Он контролирует файловую систему и ищет
-      любые изменения;
+   - Наблюдатель (~Observer~). Это класс, который отслеживает любое изменение файловой системы, а
+     затем отправляет событие обработчику ~event handler~. Он контролирует файловую систему и ищет
+     любые изменения;
 
-    - Обработчик событий (~Event handler~). Это объект, который будет уведомлён, когда что-то случится
-      с файловой системой и нужно произвести какое-либо действие, пусть даже и не с самим объектом
-      наблюдения, можно просто сделать запись в журнал. Действие, понятное дело, нужно прописать в
-      коде.
+   - Обработчик событий (~Event handler~). Это объект, который будет уведомлён, когда что-то случится
+     с файловой системой и нужно произвести какое-либо действие, пусть даже и не с самим объектом
+     наблюдения, можно просто сделать запись в журнал. Действие, понятное дело, нужно прописать в
+     коде.
 
-    И, следовательно, реализация состоит в следующем:
+     И, следовательно, реализация состоит в следующем:
 
-    - Во-первых, конечно же это импорт:
+     - Во-первых, конечно же это импорт:
 
-    #+BEGIN_SRC python
+     #+BEGIN_SRC python
 
-      from watchdog.observers import Observer
-      from watchdog.events import LoggingEventHandler
-      # (или FileSystemEventHandler, или PatternMatchingEventHandler, или RegexMatchingEventHandler)
+       from watchdog.observers import Observer
+       from watchdog.events import LoggingEventHandler
+       # (или FileSystemEventHandler, или PatternMatchingEventHandler, или RegexMatchingEventHandler)
 
-    #+END_SRC
+     #+END_SRC
 
-    - Определяем подкласс обработчика событий (~Event handler~) с собственной реализацией и создаём из
-      него экземпляр:
+     - Определяем подкласс обработчика событий (~Event handler~) с собственной реализацией и создаём из
+       него экземпляр:
 
-    #+NAME: создание экземпляра класса FileSystemEventHandler() с собственной реализацией:
-    #+BEGIN_SRC python
+     #+NAME: создание экземпляра класса FileSystemEventHandler() с собственной реализацией:
+     #+BEGIN_SRC python
 
-      from watchdog.events import FileSystemEventHandler
+       from watchdog.events import FileSystemEventHandler
 
-      class Handler(FileSystemEventHandler):
-          def on_created(self, event):
-              print event
+       class Handler(FileSystemEventHandler):
+           def on_created(self, event):
+               print event
 
-          def on_deleted(self, event):
-              print event
+           def on_deleted(self, event):
+               print event
 
-          def on_moved(self, event):
-              print event
+           def on_moved(self, event):
+               print event
 
+     #+END_SRC
 
-    #+END_SRC
+     но справедливости ради стоит сказать, что можно обойтись и встроенной реализацией обработчика:
 
-    но справедливости ради стоит сказать, что можно обойтись и встроенной реализацией обработчика:
+     #+NAME: создание экземпляра класса LoggingEventHandler() без дополнительных настроек:
+     #+BEGIN_SRC python
 
-    #+NAME: создание экземпляра класса LoggingEventHandler() без дополнительных настроек:
-    #+BEGIN_SRC python
+       from watchdog.events import LoggingEventHandler
+       event_handler = LoggingEventHandler()
 
-      from watchdog.events import LoggingEventHandler
-      event_handler = LoggingEventHandler()
+     #+END_SRC
 
-    #+END_SRC
+     - Создаём экземпляр класса потоков ~watchdog.observers.Observer~:
 
-    - Создаём экземпляр класса потоков ~watchdog.observers.Observer~:
+       #+BEGIN_SRC python
 
-      #+BEGIN_SRC python
+         observer = Observer()
 
-        observer = Observer()
+       #+END_SRC
 
-      #+END_SRC
+     - Вызываем функцию расписания через экземпляр наблюдателя (~observer.schedule()~), прикрепляя
+       обработчик событий. Функция принимает несколько других входных параметров, таких как путь к
+       отслеживаемому каталогу и рекурсивная работа.
+       По умолчанию экземпляр ~watchdog.observers.Observer~ не будет отслеживать подкаталоги. Путем
+       передачи ~recursive=True~ обеспечивается мониторинг всего дерева каталогов.
 
-    - Вызываем функцию расписания через экземпляр наблюдателя (~observer.schedule()~), прикрепляя
-      обработчик событий. Функция принимает несколько других входных параметров, таких как путь к
-      отслеживаемому каталогу и рекурсивная работа:
+     #+NAME:
+     #+BEGIN_SRC python
 
-    #+NAME:
-    #+BEGIN_SRC python
+       observer.schedule(Handler(), path='.', recursive=True)
 
-      observer.schedule(Handler(), path='.', recursive=True)
+     #+END_SRC
 
-    #+END_SRC
+     - Запускаем поток наблюдателя и ждём, пока он сгенерирует события, которые вызовут исполнение
+       кода внутри обработчика событий.
 
-    - Запускаем поток наблюдателя и ждём, пока он сгенерирует события, которые вызовут исполнение
-      кода внутри обработчика событий.
+     #+NAME:
+     #+BEGIN_SRC python
 
-    #+NAME:
-    #+BEGIN_SRC python
+       observer.start()
 
-      observer.start()
+     #+END_SRC
 
-    #+END_SRC
+     - После вызова ~start()~ мы получаем фоновый поток, следящий за изменениями. Нужно обеспечить
+       жизненный цикл наблюдателю:
 
-***** TODO @todo Разобрать observer.is_alive(), observer.join()
-      DEADLINE: <2022-06-12 Sun>
+       #+BEGIN_SRC python
+
+         try:
+             while observer.is_alive():
+                 observer.join(1)
+         except KeyboardInterrupt:
+             print('Операция завершена пользователем.')
+         finally:
+             observer.stop()
+             observer.join()
+
+       #+END_SRC
+
+   - Метод ~observer.is_alive()~ возвращает жив ли поток.
+   - ~observer.join(timeout=None)~ ждёт завершения потока. Это блокирует вызывающий поток до тех пор,
+     пока поток, чей метод join() вызывается, не завершится - либо в обычном режиме, либо из-за
+     необработанного исключения, либо до тех пор, пока не произойдет необязательный тайм-аут. Когда
+     присутствует аргумент тайм-аута, а не None, он должен быть числом с плавающей запятой,
+     указывающим тайм-аут для операции в секундах (или их долях). Поскольку join() всегда возвращает
+     None, вы должны вызвать ~is_alive()~ после ~join()~, чтобы решить, произошел ли тайм-аут - если
+     поток все еще активен, время ожидания вызова join() истекло.
+     Если аргумент тайм-аута отсутствует или установлен None, операция будет заблокирована до тех пор,
+     пока поток не завершится.
+   - В конце нужно вызвать ~stop()~ для очистки ресурсов.
 
 **** Обработчик событий (Event Handler)
 
@@ -221,190 +247,191 @@
 
 ** Пример кода из официальной документации разработчика с моими микро-правками:
 
-    [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка на пример в документации разработчика).
+   [[https://python-watchdog.readthedocs.io/en/stable/quickstart.html#a-simple-example][A Simple Example]] (внешняя ссылка на пример в документации разработчика).
 
-    Следующий пример программы будет рекурсивно отслеживать изменения файловой системы в текущем
-    каталоге и просто выводить их на консоль.
+   Следующий пример программы будет рекурсивно отслеживать изменения файловой системы в текущем
+   каталоге и просто выводить их на консоль.
 
-    Сразу же небольшое пояснение:
+   Сразу же небольшое пояснение:
 
-    - После запуска в первозданно-скопированном виде выдаёт
+   - После запуска в первозданно-скопированном виде выдаёт
 
-    *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
+     *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
 
-    в документации указано - ~This method is deprecated, use is_alive() instead.~ - делаем как
-    советуют и меняем ~observer.isAlive()~ на ~observer.is_alive()~;
+     в документации указано - ~This method is deprecated, use is_alive() instead.~ - делаем как
+     советуют и меняем ~observer.isAlive()~ на ~observer.is_alive()~;
 
-    - Далее вместо принятия аргументов через ~sys.argv[1]~ следовало бы осуществить это, импортировав
-      ~argparse~;
+     - Далее вместо принятия аргументов через ~sys.argv[1]~ следовало бы осуществить это, импортировав
+       ~argparse~;
 
-    - Добавил ~except KeyboardInterrupt~;
+     - Добавил ~except KeyboardInterrupt~;
 
-      Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
+       Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
 
-      Ну, да это всего лишь пример:
+       Ну, да это всего лишь пример:
 
-      #+BEGIN_SRC python
+       #+BEGIN_SRC python
 
-        import sys
-        import logging
-        from watchdog.observers import Observer
-        from watchdog.events import LoggingEventHandler
+         import sys
+         import logging
+         from watchdog.observers import Observer
+         from watchdog.events import LoggingEventHandler
 
-        if __name__ == "__main__":
-            # Сперва идут настройки логирования модуля logging:
-            logging.basicConfig(level=logging.INFO,
-                                format='%(asctime)s - %(message)s',
-                                datefmt='%Y-%m-%d %H:%M:%S')
+         if __name__ == "__main__":
+             # Сперва идут настройки логирования модуля logging:
+             logging.basicConfig(level=logging.INFO,
+                                 format='%(asctime)s - %(message)s',
+                                 datefmt='%Y-%m-%d %H:%M:%S')
 
-            # Затем определение аргумента командной строки,
-            # который должен принять путь к исследуемой директории.
-            # Вместо этого следовало бы использовать argparse:
-            path = sys.argv[1] if len(sys.argv) > 1 else '.'
+             # Затем определение аргумента командной строки,
+             # который должен принять путь к исследуемой директории.
+             # Вместо этого следовало бы использовать argparse:
+             path = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-            # Создаём экземпляр класса обработчика,
-            # LoggingEventHandler - регистрирует все события:
-            event_handler = LoggingEventHandler()
+             # Создаём экземпляр класса обработчика,
+             # LoggingEventHandler - регистрирует все события:
+             event_handler = LoggingEventHandler()
 
-            # Создаём экземпляр класса обозревателя:
-            observer = Observer()
+             # Создаём экземпляр класса обозревателя:
+             observer = Observer()
 
-            # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
-            # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
-            # event_handler, путь - path, который получаем через аргумент командной строки
-            # и указываем, что наблюдать нужно рекурсивно:
-            observer.schedule(event_handler, path, recursive=True)
+             # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+             # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
+             # event_handler, путь - path, который получаем через аргумент командной строки
+             # и указываем, что наблюдать нужно рекурсивно:
+             observer.schedule(event_handler, path, recursive=True)
 
-            # Запускаем обозреватель:
-            observer.start()
-            try:
-                while observer.is_alive():
-                    observer.join(1)
-            except KeyboardInterrupt:
-                print('Операция завершена пользователем.')
-            finally:
-                observer.stop()
-                observer.join()
+             # Запускаем обозреватель:
+             observer.start()
+             try:
+                 while observer.is_alive():
+                     observer.join(1)
+             except KeyboardInterrupt:
+                 print('Операция завершена пользователем.')
+             finally:
+                 observer.stop()
+                 observer.join()
 
-      #+END_SRC
+       #+END_SRC
 
-      Для остановки нужно нажать ~Control-c~.
+       Для остановки нужно нажать ~Control-c~.
 
-***** DONE @todo Переписать код с использованием argparse.
+***** DONE +@todo Переписать код с использованием argparse.+
+      CLOSED: [2022-06-09 Thu 21:18]
 
-     результат [[file:watchdog_of_doc.py][watchdog_of_doc.py]]
+      результат [[file:watchdog_of_doc.py][watchdog_of_doc.py]]
 
 ** Далее небольшой пример с Хабра:
 
-    [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка).
+   [[https://habr.com/ru/post/140649/][Мониторинг за изменениями файловой системы]] (внешняя ссылка).
 
-    Здесь импортируется класс ~FileSystemEventHandler~ - базовый класс обработчика событий файловой
-    системы, методы которого можно переопределить. Сам он мало, что умеет, но можно научить его
-    потомка.
+   Здесь импортируется класс ~FileSystemEventHandler~ - базовый класс обработчика событий файловой
+   системы, методы которого можно переопределить. Сам он мало, что умеет, но можно научить его
+   потомка.
 
-    #+BEGIN_SRC python
+   #+BEGIN_SRC python
 
-      import time
-      from watchdog.observers import Observer
-      from watchdog.events import FileSystemEventHandler
+     import time
+     from watchdog.observers import Observer
+     from watchdog.events import FileSystemEventHandler
 
-      class Handler(FileSystemEventHandler):
-          def on_created(self, event):
-              print event
+     class Handler(FileSystemEventHandler):
+         def on_created(self, event):
+             print event
 
-          def on_deleted(self, event):
-              print event
+         def on_deleted(self, event):
+             print event
 
-          def on_moved(self, event):
-              print event
+         def on_moved(self, event):
+             print event
 
 
-      # Запускаем это все:
-      observer = Observer()
-      observer.schedule(Handler(), path='.', recursive=True)
-      observer.start()
+     # Запускаем это все:
+     observer = Observer()
+     observer.schedule(Handler(), path='.', recursive=True)
+     observer.start()
 
-      try:
-          while True:
-              time.sleep(0.1)
-      except KeyboardInterrupt:
-          observer.stop()
-          observer.join()
+     try:
+         while True:
+             time.sleep(0.1)
+     except KeyboardInterrupt:
+         observer.stop()
+         observer.join()
 
-    #+END_SRC
+   #+END_SRC
 
 ** Следующий пример и опять с моими микро-правками:
 
 
-    Ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на английском языке -
-    - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]]
+   Ссылка на статью [[https://ngwaifoong92.medium.com/][Ng Wai Foong]] от Jun 8, 2020 на английском языке -
+   - [[https://levelup.gitconnected.com/how-to-monitor-file-system-events-in-python-e8e0ed6ec2c][How to Monitor File System Events in Python]]
 
-    и ниже ссылка на её перевод от 13.06.2021
+     и ниже ссылка на её перевод от 13.06.2021
 
-    - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (ссылка на nuancesprog.ru)
+     - [[https://nuancesprog.ru/p/12757/][Как отслеживать события файловой системы в Python]] (ссылка на nuancesprog.ru)
 
-    Код, взятый у автора из статьи, содержал цикл без выхода, поэтому я его немного подправил.
+     Код, взятый у автора из статьи, содержал цикл без выхода, поэтому я его немного подправил.
 
-    #+NAME: код с сайта автора
-    #+BEGIN_SRC python
+     #+NAME: код с сайта автора
+     #+BEGIN_SRC python
 
-      while True:
-          try:
-              pass
-          except KeyboardInterrupt:
-              observer.stop()
+       while True:
+           try:
+               pass
+           except KeyboardInterrupt:
+               observer.stop()
 
-    #+END_SRC
+     #+END_SRC
 
-    Далее код с комментариями и исправлением:
+     Далее код с комментариями и исправлением:
 
-    #+BEGIN_SRC python
+     #+BEGIN_SRC python
 
-      from watchdog.observers import Observer
-      from watchdog.events import FileSystemEventHandler
+       from watchdog.observers import Observer
+       from watchdog.events import FileSystemEventHandler
 
-      # Создаём новый класс, который наследуется от FileSystemEventHandler:
-      class MyHandler(FileSystemEventHandler):
-          def on_any_event(self, event):
-              print(event.event_type, event.src_path)
+       # Создаём новый класс, который наследуется от FileSystemEventHandler:
+       class MyHandler(FileSystemEventHandler):
+           def on_any_event(self, event):
+               print(event.event_type, event.src_path)
 
-          def on_created(self, event):
-              print("on_created", event.src_path)
+           def on_created(self, event):
+               print("on_created", event.src_path)
 
-          def on_deleted(self, event):
-              print("on_deleted", event.src_path)
+           def on_deleted(self, event):
+               print("on_deleted", event.src_path)
 
-          def on_modified(self, event):
-              print("on_modified", event.src_path)
+           def on_modified(self, event):
+               print("on_modified", event.src_path)
 
-          def on_moved(self, event):
-              print("on_moved", event.src_path)
+           def on_moved(self, event):
+               print("on_moved", event.src_path)
 
-      # После добавления подкласса можно безопасно создать его экземпляр
-      # вместе с классом Observer:
-      event_handler = MyHandler()
-      observer = Observer()
+       # После добавления подкласса можно безопасно создать его экземпляр
+       # вместе с классом Observer:
+       event_handler = MyHandler()
+       observer = Observer()
 
-      # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
-      # передавая в неё экземпляр класса FileSystemEventHandler(), он сопоставлен с переменной
-      # MyHandler.
-      # Назначим выбранный путь для процесса отслеживания.
-      # В данном случае это текущая папка, откуда запускается скрипт,
-      # И просим не работать рекурсивно:
-      observer.schedule(event_handler, path='.', recursive=False)
+       # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+       # передавая в неё экземпляр класса FileSystemEventHandler(), он сопоставлен с переменной
+       # MyHandler.
+       # Назначим выбранный путь для процесса отслеживания.
+       # В данном случае это текущая папка, откуда запускается скрипт,
+       # И просим не работать рекурсивно:
+       observer.schedule(event_handler, path='.', recursive=False)
 
-      # Вызов «start» запустит поток, и при внесении изменений
-      # в соответствующий путь будет сгенерировано событие.
-      observer.start()
+       # Вызов «start» запустит поток, и при внесении изменений
+       # в соответствующий путь будет сгенерировано событие.
+       observer.start()
 
-      # Чтобы протестировать написанный код, надо реализовать цикл выполнения
-      # и предотвратить выход из него.
-      # На выходе при возникновении исключения KeyboardInterrupt
-      # вызываем функцию «stop» для очистки ресурсов.
-      try:
-          while observer.is_alive():
-              observer.join()
-      except KeyboardInterrupt:
-          observer.stop()
+       # Чтобы протестировать написанный код, надо реализовать цикл выполнения
+       # и предотвратить выход из него.
+       # На выходе при возникновении исключения KeyboardInterrupt
+       # вызываем функцию «stop» для очистки ресурсов.
+       try:
+           while observer.is_alive():
+               observer.join()
+       except KeyboardInterrupt:
+           observer.stop()
 
-    #+END_SRC
+     #+END_SRC
