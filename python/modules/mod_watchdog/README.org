@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Thursday June 9 21:18:48 EEST 2022>
+# Time-stamp: <Последнее обновление -- Friday June 10 22:51:26 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -70,7 +70,7 @@
 
    #+BEGIN_SRC shell
 
-     pip install watchdog
+   pip install watchdog
 
    #+END_SRC
 
@@ -93,9 +93,9 @@
 
      #+BEGIN_SRC python
 
-       from watchdog.observers import Observer
-       from watchdog.events import LoggingEventHandler
-       # (или FileSystemEventHandler, или PatternMatchingEventHandler, или RegexMatchingEventHandler)
+     from watchdog.observers import Observer
+     from watchdog.events import LoggingEventHandler
+     # (или FileSystemEventHandler, или PatternMatchingEventHandler, или RegexMatchingEventHandler)
 
      #+END_SRC
 
@@ -105,17 +105,17 @@
      #+NAME: создание экземпляра класса FileSystemEventHandler() с собственной реализацией:
      #+BEGIN_SRC python
 
-       from watchdog.events import FileSystemEventHandler
+     from watchdog.events import FileSystemEventHandler
 
-       class Handler(FileSystemEventHandler):
-           def on_created(self, event):
-               print event
+     class Handler(FileSystemEventHandler):
+         def on_created(self, event):
+             print event
 
-           def on_deleted(self, event):
-               print event
+         def on_deleted(self, event):
+             print event
 
-           def on_moved(self, event):
-               print event
+         def on_moved(self, event):
+             print event
 
      #+END_SRC
 
@@ -124,8 +124,8 @@
      #+NAME: создание экземпляра класса LoggingEventHandler() без дополнительных настроек:
      #+BEGIN_SRC python
 
-       from watchdog.events import LoggingEventHandler
-       event_handler = LoggingEventHandler()
+     from watchdog.events import LoggingEventHandler
+     event_handler = LoggingEventHandler()
 
      #+END_SRC
 
@@ -133,7 +133,7 @@
 
        #+BEGIN_SRC python
 
-         observer = Observer()
+       observer = Observer()
 
        #+END_SRC
 
@@ -146,7 +146,7 @@
      #+NAME:
      #+BEGIN_SRC python
 
-       observer.schedule(Handler(), path='.', recursive=True)
+     observer.schedule(Handler(), path='.', recursive=True)
 
      #+END_SRC
 
@@ -156,7 +156,7 @@
      #+NAME:
      #+BEGIN_SRC python
 
-       observer.start()
+     observer.start()
 
      #+END_SRC
 
@@ -165,14 +165,14 @@
 
        #+BEGIN_SRC python
 
-         try:
-             while observer.is_alive():
-                 observer.join(1)
-         except KeyboardInterrupt:
-             print('Операция завершена пользователем.')
-         finally:
-             observer.stop()
-             observer.join()
+       try:
+           while observer.is_alive():
+               observer.join(1)
+       except KeyboardInterrupt:
+           print('Операция завершена пользователем.')
+       finally:
+           observer.stop()
+           observer.join()
 
        #+END_SRC
 
@@ -209,21 +209,21 @@
 
      #+BEGIN_SRC python
 
-       class MyHandler(FileSystemEventHandler):
-           def on_any_event(self, event):
-               print(event.event_type, event.src_path)
+     class MyHandler(FileSystemEventHandler):
+         def on_any_event(self, event):
+             print(event.event_type, event.src_path)
 
-           def on_created(self, event):
-               print("on_created", event.src_path)
+         def on_created(self, event):
+             print("on_created", event.src_path)
 
-           def on_deleted(self, event):
-               print("on_deleted", event.src_path)
+         def on_deleted(self, event):
+             print("on_deleted", event.src_path)
 
-           def on_modified(self, event):
-               print("on_modified", event.src_path)
+         def on_modified(self, event):
+             print("on_modified", event.src_path)
 
-           def on_moved(self, event):
-               print("on_moved", event.src_path)
+         def on_moved(self, event):
+             print("on_moved", event.src_path)
 
      #+END_SRC
 
@@ -240,8 +240,8 @@
 
      #+BEGIN_SRC python
 
-       if(event.src_path == "./path/file.txt"):
-           print("Execute your logic here!")
+     if(event.src_path == "./path/file.txt"):
+         print("Execute your logic here!")
 
      #+END_SRC
 
@@ -272,45 +272,45 @@
 
        #+BEGIN_SRC python
 
-         import sys
-         import logging
-         from watchdog.observers import Observer
-         from watchdog.events import LoggingEventHandler
+       import sys
+       import logging
+       from watchdog.observers import Observer
+       from watchdog.events import LoggingEventHandler
 
-         if __name__ == "__main__":
-             # Сперва идут настройки логирования модуля logging:
-             logging.basicConfig(level=logging.INFO,
-                                 format='%(asctime)s - %(message)s',
-                                 datefmt='%Y-%m-%d %H:%M:%S')
+       if __name__ == "__main__":
+           # Сперва идут настройки логирования модуля logging:
+           logging.basicConfig(level=logging.INFO,
+                               format='%(asctime)s - %(message)s',
+                               datefmt='%Y-%m-%d %H:%M:%S')
 
-             # Затем определение аргумента командной строки,
-             # который должен принять путь к исследуемой директории.
-             # Вместо этого следовало бы использовать argparse:
-             path = sys.argv[1] if len(sys.argv) > 1 else '.'
+           # Затем определение аргумента командной строки,
+           # который должен принять путь к исследуемой директории.
+           # Вместо этого следовало бы использовать argparse:
+           path = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-             # Создаём экземпляр класса обработчика,
-             # LoggingEventHandler - регистрирует все события:
-             event_handler = LoggingEventHandler()
+           # Создаём экземпляр класса обработчика,
+           # LoggingEventHandler - регистрирует все события:
+           event_handler = LoggingEventHandler()
 
-             # Создаём экземпляр класса обозревателя:
-             observer = Observer()
+           # Создаём экземпляр класса обозревателя:
+           observer = Observer()
 
-             # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
-             # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
-             # event_handler, путь - path, который получаем через аргумент командной строки
-             # и указываем, что наблюдать нужно рекурсивно:
-             observer.schedule(event_handler, path, recursive=True)
+           # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+           # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
+           # event_handler, путь - path, который получаем через аргумент командной строки
+           # и указываем, что наблюдать нужно рекурсивно:
+           observer.schedule(event_handler, path, recursive=True)
 
-             # Запускаем обозреватель:
-             observer.start()
-             try:
-                 while observer.is_alive():
-                     observer.join(1)
-             except KeyboardInterrupt:
-                 print('Операция завершена пользователем.')
-             finally:
-                 observer.stop()
-                 observer.join()
+           # Запускаем обозреватель:
+           observer.start()
+           try:
+               while observer.is_alive():
+                   observer.join(1)
+           except KeyboardInterrupt:
+               print('Операция завершена пользователем.')
+           finally:
+               observer.stop()
+               observer.join()
 
        #+END_SRC
 
@@ -331,32 +331,32 @@
 
    #+BEGIN_SRC python
 
-     import time
-     from watchdog.observers import Observer
-     from watchdog.events import FileSystemEventHandler
+   import time
+   from watchdog.observers import Observer
+   from watchdog.events import FileSystemEventHandler
 
-     class Handler(FileSystemEventHandler):
-         def on_created(self, event):
-             print event
+   class Handler(FileSystemEventHandler):
+       def on_created(self, event):
+           print event
 
-         def on_deleted(self, event):
-             print event
+       def on_deleted(self, event):
+           print event
 
-         def on_moved(self, event):
-             print event
+       def on_moved(self, event):
+           print event
 
 
-     # Запускаем это все:
-     observer = Observer()
-     observer.schedule(Handler(), path='.', recursive=True)
-     observer.start()
+   # Запускаем это все:
+   observer = Observer()
+   observer.schedule(Handler(), path='.', recursive=True)
+   observer.start()
 
-     try:
-         while True:
-             time.sleep(0.1)
-     except KeyboardInterrupt:
-         observer.stop()
-         observer.join()
+   try:
+       while True:
+           time.sleep(0.1)
+   except KeyboardInterrupt:
+       observer.stop()
+       observer.join()
 
    #+END_SRC
 
@@ -375,11 +375,11 @@
      #+NAME: код с сайта автора
      #+BEGIN_SRC python
 
-       while True:
-           try:
-               pass
-           except KeyboardInterrupt:
-               observer.stop()
+     while True:
+         try:
+             pass
+         except KeyboardInterrupt:
+             observer.stop()
 
      #+END_SRC
 
@@ -387,51 +387,71 @@
 
      #+BEGIN_SRC python
 
-       from watchdog.observers import Observer
-       from watchdog.events import FileSystemEventHandler
+     from watchdog.observers import Observer
+     from watchdog.events import FileSystemEventHandler
 
-       # Создаём новый класс, который наследуется от FileSystemEventHandler:
-       class MyHandler(FileSystemEventHandler):
-           def on_any_event(self, event):
-               print(event.event_type, event.src_path)
+     # Создаём новый класс, который наследуется от FileSystemEventHandler:
+     class MyHandler(FileSystemEventHandler):
+         def on_any_event(self, event):
+             print(event.event_type, event.src_path)
 
-           def on_created(self, event):
-               print("on_created", event.src_path)
+         def on_created(self, event):
+             print("on_created", event.src_path)
 
-           def on_deleted(self, event):
-               print("on_deleted", event.src_path)
+         def on_deleted(self, event):
+             print("on_deleted", event.src_path)
 
-           def on_modified(self, event):
-               print("on_modified", event.src_path)
+         def on_modified(self, event):
+             print("on_modified", event.src_path)
 
-           def on_moved(self, event):
-               print("on_moved", event.src_path)
+         def on_moved(self, event):
+             print("on_moved", event.src_path)
 
-       # После добавления подкласса можно безопасно создать его экземпляр
-       # вместе с классом Observer:
-       event_handler = MyHandler()
-       observer = Observer()
+     # После добавления подкласса можно безопасно создать его экземпляр
+     # вместе с классом Observer:
+     event_handler = MyHandler()
+     observer = Observer()
 
-       # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
-       # передавая в неё экземпляр класса FileSystemEventHandler(), он сопоставлен с переменной
-       # MyHandler.
-       # Назначим выбранный путь для процесса отслеживания.
-       # В данном случае это текущая папка, откуда запускается скрипт,
-       # И просим не работать рекурсивно:
-       observer.schedule(event_handler, path='.', recursive=False)
+     # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+     # передавая в неё экземпляр класса FileSystemEventHandler(), он сопоставлен с переменной
+     # MyHandler.
+     # Назначим выбранный путь для процесса отслеживания.
+     # В данном случае это текущая папка, откуда запускается скрипт,
+     # И просим не работать рекурсивно:
+     observer.schedule(event_handler, path='.', recursive=False)
 
-       # Вызов «start» запустит поток, и при внесении изменений
-       # в соответствующий путь будет сгенерировано событие.
-       observer.start()
+     # Вызов «start» запустит поток, и при внесении изменений
+     # в соответствующий путь будет сгенерировано событие.
+     observer.start()
 
-       # Чтобы протестировать написанный код, надо реализовать цикл выполнения
-       # и предотвратить выход из него.
-       # На выходе при возникновении исключения KeyboardInterrupt
-       # вызываем функцию «stop» для очистки ресурсов.
-       try:
-           while observer.is_alive():
-               observer.join()
-       except KeyboardInterrupt:
-           observer.stop()
+     # Чтобы протестировать написанный код, надо реализовать цикл выполнения
+     # и предотвратить выход из него.
+     # На выходе при возникновении исключения KeyboardInterrupt
+     # вызываем функцию «stop» для очистки ресурсов.
+     try:
+         while observer.is_alive():
+             observer.join()
+     except KeyboardInterrupt:
+         observer.stop()
 
      #+END_SRC
+
+
+
+** TODO @todo Изучить нижеследующие ссылки
+
+   - [[https://philipkiely.com/code/python_watchdog.html][Get Started with Python Watchdog]] (09 April 2021, статья на инглиш)
+   - [[https://www.geeksforgeeks.org/create-a-watchdog-in-python-to-look-for-filesystem-changes/][Create a watchdog in Python to look for filesystem changes]] (06 Dec, 2019, статья на инглиш)
+
+   И наконец видео с сопутствующими статьями:
+   - [[https://www.youtube.com/watch?v=uFzNc7D44HI][Python на практике / Пишем 3 программы на Питон за 5 минут]] (ссылка на ~youtube~ + статья по этому
+     видео [[https://itproger.com/news/pishem-3-programmi-na-python-za-paru-minut][Пишем 3 программы на Python за пару минут]]).
+
+
+   - [[https://www.youtube.com/watch?v=6o8ck1eIReU][Python project - File Organization with Watchdog | Part-1]] (ссылка на ~youtube~ - говорят не по-нашенски),
+   - [[https://www.youtube.com/watch?v=AxxZL6Qpx0c][Python Project - File organization using Watchdog | Part-2]] (вторая часть видео +
+     [[https://github.com/bharath2438/Watchdog_project/blob/master/watchdog_example.py][watchdog_example.py]] пример кода на github).
+
+
+   - [[https://www.youtube.com/watch?v=geCx-psFOcs][Monitor MULTIPLE folders with Python Watchdog and Multiprocessing]] (ссылка на ~youtube~ +
+     [[https://github.com/bjone6/WatchdogFilesChecker][bjone6/WatchdogFilesChecker]] пример кода на github).
