@@ -1,0 +1,132 @@
+# -*- mode: org; -*-
+#+TITLE: модуль pathlib
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 08 18:43:32 EEST 2022>
+# Time-stamp: <Последнее обновление -- Sunday June 12 13:59:52 EEST 2022>
+
+
+- [[https://docs.python.org/3/library/pathlib.html][pathlib - Object-oriented filesystem paths]] (ссылка на официальную документацию).
+
+- [[https://digitology.tech/docs/python_3/library/pathlib.html][pathlib - Объектно-ориентированные пути файловой системы]] (русский перевод документации на digitology.tech).
+
+
+
+- [[https://www.digitalocean.com/community/tutorials/how-to-use-the-pathlib-module-to-manipulate-filesystem-paths-in-python-3-ru][Использование модуля pathlib для манипуляции путями файловых систем в Python 3]] (tutorial by
+  DavidMuller от August 19, 2020 на digitalocean.com).
+
+- [[https://python-scripts.com/pathlib][Pathlib - манипуляция путями, создание и удаление папок и файлов]] (статья на python-scripts.com).
+
+
+- [[https://zetcode.com/python/pathlib/][Python pathlib]] (статья на инглиш с zetcode.com).
+
+- [[https://miguendes.me/python-pathlib#how-to-change-directories-with-python-pathlib][Python pathlib Cookbook: 57+ Examples to Master It (2021)]] (A mega tutorial with dozens of examples
+  on how to use the pathlib module in Python 3)
+
+
+
+Модуль Pathlib в Python занимается задачами, связанными с путями, такими как создание новых путей из
+названий файлов и других путей, проверка различных свойств путей, создание файлов и папок по
+определенным путям.
+
+
+** Модуль pathlib представляет шесть классов:
+
+   - pathlib.Path
+   - pathlib.PosixPath
+   - pathlib.PurePath
+   - pathlib.PurePosixPath
+   - pathlib.PureWindowsPath
+   - pathlib.WindowsPath
+
+** Класс Path
+
+   Если вы никогда раньше не использовали этот модуль или просто не уверены, какой класс подходит
+   для вашей задачи, ~Path~, скорее всего, то, что вам нужно. Экземпляры класса Path представляют путь
+   к файлу или каталогу в файловой системе вашего компьютера независимо от установленной
+   операционной системы.
+
+   Чистые пути полезны в некоторых особых случаях. Например:
+
+   - Если вы хотите управлять путями Windows на машине Unix (или наоборот). Вы не можете создать
+     экземпляр ~WindowsPath~ при работе в ~Unix~, но вы можете создать экземпляр ~PureWindowsPath~;
+
+   - Вы хотите убедиться, что ваш код управляет только путями, не обращаясь к ОС. В этом случае
+     создание экземпляра одного из чистых классов может быть полезным, поскольку у них просто нет
+     операций доступа к ОС.
+
+   #+BEGIN_SRC python
+
+   from pathlib import Path
+
+   #+END_SRC
+
+   Получаем текущую директорию:
+
+   #+BEGIN_SRC python
+
+   current_dir = Path.cwd()
+   print(current_dir)
+
+   #+END_SRC
+
+   Получаем домашнюю директорию:
+
+   #+BEGIN_SRC python
+
+   home_dir = Path.home()
+   print(home_dir)
+
+   #+END_SRC
+
+   Создание пути к файлу в текущей директории:
+
+   #+BEGIN_SRC python
+
+   path_file = Path(Path.cwd(), 'dir', 'file.txt')
+   print(path_file)
+
+   #+END_SRC
+
+   Это не создание файла, сам файл можно создать путём использования функции
+   ~open()~ или конструкции ~with path_file.open('w') as...~, но прежде нужно либо создать директорию,
+   либо проверить существует ли она:
+
+   #+BEGIN_SRC python
+
+   # Создаём путь к директории с файлом:
+   path = Path(Path.cwd(), 'dir1', 'dir2')
+   # Создаём путь к файлу:
+   path_file = Path(path, 'file.txt')
+
+   # Проверяем существование пути (./dir1/dir2/)
+   # и является ли путь директорией:
+   if path.exists() and path.is_dir():
+       # Если проверка успешна - открываем файл на запись (добавление записи)
+       # и пишем, пишем пишем...:
+       path_file.open('a').write('some text\n')
+   else:
+       # В случае отсутствия пути (./dir1/dir2/) - создаём:
+       path.mkdir(parents=True, exist_ok=True)
+       # и пишем:
+       path_file.open('a').write('some text\n')
+
+   # или всё то же самое, но немного другая конструкция записи в файл:
+   if path.exists() and path.is_dir():
+       with path_file.open('a') as f:
+           f.write('other text\n')
+   else:
+       path.mkdir(parents=True, exist_ok=True)
+       with path_file.open('a') as f:
+           f.write('other text\n')
+
+   #+END_SRC
+
+*** TODO @todo Домашнее задание:
+
+**** TODO @todo Написать скрипт создания директории и записи файла в эту диреторию с логированием действий (logging) и получением аргументов командной строки, которые передают место и имя файла.
