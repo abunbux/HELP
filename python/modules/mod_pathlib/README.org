@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Wed Jun 08 18:43:32 EEST 2022>
-# Time-stamp: <Последнее обновление -- Sunday June 12 19:4:27 EEST 2022>
+# Time-stamp: <Последнее обновление -- Monday June 13 18:51:4 EEST 2022>
 
 
 - [[https://docs.python.org/3/library/pathlib.html][pathlib - Object-oriented filesystem paths]] (ссылка на официальную документацию).
@@ -129,8 +129,19 @@
 
 *** TODO @todo Домашнее задание:
 
-**** TODO @todo Написать скрипт создания директории и записи файла в эту директорию с логированием действий (logging) и получением аргументов командной строки (argparse), которые передают место ,имя файла и строку, которую нужно записать в этот файл.
+**** DONE +@todo Написать скрипт создания директории и записи файла в эту директорию с логированием действий (logging) и получением аргументов командной строки (argparse), которые передают место, имя файла и строку, которую нужно записать в этот файл.+
+     CLOSED: [2022-06-13 Mon 18:49]
 
      Результат [[file:mod_pathlib_logging_argparse.py][mod_pathlib_logging_argparse.py]]
+
+**** TODO @todo Часть вторая - совершенствуем.
+
+     @todo Переписать скрипт [[file:mod_pathlib_logging_argparse.py][mod_pathlib_logging_argparse.py]].
+
+     В грубой форме скрипт, конечно же, готов, но кое-чего не хватает:
+     @todo Оформить функции;
+     @todo Осуществить отлов исключений.
+
+     Результат [[file:mod_pathlib_logging_argparse.py][mod_pathlib_logging_argparse-2.py]]
 
 **** TODO @todo Переписать скрипт из предыдущего задания - вводные параметры запрашиваем у пользователя (input()).
