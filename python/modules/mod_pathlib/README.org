@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Wed Jun 08 18:43:32 EEST 2022>
-# Time-stamp: <Последнее обновление -- Monday June 13 18:51:4 EEST 2022>
+# Time-stamp: <Последнее обновление -- Monday June 13 18:57:9 EEST 2022>
 
 
 - [[https://docs.python.org/3/library/pathlib.html][pathlib - Object-oriented filesystem paths]] (ссылка на официальную документацию).
@@ -139,8 +139,8 @@
      @todo Переписать скрипт [[file:mod_pathlib_logging_argparse.py][mod_pathlib_logging_argparse.py]].
 
      В грубой форме скрипт, конечно же, готов, но кое-чего не хватает:
-     @todo Оформить функции;
-     @todo Осуществить отлов исключений.
+     - @todo Оформить функции;
+     - @todo Осуществить отлов исключений.
 
      Результат [[file:mod_pathlib_logging_argparse.py][mod_pathlib_logging_argparse-2.py]]
 
