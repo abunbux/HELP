@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Friday June 10 22:51:26 EEST 2022>
+# Time-stamp: <Последнее обновление -- Monday June 13 19:42:59 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
