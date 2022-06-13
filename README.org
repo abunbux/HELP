@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Monday June 6 19:50:14 EEST 2022>
+# Time-stamp: <Последнее обновление -- Saturday June 11 19:1:37 EEST 2022>
 
 
 ** gentoo
@@ -194,12 +194,12 @@
 
     #+BEGIN_SRC shell
 
-      grub-install /dev/sda
-      Installing for i386-pc platform.
-      ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
-                grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.
-      However, blocklists are UNRELIABLE and their use is discouraged..
-                ,**grub-install: error: will not proceed with blocklists.**
+    grub-install /dev/sda
+    Installing for i386-pc platform.
+    ,**grub-install: warning: this GPT partition label contains no BIOS Boot Partition; embedding won't be possible.**
+              grub-install: warning: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.
+    However, blocklists are UNRELIABLE and their use is discouraged..
+              ,**grub-install: error: will not proceed with blocklists.**
 
     #+END_SRC
 
@@ -221,10 +221,10 @@
 
    #+BEGIN_SRC shell
 
-     tar cfzpv /mnt/gentoo/home/collection/server.tar.gz \
-         --exclude=/mnt/gentoo/home --exclude=/lost+found --exclude=/dev \
-         --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/mnt/gentoo/usr/src \
-         /mnt/gentoo
+   tar cfzpv /mnt/gentoo/home/collection/server.tar.gz \
+       --exclude=/mnt/gentoo/home --exclude=/lost+found --exclude=/dev \
+       --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/mnt/gentoo/usr/src \
+       /mnt/gentoo
 
    #+END_SRC
 
@@ -232,9 +232,9 @@
 
    #+BEGIN_SRC shell
 
-     eselect java-vm list
-     eselect java-vm set user 2
-     eselect java-vm set system openjdk-bin-11
+   eselect java-vm list
+   eselect java-vm set user 2
+   eselect java-vm set system openjdk-bin-11
 
    #+END_SRC
 
@@ -253,10 +253,10 @@
 
      #+BEGIN_SRC shell
 
-       pydoc -n 127.0.0.1
-       Server ready at http://127.0.0.1:34553/
-       Server commands: [b]rowser, [q]uit
-       >
+     pydoc -n 127.0.0.1
+     Server ready at http://127.0.0.1:34553/
+     Server commands: [b]rowser, [q]uit
+     >
 
      #+END_SRC
 
@@ -295,3 +295,12 @@
     - [[file:python/modules/mod_loguru/README.org][модуль loguru]] (ведение логов в python)
     - [[file:python/modules/mod_watchdog/README.org][модуль watchdog]] (мониторинг событий файловой системы)
     - [[file:python/modules/mod_argparse/README.org][модуль argparse]] (обработка аргументов командной строки)
+    - [[file:python/modules/mod_pathlib/README.org][модуль pathlib]] (объектно-ориентированный подход к работе с файлами и каталогами)
+    - [[file:python/modules/mod_os/README.org][модуль os]]
+
+*** Функции
+
+    - [[file:python/functions/func_filter/README.org][Функция filter]]
+    - [[file:python/functions/func_map/README.org][Функция map]]
+    - [[file:python/functions/func_reduce/README.org][Функция reduce]]
+    - [[file:python/functions/func_zip/README.org][Функция zip]]
