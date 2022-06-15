@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: глава 1
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 15 13:27:20 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 13:27:38 EEST 2022>
