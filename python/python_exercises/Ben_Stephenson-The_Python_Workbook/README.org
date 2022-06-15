@@ -1,0 +1,14 @@
+# -*- mode: org; -*-
+#+TITLE: Бен Стивенсон - Python. Сборник упражнений. Введение в язык Python с задачами и решениями  (2021)
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 15 11:58:27 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 12:39:38 EEST 2022>
+
+Книга ~The Python Workbook. A Brief Introduction with Exercises and Solutions. Ben Stephenson~ (Python
+Сборникупражнений. Введение в язык Python с задачами и решениями. Бен Стивенсон), год выпуска 2021.
