@@ -1,0 +1,15 @@
+# -*- mode: org; -*-
+#+TITLE: Примеры написания скриптов - простые и сложные
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 15 13:46:46 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 19:49:3 EEST 2022>
+
+
+- [[https://cccc.sh/topic/47350-pishem-asinhronnyy-ssh-bruteforce-na-python/][Пишем асинхронный ssh bruteforce на Python.]]
+- [[https://cccc.sh/topic/47351-pishem-parser-kursa-dollara-na-python/?tab=comments#comment-265395][Пишем парсер курса доллара на Python]]

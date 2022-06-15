@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: README
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Tue Jun 14 17:57:25 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 14 17:57:31 EEST 2022>
