@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: Функция enumerate
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 15 16:41:06 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 16:41:25 EEST 2022>

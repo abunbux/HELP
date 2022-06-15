@@ -1,0 +1,11 @@
+# -*- mode: org; -*-
+#+TITLE: Функция product
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Wed Jun 15 16:45:49 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 16:46:11 EEST 2022>
