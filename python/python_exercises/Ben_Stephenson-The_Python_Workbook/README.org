@@ -8,9 +8,9 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Wed Jun 15 11:58:27 EEST 2022>
-# Time-stamp: <Последнее обновление -- Wednesday June 15 13:26:8 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 13:59:10 EEST 2022>
 
 Книга ~The Python Workbook. A Brief Introduction with Exercises and Solutions. Ben Stephenson~ (Python
-Сборникупражнений. Введение в язык Python с задачами и решениями. Бен Стивенсон), год выпуска 2021.
+Сборник упражнений. Введение в язык Python с задачами и решениями. Бен Стивенсон), год выпуска 2021.
 
 - [[file:glava_01/README.org][Глава 1]]

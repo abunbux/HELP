@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Saturday June 11 19:1:37 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 16:47:14 EEST 2022>
 
 
 ** gentoo
@@ -304,3 +304,5 @@
     - [[file:python/functions/func_map/README.org][Функция map]]
     - [[file:python/functions/func_reduce/README.org][Функция reduce]]
     - [[file:python/functions/func_zip/README.org][Функция zip]]
+    - [[file:python/functions/func_enumerate/README.org][Функция enumerate]]
+    - [[file:python/functions/func_product/README.org][Функция product]]
