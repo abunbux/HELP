@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday June 15 16:47:14 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 15 23:4:35 EEST 2022>
 
 
 ** gentoo
@@ -94,9 +94,24 @@
 
 ** git
 
-   [[file:git/dotfiles.org][отслеживание dotfiles]]
+   - [[https://drewdevault.com/2019/12/30/dotfiles.html][Managing my dotfiles as a git repository]] (December 30, 2019, внешняя ссылка)
+   - [[https://www.8host.com/blog/upravlenie-konfiguracionnymi-fajlami-s-pomoshhyu-git/][Управление конфигурационными файлами с помощью git]] (9 февраля, 2015, внешняя ссылка)
 
-   [[file:git/git_submodule.org][git submodule]]
+   - [[file:git/git_submodule.org][git submodule]]
+
+*** Отмена коммитов
+
+    - Коммит сделан, но по здравом размышлении оказался недостаточно хорош - в таком случае можно
+      его изменить командой:
+
+      #+BEGIN_SRC shell
+
+      git commit -a --amend
+
+      #+END_SRC
+
+      В этом случае будет открыт редактор, прописанный в переменной ~$EDITOR~ и можно будет всё
+      подправить.
 
 ** shell
 
