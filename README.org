@@ -8,45 +8,57 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday June 15 23:4:35 EEST 2022>
+# Time-stamp: <Последнее обновление -- Monday June 20 20:0:17 EEST 2022>
 
+
+С этого файла начинается моя небольшая справочная система.
 
 ** gentoo
 
-   [[file:gentoo/install_gentoo.org][установка и настройка gentoo]]
-
-   [[file:gentoo/portage.org][portage]]
+   - [[file:gentoo/install_gentoo.org][установка и настройка gentoo]]
+   - [[file:gentoo/portage.org][portage]]
 
 ** emacs
 
-   [[file:emacs/README.org][README.org]]
+   - [[file:emacs/README.org][README.org]]
+   - [[file:emacs/keybindings.org][keybindings.org]]
+   - [[file:emacs/literate-config_without_org-babel.org][literate-config без org-babel]]
+   - [[file:emacs/emacs-daemon.org][emacs-daemon]]
+   - [[https://smartparens.readthedocs.io/en/latest/pair-management.html][Pair management]] (внешняя ссылка)
+   - [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (внешняя ссылка) Обсуждение того, как добиться быстрой инициализации Emacs
+     с помощью ~melpa~ и ~use-package~.
 
-   [[file:emacs/keybindings.org][keybindings.org]]
+*** ПОЛЕЗНЫЕ ССЫЛКИ
 
-   [[file:emacs/literate-config_without_org-babel.org][literate-config без org-babel]]
+    - [[https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet]["Markdown Cheatsheet" adam-p/markdown-here]]
+    - [[https://caiorss.github.io/org-wiki/][org-wiki html documentation]]
+    - [[https://github.com/caiorss/org-wiki][org-wiki repository]]
 
-   [[file:emacs/emacs-daemon.org][emacs-daemon]]
+*** emacs org-mode
 
-   [[https://smartparens.readthedocs.io/en/latest/pair-management.html][Pair management]] (внешняя ссылка)
 
-   [[https://github.com/nilcons/emacs-use-package-fast][emacs-use-package-fast]] (внешняя ссылка) Обсуждение того, как добиться быстрой инициализации Emacs
-   с помощью ~melpa~ и ~use-package~.
+    - [[file:emacs/org-babel.org][org-babel]]
+    - [[file:emacs/images.org][iimage-mode (изображения в буфере)]]
+**** Ссылка в режиме org на заголовок в другом файле org
 
-** emacs org-mode
+     #+BEGIN_SRC emacs-lisp
 
-   [[file:emacs/org-babel.org][org-babel]]
+     (global-set-key (kbd "C-c l") 'org-store-link)
+     (global-set-key (kbd "C-c C-l") 'org-insert-link)
 
-   [[file:emacs/images.org][iimage-mode (изображения в буфере)]]
+     #+END_SRC
 
-   ссылка в режиме org на заголовок в другом файле org
-   (global-set-key (kbd "C-c l") 'org-store-link)
-   (global-set-key (kbd "C-c C-l") 'org-insert-link)
+     выбираем элемент, на который нужно сделать ссылку - =org-store-link= (C-c l), затем выбираем
+     место, где будет расположена ссылка - =org-insert-link= (C-c C-l), нас попросят подтвердить
+     местоположение и затем ввести имя ссылки - можно просто нажать Enter, чтобы принять значения по
+     умолчанию. Будет создана ссылка типа =[[file: foo.org :: * bar] [link-name]]=, которая
+     отображается как link-name.
 
-   вы можете нажать C-c l где-нибудь внутри или на элементе, на который хотите
-   сослаться, затем C-c C-l туда , где вы хотите разместить ссылку. Он попросит
-   вас подтвердить местоположение и затем ввести имя ссылки - вы можете просто
-   нажать Enter, чтобы принять значения по умолчанию. Будет создана ссылка типа
-   [[file: foo.org :: * bar] [link-name]], которая отображается как link-name.
+     - Более подробно о ссылках читаем [[https://orgmode.org/manual/Handling-Links.html][Handling Links]].
+     - И ещё читаем [[https://orgmode.org/manual/External-Links.html#External-links][External Links]].
+
+**** TODO @todo Изучить - [[https://harryrschwartz.com/2016/02/15/switching-to-a-literate-emacs-configuration][Switching to a Literate Emacs Configuration]] (внешняя ссылка)
+**** TODO @todo Изучить - [[https://leanpub.com/lit-config/read][Literate configuration]] (внешняя ссылка)
 
 ** search
 
@@ -321,3 +333,5 @@
     - [[file:python/functions/func_zip/README.org][Функция zip]]
     - [[file:python/functions/func_enumerate/README.org][Функция enumerate]]
     - [[file:python/functions/func_product/README.org][Функция product]]
+
+*** TODO @todo Аннотации типов

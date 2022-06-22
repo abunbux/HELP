@@ -1,26 +1,16 @@
 # -*- mode: org; -*-
-#+TITLE: README
-#+KEYWORDS: emacs, cheatsheet, default
-#+STARTUP: content
+#+TITLE: emacs
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Mon Jun 20 18:59:52 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 21 21:40:39 EEST 2022>
 
 
-
-С этого файла начинается моя небольшая справочная система.
-
-
-
-* ПОЛЕЗНЫЕ ССЫЛКИ
-
-  [[https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet]["Markdown Cheatsheet" adam-p/markdown-here]]
-
-  [[https://caiorss.github.io/org-wiki/][org-wiki html documentation]]
-
-  [[https://github.com/caiorss/org-wiki][org-wiki repository]]
-
-
-* [[file:help/literate-config.org][literate-config]]
-
-* [[file:help/Keybindings.org][Emacs Key bindings]] - Emacs keybindings and useful commands.
 * РАЗНЫЕ ЗАПИСИ - НЕПОНЯЯТНО КУДА ИХ ЗАНЕСТИ
 
   *bold*, /italic/, _underlined_, =verbatim= and ~code~, and, if you must, +strike-through+
@@ -34,12 +24,12 @@
 
   #+begin_SRC emacs-lisp :tangle yes
 
-    (put 'org-mark-element 'disabled t)
+  (put 'org-mark-element 'disabled t)
 
-    (with-eval-after-load 'org-mode
-      (put 'org-mark-element 'disabled t))
+  (with-eval-after-load 'org-mode
+    (put 'org-mark-element 'disabled t))
 
-  #+END_SRC
+    #+END_SRC
 
 * MODES →
 
@@ -47,62 +37,19 @@
 
    #+BEGIN_SRC emacs-lisp :tangle yes
 
-     :init
-     (unless (package-installed-p 'undo-tree)
-       (quelpa '(undo-tree :fetcher url :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/undo-tree/undo-tree.el")))
+   :init
+   (unless (package-installed-p 'undo-tree)
+     (quelpa '(undo-tree :fetcher url :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/undo-tree/undo-tree.el")))
 
-     (unless (package-installed-p 'queue)
-       (quelpa '(queue :fetcher url :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/queue/queue.el" :version original)))
+   (unless (package-installed-p 'queue)
+     (quelpa '(queue :fetcher url :url "http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/packages/queue/queue.el" :version original)))
 
-     :quelpa (smart-mode-line :fetcher github :repo "Bruce-Connor/smart-mode-line")
+   :quelpa (smart-mode-line :fetcher github :repo "Bruce-Connor/smart-mode-line")
 
    #+END_SRC
 
-** org-mode
-
-*** ссылка в режиме org на заголовок в другом файле org:
-
-    выбираем элемент, на который нужно сделать ссылку - =org-store-link=, затем
-    выбираем место, где будет расположена ссылка - =org-insert-link=, нас
-    попросят подтвердить местоположение и затем ввести имя ссылки - можно просто
-    нажать Enter, чтобы принять значения по умолчанию. Будет создана ссылка типа
-    =[[file: foo.org :: * bar] [link-name]]=, которая отображается как link-name.
-
-    Более подробно о ссылках читаем [[https://orgmode.org/manual/Handling-Links.html][Handling Links]].
-    И ещё читаем [[https://orgmode.org/manual/External-Links.html#External-links][External Links]].
 
 
-* РЕДАКТИРОВАНИЕ ТЕКСТА →
-
-  |               |                                                             | was earlier   |
-  |---------------+-------------------------------------------------------------+---------------|
-  | backspace     | delete-char                                                 |               |
-  | delete        | delete-backward-char                                        |               |
-  | M-d           | kill-word (forward)                                         |               |
-  | C-DEL (***)     | kill-word (forward)                                         |               |
-  | C-backspace   | backward-kill-word                                          |               |
-  | C-x backspace | backward-kill-sentence                                      |               |
-  |               | kill-paragraph                                              |               |
-  |               | backward-kill-paragraph                                     |               |
-  | C-k           | kill-line (from point to end of line)                       |               |
-  | M-k (*)       | ~my/delete-line~ (delete the whole line)                      | ~kill-sentence~ |
-  | C-S-backspace | kill-whole-line                                             |               |
-  | C-w (**)      | kill-region (cut) - without region cuts the entire line     |               |
-  | M-w (**)      | kill-ring-save (copy) - without region cuts the entire line |               |
-  | C-y           | yank (paste)                                                |               |
-  | M-y (*)       | helm-show-kill-ring                                         | ~yank-pop~      |
-  | C-x i         | insert-file                                                 |               |
-  | C-M-\ (*)     | ~my/indent-region-or-buffer~                                  | ~indent-region~ |
-  | C-x /         | ~my/comment-or-uncomment-this~                                |               |
-  | C-q           | quoted-insert                                               |               |
-  | C-x r k       | kill-rectangle                                              |               |
-  | C-x r M-w     | copy-rectangle-as-kill                                      |               |
-  |               |                                                             |               |
-
-** вставка символа
-   ~insert-char~
-   C-x 8 ...
-   C-x 8 C-H - help
 
 
 * ПЕРЕМЕЩЕНИЕ ПО ТЕКСТУ →
@@ -121,56 +68,7 @@
     | (setq global-mark-ring-max 6) |
     |-------------------------------|
 
-*** Jump to Previous Position
-    Часто вам нужно перейти на предыдущую позицию в буфере.
-    В Emacs есть кольцо меток буфера (~mark ring~) и глобальное кольцо меток (~global mark ring~), которые записывают позиции меток и позволяют вам переходить к ним.
-    Чтобы отметить позицию, введите команду ~set-mark~ (~Ctrl-SPC ~Ctrl-SPC~) - сделайте это дважды, чтобы убрать выделение. Это помещает текущую позицию в кольцо меток.
-    Есть 3 способа переместить курсор в предыдущую позицию.
-    |                         |                                                                                  |
-    |-------------------------+----------------------------------------------------------------------------------|
-    | ~Ctrl-u Ctrl-SPC~         | Переместить курсор в предыдущую отмеченную позицию в текущем буфере.             |
-    |                         | Повторный вызов переместит курсор на позиции в кольце отметок.                   |
-    |-------------------------+----------------------------------------------------------------------------------|
-    | ~pop-global-mark~         | Переместить курсор в предыдущую отмеченную позицию (может быть в другом буфере). |
-    | (~Ctrl-x Ctrl-SPC~)       | Повторный вызов переместит курсор на позиции в ~global-mark-ring~.                 |
-    |-------------------------+----------------------------------------------------------------------------------|
-    | ~exchange-point-and-mark~ | Переместить курсор на другой конец выделения.                                    |
-    | (~Ctrl-x Ctrl-x~)         | Повторный вызов любого из вышеперечисленных вернет курсор в начальную позицию.   |
-    |                         |                                                                                  |
 
-** Navigation - Навигация по тексту
-
-
-     |                               |                                  |                                                    |
-     |-------------------------------+----------------------------------+----------------------------------------------------|
-     | C-a                           | my/smart-beginning-of-line ~(*)~   | was =move-beginning-of-line= Go to start of the line |
-     | C-e                           | move-end-of-line                 | Go to end of the line.                             |
-     | C-p [up key]                  | previous-line                    |                                                    |
-     | C-n [down key]                | next-line                        |                                                    |
-     | M-b                           | backward-word                    | Move backward one word                             |
-     | M-f                           | forward-word                     | Move forward one word                              |
-     | M-[left key] (C-[left key])   | left-word                        | Move backward one word                             |
-     | M-[right key] (C-[right key]) | right-word                       | Move forward one word                              |
-     | M-g g <line-num>              | goto-line                        | Go to line number                                  |
-     | M-g c <cursor-pos>            | goto-char                        | Go to character position                           |
-     | M-g M-g                       | my/goto-line-with-feedback ~(*)~   |                                                    |
-     |                               | previous-logical-line            |                                                    |
-     |                               | next-logical-line                |                                                    |
-     |-------------------------------+----------------------------------+----------------------------------------------------|
-     | *scroll*                        |                                  |                                                    |
-     |-------------------------------+----------------------------------+----------------------------------------------------|
-     | C-v (next)                    | scroll-up-command                |                                                    |
-     | M-v (prior)                   | scroll-down-command              |                                                    |
-     | C-x < (C-next)                | scroll-left                      |                                                    |
-     | C-x > (C-prior)               | scroll-right                     |                                                    |
-     | C-M-S-v (M-prior, ESC prior)  | scroll-other-window-down         |                                                    |
-     | C-M-v (M-next, ESC next)      | scroll-other-window              |                                                    |
-     | ESC <end>                     | end-of-buffer-other-window       |                                                    |
-     | ESC <begin>                   | beginning-of-buffer-other-window |                                                    |
-     | M-<                           | beginning-of-buffer              | Move to top of buffer                              |
-     | M->                           | end-of-buffer                    | Move to Bottom of buffer                           |
-     |                               |                                  |                                                    |
-     |                               |                                  |                                                    |
 
 * SEARCH, REPLACE →
 

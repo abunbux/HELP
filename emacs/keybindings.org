@@ -1,106 +1,98 @@
 # -*- mode: org; -*-
 #+TITLE: Emacs Key Bindings
+#+DESCRIPTION:
 #+KEYWORDS: emacs,  keybindings, bindings, keyboard, shortcut, default
-#+STARTUP: content
-# #+INCLUDE: theme/style.org
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Tue Jun 21 19:05:33 EEST 2021>
+# Time-stamp: <Последнее обновление -- Wednesday June 22 23:14:56 EEST 2022>
 
 
-[[https://github.com/caiorss/Emacs-Elisp-Programming/blob/master/Keybindings.org][Взял отсюда и немного подредактировал]]:
-
-
-*Примечание*
-
-(*) Звёздочкой отмечены команды, которые переназначены с родных биндингов.
-
-(**) функция усовершенствована ~defadvice~
-
-(***) Эти привязки клавиш можно забирать - они повторяются.
-
-
-
-* Мои привязки ключей в emacs
-
-
-** Key Bindings and Useful Commands
-
+** Привязки клавиш и полезные команды
 
    Популярные комбинации =Ctrl-v (paste)=, =Ctrl-c (copy)=, =Ctrl-z (undo)= можно
    включить, набрав: =M-x cua-mode= или вставив =(cua-mode)= в файл конфигурации
-   Emacs. Он также поддерживает привязки клавиш Vim, установите пакет =evil= =(M-x package-install evil)=.
+   Emacs. Он также поддерживает привязки клавиш Vim, установите пакет =evil= =(M-x package-install
+   evil)=.
 
    *ПРИМЕЧАНИЕ:* Стандартные привязки клавиш Emacs могут быть переопределены
    пользовательской конфигурацией или такими режимами, как =cua-mode= или
    =evil-mode=, который эмулирует VI.
 
-
    See also:
+   - [[https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf][GNU Emacs Key Bindings Reference Card]] (внешняя ссылка на pdf файл с основными сочетаниями
+     клавиш для работы в emacs).
 
-   - [[https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf][GNU Emacs Key Bindings  Reference Card]]
+*** Ключевые обозначения
 
+    | Key       | Name      | Modern Keyboard Equivalence |
+    |-----------+-----------+-----------------------------|
+    | M         | Meta      | Alt                         |
+    | A         | Meta      | Alt                         |
+    | C         | Control   | Ctrl                        |
+    | S         | Shift     | Shift                       |
+    | SPC       | Space     | Space                       |
+    | ESC       | Escape    | Escape (C-[)                |
+    | PgUp      | prior     | PgUp                        |
+    | PgDn      | next      | PgDn                        |
+    | backspace | backspace | backspace                   |
+    |           |           |                             |
 
-   *Key Notation*
+    - Some texts uses ~A~ - ~Alt~ instead of Meta.
 
-   | Key       | Name      | Modern Keyboard Equivalence |
-   |-----------+-----------+-----------------------------|
-   | M         | Meta      | Alt                         |
-   | A         | Meta      | Alt                         |
-   | C         | Control   | Ctrl                        |
-   | S         | Shift     | Shift                       |
-   | SPC       | Space     | Space                       |
-   | ESC       | Escape    | Escape (C-[)                |
-   | PgUp      | prior     | PgUp                        |
-   | PgDn      | next      | PgDn                        |
-   | backspace | backspace | backspace                   |
-   |           |           |                             |
+*** Ключевые префиксы
 
-   * Some texts uses A - Alt instead of Meta.
+    | Prefix Key | Purpose                             |
+    |------------+-------------------------------------|
+    | C-x        | General extend commands             |
+    | C-h (<f1>) | Help Commands                       |
+    | C-c        | Mode specific extended commands     |
+    | M-x        | Reserved to execute Emacs Commands. |
+    | C-g        | Reserved to cancel Emacs commands.  |
 
-     *Key Sequence*
+*** TODO @todo И немного о моих личных префиксах:
 
-     | Prefix Key | Purpose                             |
-     |------------+-------------------------------------|
-     | C-x        | General extend commands             |
-     | C-h (<f1>) | Help Commands                       |
-     | C-c        | Mode specific extended commands     |
-     | M-x        | Reserved to execute Emacs Commands. |
-     | C-g        | Reserved to cancel Emacs commands.  |
+    |   |   |
+    |---+---|
+    |   |   |
 
-     *Key Mnemonics*
+*** Мнемоника для запоминания некоторых принципов назначения клавиш в emacs
 
-     | Letter | Mnemonic  |
-     |--------+-----------|
-     | p      | previous  |
-     | n      | next      |
-     | b      | backward  |
-     | f      | forward   |
-     | a      | beginning |
-     | e      | end       |
+    | Letter | Mnemonic  |
+    |--------+-----------|
+    | p      | previous  |
+    | n      | next      |
+    | b      | backward  |
+    | f      | forward   |
+    | a      | beginning |
+    | e      | end       |
 
+*** TODO @todo Проверить и изучить следующие ссылки:
 
+    - [[http://ergoemacs.org/emacs/emacs_kb_shortcuts_pain.html][Why Emacs's Keyboard Shortcuts are Painful]]
+    - [[http://ergoemacs.org/emacs/command-frequency.html][Emacs's Command Frequency Statistics]]
+    - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Changing-Key-Bindings.html][Emacs Manual - 21.12 Changing Key Bindings]]
+    - [[http://stackoverflow.com/questions/1144424/are-there-any-emacs-key-combinations-reserved-for-custom-commands][Are there any emacs key combinations reserved for custom commands?]]
+    - [[https://www.masteringemacs.org/article/mastering-key-bindings-emacs][Mastering Key Bindings in Emacs]]
 
-   See also:
+*** Выход из программы
 
-   - [[http://ergoemacs.org/emacs/emacs_kb_shortcuts_pain.html][Why Emacs's Keyboard Shortcuts are Painful]]
-   - [[http://ergoemacs.org/emacs/command-frequency.html][Emacs's Command Frequency Statistics]]
-   - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Changing-Key-Bindings.html][Emacs Manual - 21.12 Changing Key Bindings]]
-   - [[http://stackoverflow.com/questions/1144424/are-there-any-emacs-key-combinations-reserved-for-custom-commands][Are there any emacs key combinations reserved for custom commands?]]
-   - [[https://www.masteringemacs.org/article/mastering-key-bindings-emacs][Mastering Key Bindings in Emacs]]
+    | Key Binding       | Command (M-x <cmd>)     | Description                                   |
+    |-------------------+-------------------------+-----------------------------------------------|
+    |                   | kill-emacs              | End Emacs and save all buffers automatically. |
+    | C-x C-c           | save-buffers-kill-emacs | Ask to kill each buffer and close Emacs.      |
+    | C-g               | keyboard-quit           | Cancel any emacs command or prompt.           |
+    | C-x k             | kill-buffer             | Close current buffer.                         |
+    | C-z (*) (C-x C-z) | suspend-emacs           | Iconify Emacs in graphical mode or            |
+    |                   |                         | suspend Emacs process when in terminal.       |
 
-*** Key Bindings and Commands by Task
-**** Quitting
+    - ~C-z~, ~C-x~, ~C-c~ при включённом ~cua-mode~ на выход не работают.
+    - ~C-z~ (~suspend-emacs~) забрал себе на префикс - ~C-x C-z~ делает то же самое.
 
-     | Key Binding   | Command (M-x <cmd>)     | Description                                                                |
-     |---------------+-------------------------+----------------------------------------------------------------------------|
-     |               | kill-emacs              | End Emacs and save all buffers automatically.                              |
-     | C-x C-c       | save-buffers-kill-emacs | Ask to kill each buffer and close Emacs.                                   |
-     | C-g           | keyboard-quit           | Cancel any emacs command or prompt.                                        |
-     | C-x k         | kill-buffer             | Close current buffer.                                                      |
-     | C-z (C-x C-z) | suspend-emacs           | Iconify Emacs in graphical mode or suspend Emacs process when in terminal. |
-     |               |                         |                                                                            |
-
-     Note: Neither C-z or C-x C-c work in Cua mode.
-
-**** File
+**** Файлы
 
      | Key Binding | Function                   | Description                                       |
      |-------------+----------------------------+---------------------------------------------------|
@@ -112,53 +104,56 @@
      | C-u C-x s   |                            | Save all buffers.                                 |
      | C-x C-C     | save-buffers-kill-terminal | Closes Emacs and asks to save each buffers.       |
      | C-x i       | insert-file                | Insert the content of a file at cursor position.  |
-     | <f5> (**)   | revert-buffer              | Update a buffer when the file is changed on disk. |
      | C-x C-q     | read-only-mode             | Toggle read-only mode.                            |
+     |             |                            |                                                   |
 
-     (**) по-умолчанию клавиши не назначены, команды родные - биндинги мои.
+**** Буферы
 
-**** Buffers
+     | Key Binding         | Function                           | Description                                       |
+     |---------------------+------------------------------------+---------------------------------------------------|
+     | C-x [right key]     | next-buffer                        | Move to next buffer                               |
+     | C-x [left key]      | previous-buffer                    | Move to previous buffer                           |
+     | C-x 4 C-o           | display-buffer                     |                                                   |
+     | C-x 6 b             | 2C-associate-buffer                |                                                   |
+     |                     | view-buffer-other-frame            |                                                   |
+     | C-x 4 c             | clone-indirect-buffer-other-window |                                                   |
+     | <f5>           (**) | revert-buffer                      | Update a buffer when the file is changed on disk. |
+     |                     |                                    |                                                   |
+     |---------------------+------------------------------------+---------------------------------------------------|
+     | C-c b           (*) | counsel-ibuffer                    |                                                   |
+     | C-x b           (*) | ivy-switch-buffer                  | was =switch-to-buffer=                              |
+     | C-x B (C-x 4 b) (*) | ivy-switch-buffer-other-window     | was =switch-to-buffer-other-window=                 |
+     | C-x C-b         (*) | helm-mini                          | was =list-buffers=                                  |
+     |                     |                                    |                                                   |
+     |                     |                                    |                                                   |
+     | *Kill or Delete*      |                                    |                                                   |
+     |---------------------+------------------------------------+---------------------------------------------------|
+     | C-x k               | kill-buffer                        |                                                   |
+     | M-0            (**) | kill-this-buffer                   | команда родная, биндинг мой                       |
+     | C-d 1          (**) | kill-this-buffer                   | делает то же самое, но в терминале,               |
+     |                     |                                    | ещё не разобрался почему некоторые                |
+     |                     |                                    | сочетания клавиш не работают в терминале.         |
+     |                     |                                    |                                                   |
+     |                     |                                    |                                                   |
+     | C-d a           (*) | my/kill-all-buffers                | функция написана                                  |
+     | C-d o           (*) | my/kill-other-buffers              | функция написана                                  |
+     | C-d 0           (*) | my/delete-current-buffer-file      | функция написана                                  |
+     | C-x 4 0             | kill-buffer-and-window             |                                                   |
+     |                     |                                    |                                                   |
+     | *menu*                |                                    |                                                   |
+     |---------------------+------------------------------------+---------------------------------------------------|
+     | C-<f10>             | buffer-menu-open                   | see note                                          |
+     | C-<down-mouse-1>    | mouse-buffer-menu                  |                                                   |
+     |                     |                                    |                                                   |
 
-     | Key Binding      | Function                           | Description                       |
-     |------------------+------------------------------------+-----------------------------------|
-     | C-x [right key]  | next-buffer                        | Move to next buffer               |
-     | C-x [left key]   | previous-buffer                    | Move to previous buffer           |
-     | C-x 4 C-o        | display-buffer                     |                                   |
-     | C-x 6 b          | 2C-associate-buffer                |                                   |
-     |                  | view-buffer-other-frame            |                                   |
-     | C-x 4 c          | clone-indirect-buffer-other-window |                                   |
-     |------------------+------------------------------------+-----------------------------------|
-     | C-c b            | counsel-ibuffer                (*) |                                   |
-     | C-x b            | ivy-switch-buffer              (*) | was =switch-to-buffer=              |
-     | C-x B (C-x 4 b)  | ivy-switch-buffer-other-window (*) | was =switch-to-buffer-other-window= |
-     | C-x C-b          | helm-mini                      (*) | was =list-buffers=                  |
-     |                  |                                    |                                   |
-     |                  |                                    |                                   |
-     | *Kill or Delete*   |                                    |                                   |
-     |------------------+------------------------------------+-----------------------------------|
-     | C-x k            | kill-buffer                        | Kill a buffer                     |
-     | M-0 (**)         | kill-this-buffer                   |                                   |
-     | C-d - a          | my/kill-all-buffers           (*)  |                                   |
-     | C-d - o          | my/kill-other-buffers         (*)  |                                   |
-     | C-d - 0          | my/delete-current-buffer-file (*)  |                                   |
-     | C-x 4 0          | kill-buffer-and-window             |                                   |
-     |                  |                                    |                                   |
-     | *menu*             |                                    |                                   |
-     |------------------+------------------------------------+-----------------------------------|
-     | C-<f10>          | buffer-menu-open                   | see note                          |
-     | C-<down-mouse-1> | mouse-buffer-menu                  |                                   |
-
-     Note:
-
-     (*) этих команд нет в =emacs= по умолчанию. Они здесь появились либо в
-     результате установки дополнительных модов, либо в результате написания -
-     переписывания (=defadvice=) функций.
-
-     (**) по-умолчанию клавиши не назначены, команды родные - биндинги мои.
-
-     --- комбинация =C-<f10>= (=buffer-menu-open=) в kde-plasma не работает,
-     так-как на неё назначено системное действие kwin =Показать все окна со всех
-     рабочих столов=. Я не стал заморачиваться переделывать.
+     - (*) эти комбинации здесь появились либо в результате установки дополнительных модов, либо в
+       результате написания своих функций, либо как результат переписывания родных (=defadvice=)
+       функций. И когда я говорю о своих функциях, следует понимать, что в основном они украдены на
+       просторах всеимеющего интернета.
+     - (**) по-умолчанию клавиши не назначены, команды родные - биндинги мои.
+     - комбинация =C-<f10>= (=buffer-menu-open=) в kde-plasma не работает, так-как на неё назначено
+       системное действие kwin - =Показать все окна со всех рабочих столов=. Я не стал заморачиваться
+       переделывать.
 
 **** Frames
 
@@ -183,9 +178,6 @@
      - In terminal the key binding C-x C-z or the command
        =M-x iconify-or-deiconify-frame= suspends the Emacs process. To
        return to the process: type in the Unix shell fg and return.
-
-
-
 
 **** Bookmarks
 
@@ -219,21 +211,41 @@
      | M-s-h-l | Highlight lines matching a regex |
      | M-s-h-u | Unhighlight regex                |
 
-**** Edit
+**** РЕДАКТИРОВАНИЕ ТЕКСТА →
 
-     |                  |                    |                                                             |
-     |------------------+--------------------+-------------------------------------------------------------|
-     | C-_ (C-/, C-x u) | undo               |                                                             |
-     | C-SPC            | set-mark-command   | Begin Selection                                             |
-     | C-x h            | mark-whole-buffer  | Select the whole buffer                                     |
-     | C-y              | yank               |                                                             |
-     | C-<backspace>    | backward-kill-word |                                                             |
-     | C-<delete> (M-d) | kill-word          | forward                                                     |
-     | C-k              | kill-line          | Cut/Delete from cursor to the end of the line.              |
-     | M-k              | my/delete-line (*) |                                                             |
-     | C-w              | kill-region    (*) | Cut    (Wipe out), Delete and copy to clipboard (Kill Ring) |
-     | M-w              | kill-ring-save (*) | Copy                                                        |
-     |                  |                    |                                                             |
+     |                  |                            |                                                | was earlier   |
+     |------------------+----------------------------+------------------------------------------------+---------------|
+     | backspace        | delete-char                |                                                |               |
+     | delete           | delete-backward-char       |                                                |               |
+     | M-d (*)          | kill-word (forward)        |                                                |               |
+     | C-DEL (*)        | kill-word (forward)        |                                                |               |
+     | C-backspace      | backward-kill-word         |                                                |               |
+     | C-x backspace    | backward-kill-sentence     |                                                |               |
+     |                  | kill-paragraph             |                                                |               |
+     |                  | backward-kill-paragraph    |                                                |               |
+     | C-k              | kill-line                  | From point to end of line                      |               |
+     | M-k (*)          | ~my/delete-line~             | Delete the whole line                          | ~kill-sentence~ |
+     | C-S-backspace    | kill-whole-line            |                                                |               |
+     | C-w (*)          | kill-region                |                                                |               |
+     | M-w (*)          | kill-ring-save             |                                                |               |
+     | C-y              | yank (paste)               |                                                |               |
+     | M-y (*)          | helm-show-kill-ring        |                                                | ~yank-pop~      |
+     | C-x i            | insert-file                |                                                |               |
+     | C-M-\ (*)        | ~my/indent-region-or-buffer~ |                                                | ~indent-region~ |
+     | C-x TAB          | ident-rigidly              | Select a region and type C-x TAB.              |               |
+     |                  |                            | Type right, left (move 1 space) or             |               |
+     |                  |                            | S-right, S-left (move 1 tab) to move the block |               |
+     |                  |                            | to left or right.                              |               |
+     |                  |                            | *Doesn't work if cua-mode is activated*.         |               |
+     |                  |                            |                                                |               |
+     | C-q              | quoted-insert              |                                                |               |
+     | C-x r k          | kill-rectangle             |                                                |               |
+     | C-x r M-w        | copy-rectangle-as-kill     |                                                |               |
+     | C-_ (C-/, C-x u) | undo                       |                                                |               |
+     | C-SPC            | set-mark-command           | Begin Selection                                |               |
+     | C-x h            | mark-whole-buffer          | Select the whole buffer                        |               |
+     | C-x 8 RET        | insert-char                |                                                |               |
+     |                  |                            |                                                |               |
 
      Note:
 
@@ -241,41 +253,59 @@
      результате установки дополнительных модов, либо в результате написания -
      переписывания (=defadvice=) функций.
 
-     --- =my/delete-line= удаляет всю линию, помещает её в =kill-ring= и
+     - ~M-d~ или ~C-DEL~ (~kill-word~ (forward)) две комбинации на одну команду, можно назначить на
+       что-нибудь другое;
+     - ~my/delete-line~ удаляет всю линию, помещает её в ~kill-ring~ и
      поднимает позицию курсора на линию вверх.
-
-     --- =kill-region= (=defadvice=) при отсутствии выделения вырезает всю линию, помещает её
-     в =kill-ring=, но, в отличие от =my/delete-line=, остаётся на пустой
+     - ~kill-region~ (~C-w~) (~defadvice~) при отсутствии выделения вырезает всю линию, помещает её
+     в ~kill-ring~, но, в отличие от ~my/delete-line~, остаётся на пустой
      строке, при существующем выделении ведёт себя как обычно.
-
-     --- =kill-ring-save= (=defadvice=) при отсутствии выделения копирует всю линию, помещает её
-     в =kill-ring=, при существующем выделении ведёт себя как обычно.
-
-
-     | *case* |                     |                                                |
-     |------+---------------------+------------------------------------------------|
-     | M-u  | upcase-word     (*) | Make word uppercase                            |
-     | M-l  | downcase-word   (*) | Make word lowercase                            |
-     | M-c  | capitalize-word (*) | Make word title (Capitalize only first letter) |
-     |      |                     |                                                |
-
-     --- при существующем выделении все три команды выполняют операцию с выделением.
+     - ~kill-ring-save~ (~M-w~) (~defadvice~) при отсутствии выделения копирует всю линию, помещает её
+     в ~kill-ring~, при существующем выделении ведёт себя как обычно.
 
 
-     | *comment* |                                  |                                  |
-     |---------+----------------------------------+----------------------------------|
-     | M-;     | comment-dwim                     | Comment/ Uncomment Selected Code |
-     |         | comment-kill                     |                                  |
-     | C-x C-; | comment-line                     |                                  |
-     |         | comment-indent                   |                                  |
-     |         | comment-region                   |                                  |
-     |         | uncomment-region                 |                                  |
-     |         | comment-or-uncomment-region      |                                  |
-     | C-x /   | my/comment-or-uncomment-this (*) |                                  |
-     |         |                                  |                                  |
+     | *case*    |                 |                                                |
+     |---------+-----------------+------------------------------------------------|
+     | M-u (*) | upcase-word     | Make word uppercase                            |
+     | M-l (*) | downcase-word   | Make word lowercase                            |
+     | M-c (*) | capitalize-word | Make word title (Capitalize only first letter) |
+     |         |                 |                                                |
 
-     --- =my/comment-or-uncomment-this= комментирует либо линию, либо
-     выделение - если оно существующет.
+     - при существующем выделении все три команды выполняют операцию с выделением.
+
+
+     | *comment*   |                              |                                  |
+     |-----------+------------------------------+----------------------------------|
+     | M-;       | comment-dwim                 | Comment/ Uncomment Selected Code |
+     |           | comment-kill                 |                                  |
+     | C-x C-;   | comment-line                 |                                  |
+     |           | comment-indent               |                                  |
+     |           | comment-region               |                                  |
+     |           | uncomment-region             |                                  |
+     |           | comment-or-uncomment-region  |                                  |
+     | C-x / (*) | ~my/comment-or-uncomment-this~ |                                  |
+     |           |                              |                                  |
+
+     - =my/comment-or-uncomment-this= комментирует либо линию, либо выделение - если оно существующет.
+
+**** Jump to Previous Position
+     Часто вам нужно перейти на предыдущую позицию в буфере. В Emacs есть кольцо меток буфера (~mark
+     ring~) и глобальное кольцо меток (~global mark ring~), которые записывают позиции меток и позволяют
+     вам переходить к ним. Чтобы отметить позицию, введите команду ~set-mark~ (~Ctrl-SPC ~Ctrl-SPC~) -
+     сделайте это дважды, чтобы убрать выделение. Это помещает текущую позицию в кольцо меток.
+     Есть 3 способа переместить курсор в предыдущую позицию:
+
+     |                         |                                                                                  |
+     |-------------------------+----------------------------------------------------------------------------------|
+     | ~Ctrl-u Ctrl-SPC~         | Переместить курсор в предыдущую отмеченную позицию в текущем буфере.             |
+     |                         | Повторный вызов переместит курсор на позиции в кольце отметок.                   |
+     |-------------------------+----------------------------------------------------------------------------------|
+     | ~pop-global-mark~         | Переместить курсор в предыдущую отмеченную позицию (может быть в другом буфере). |
+     | (~Ctrl-x Ctrl-SPC~)       | Повторный вызов переместит курсор на позиции в ~global-mark-ring~.                 |
+     |-------------------------+----------------------------------------------------------------------------------|
+     | ~exchange-point-and-mark~ | Переместить курсор на другой конец выделения.                                    |
+     | (~Ctrl-x Ctrl-x~)         | Повторный вызов любого из вышеперечисленных вернет курсор в начальную позицию.   |
+     |                         |                                                                                  |
 
 **** Windows
 
@@ -286,7 +316,6 @@
      | C-x 2       | split-window-below  | Split Horizontally                                        |
      | C-x 3       |                     | Split Vertically                                          |
      | C-x o       |                     | Switch Window                                             |
-
 
 **** Restricted Editing
 
@@ -332,8 +361,6 @@
      |             | find-library          | Find a library *.el file loaded with require |
      |             |                       | Example: M-x find-library org                |
 
-
-*** Selected Key Bindings and Commands for Programming
 **** File Editing
 
      |                          |                                                |
@@ -346,21 +373,41 @@
      | C-g                      | Cancel any Emacs command                       |
      |                          |                                                |
 
-**** Navigation
+**** Navigation - Навигация по тексту
 
-     |                    |                                               |
-     |--------------------+-----------------------------------------------|
-     | C-a                | Move the cursor to the beggining of line      |
-     | C-e                | Move the cursor to the end of line            |
-     | M-<                | Move the cursor to the beggining of buffer    |
-     | M->                | Move to the cursor tor end of buffer          |
-     | M-x goto-char      | Got a character position                      |
-     | M-g g <line-num>   | Go to line number                             |
-     | M-g c <cursor-pos> | Go to character position                      |
-     | M-m                | Jump to first non whitespace in current line. |
-     |--------------------+-----------------------------------------------|
-     | C-x r m            | Make bookmark                                 |
-     | C-x r b            | Jump to bookmarks                             |
+     |                               |                                |                                                    |
+     |-------------------------------+--------------------------------+----------------------------------------------------|
+     | C-a                           | my/smart-beginning-of-line ~(*)~ | was =move-beginning-of-line= Go to start of the line |
+     | C-e                           | move-end-of-line               | Go to end of the line.                             |
+     | C-p [up key]                  | previous-line                  |                                                    |
+     | C-n [down key]                | next-line                      |                                                    |
+     | M-b                           | backward-word                  | Move backward one word                             |
+     | M-f                           | forward-word                   | Move forward one word                              |
+     | M-[left key] (C-[left key])   | left-word                      | Move backward one word                             |
+     | M-[right key] (C-[right key]) | right-word                     | Move forward one word                              |
+     | M-g g <line-num>              | goto-line                      | Go to line number                                  |
+     | M-g c <cursor-pos>            | goto-char                      | Go to character position                           |
+     | M-g M-g                       | my/goto-line-with-feedback ~(*)~ |                                                    |
+     |                               | previous-logical-line          |                                                    |
+     |                               | next-logical-line              |                                                    |
+     | M-m (*)                       | back-to-indentation            | Go to first non whitespace in current line.        |
+     |                               |                                |                                                    |
+
+     - Из ~M-m~ (~back-to-indentation~) сделал клавишу-модификатор для работы с [[https://github.com/magnars/multiple-cursors.el][multiple-cursors]].
+
+     | *scroll*                        |                                  |                                                    |
+     |-------------------------------+----------------------------------+----------------------------------------------------|
+     | C-v (next)                    | scroll-up-command                |                                                    |
+     | M-v (prior)                   | scroll-down-command              |                                                    |
+     | C-x < (C-next)                | scroll-left                      |                                                    |
+     | C-x > (C-prior)               | scroll-right                     |                                                    |
+     | C-M-S-v (M-prior, ESC prior)  | scroll-other-window-down         |                                                    |
+     | C-M-v (M-next, ESC next)      | scroll-other-window              |                                                    |
+     | ESC <end>                     | end-of-buffer-other-window       |                                                    |
+     | ESC <begin>                   | beginning-of-buffer-other-window |                                                    |
+     | M-<                           | beginning-of-buffer              | Move to top of buffer                              |
+     | M->                           | end-of-buffer                    | Move to Bottom of buffer                           |
+     |                               |                                  |                                                    |
 
 **** Text Editing
 
@@ -382,25 +429,6 @@
      | M-x replace-regexp | Batch replace regex pattern in selected text or buffer. |
      | M-x regexp-builder | Build and test Emacs regex patterns.                    |
      |                    |                                                         |
-
-**** Indentation
-
-     | M-x <command>      |         |                                                                      |
-     |--------------------+---------+----------------------------------------------------------------------|
-     | back-to-identation | M-m     | Move to the first non-whitespace character on the current line.      |
-     | ident-region       | C-M-\   | Indent all lines in a region.                                        |
-     |                    |         |                                                                      |
-     | ident-rigidly      | C-x TAB | Select a region and type C-x TAB. Type right, left (move 1 space) or |
-     |                    |         | S-right, S-left (move 1 tab) to move the block to left or right.     |
-     |                    |         | _This keybinding doesn't work if cua-mode is activated_.             |
-     |                    |         |                                                                      |
-     |                    |         |                                                                      |
-
-
-     *Indent entire buffer*
-
-     1. =C-x h= -> Select the whole buffer.
-     2. =C-M-\= or M-x indent-region
 
 *** Ubiquitous Emacs Key Bindings
 
@@ -442,7 +470,6 @@
 
     - [[http://www.catonmat.net/blog/bash-emacs-editing-mode-cheat-sheet/][Bash Emacs Editing Mode Cheat Sheet]]
     - [[http://unix.stackexchange.com/questions/150578/confusing-behavior-of-emacs-style-keybindings-in-bash][Confusing behavior of emacs-style keybindings in bash]]
-
 
 ** Key Bindings for Dired-mode and commands to find files
 *** Dired mode key bindings
@@ -528,7 +555,6 @@
 
    Useful lisp key bindings to edit and navigate Lisp code.
 
-
    *Delimiter Wrapping*
 
    |     |                                   |
@@ -552,7 +578,6 @@
    | C-M-e | Move to the end of current function       |
 
 * Useful Commands
-
 ** Misc commands
 
    | Command                        | Key bindings | Description                                                                            |
@@ -613,7 +638,6 @@
 
    - It may be better to disable C-x C-c, since it is easy to
      accidentally hit and exit Emacs.
-
 
 ** Change current buffer mode
 
