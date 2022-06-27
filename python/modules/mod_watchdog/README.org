@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Fri Jun 03 15:34:54 EEST 2022>
-# Time-stamp: <Последнее обновление -- Tuesday June 28 0:59:46 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 28 1:7:35 EEST 2022>
 
 
 ** Для чего нужен модуль watchdog?
@@ -256,67 +256,67 @@
 
    - После запуска в первозданно-скопированном виде выдаёт
 
-     *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
+   *AttributeError: 'InotifyObserver' object has no attribute 'isAlive'*
 
-     в документации указано - ~This method is deprecated, use is_alive() instead.~ - делаем как
-     советуют и меняем ~observer.isAlive()~ на ~observer.is_alive()~;
+   в документации указано - ~This method is deprecated, use is_alive() instead.~ - делаем как
+   советуют и меняем ~observer.isAlive()~ на ~observer.is_alive()~;
 
-     - Далее вместо принятия аргументов через ~sys.argv[1]~ следовало бы осуществить это, импортировав
-       ~argparse~;
+   - Далее вместо принятия аргументов через ~sys.argv[1]~ следовало бы осуществить это, импортировав
+     ~argparse~;
 
-     - Добавил ~except KeyboardInterrupt~;
+   - Добавил ~except KeyboardInterrupt~;
 
-       Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
+     Настроек пользователя здесь минимум, используется ~встроенный watchdog.events.LoggingEventHandler~.
 
-       Ну, да это всего лишь пример:
+     Ну, да это всего лишь пример:
 
-       #+BEGIN_SRC python
+     #+BEGIN_SRC python
 
-       import sys
-       import logging
-       from watchdog.observers import Observer
-       from watchdog.events import LoggingEventHandler
+     import sys
+     import logging
+     from watchdog.observers import Observer
+     from watchdog.events import LoggingEventHandler
 
-       if __name__ == "__main__":
-           # Сперва идут настройки логирования модуля logging:
-           logging.basicConfig(level=logging.INFO,
-                               format='%(asctime)s - %(message)s',
-                               datefmt='%Y-%m-%d %H:%M:%S')
+     if __name__ == "__main__":
+         # Сперва идут настройки логирования модуля logging:
+         logging.basicConfig(level=logging.INFO,
+                             format='%(asctime)s - %(message)s',
+                             datefmt='%Y-%m-%d %H:%M:%S')
 
-           # Затем определение аргумента командной строки,
-           # который должен принять путь к исследуемой директории.
-           # Вместо этого следовало бы использовать argparse:
-           path = sys.argv[1] if len(sys.argv) > 1 else '.'
+         # Затем определение аргумента командной строки,
+         # который должен принять путь к исследуемой директории.
+         # Вместо этого следовало бы использовать argparse:
+         path = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-           # Создаём экземпляр класса обработчика,
-           # LoggingEventHandler - регистрирует все события:
-           event_handler = LoggingEventHandler()
+         # Создаём экземпляр класса обработчика,
+         # LoggingEventHandler - регистрирует все события:
+         event_handler = LoggingEventHandler()
 
-           # Создаём экземпляр класса обозревателя:
-           observer = Observer()
+         # Создаём экземпляр класса обозревателя:
+         observer = Observer()
 
-           # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
-           # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
-           # event_handler, путь - path, который получаем через аргумент командной строки
-           # и указываем, что наблюдать нужно рекурсивно:
-           observer.schedule(event_handler, path, recursive=True)
+         # Вызываем функцию расписания через экземпляр наблюдателя observer.schedule(),
+         # передавая в неё экземпляр класса LoggingEventHandler(), он сопоставлен с переменной
+         # event_handler, путь - path, который получаем через аргумент командной строки
+         # и указываем, что наблюдать нужно рекурсивно:
+         observer.schedule(event_handler, path, recursive=True)
 
-           # Запускаем обозреватель:
-           observer.start()
-           try:
-               while observer.is_alive():
-                   observer.join(1)
-           except KeyboardInterrupt:
-               print('Операция завершена пользователем.')
-           finally:
-               observer.stop()
-               observer.join()
+         # Запускаем обозреватель:
+         observer.start()
+         try:
+             while observer.is_alive():
+                 observer.join(1)
+         except KeyboardInterrupt:
+             print('Операция завершена пользователем.')
+         finally:
+             observer.stop()
+             observer.join()
 
-       #+END_SRC
+     #+END_SRC
 
-       Для остановки нужно нажать ~Control-c~.
+     Для остановки нужно нажать ~Control-c~.
 
-***** DONE +@todo Переписать код с использованием argparse.+
+***** DONE +@done Переписать код с использованием argparse.+
       CLOSED: [2022-06-28 Tue 00:52]
 
       результат [[file:watchdog_of_doc.py][watchdog_of_doc.py]]
@@ -331,7 +331,7 @@
       # системы в указанном каталоге и просто выводить их на консоль.
 
 
-      # DONE @todo Переписать код с использованием argparse.
+      # DONE @done Переписать код с использованием argparse.
       # CLOSED: [2022-06-28 Tue 00:52]
 
 
