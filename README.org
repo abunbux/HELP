@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Monday June 20 20:0:17 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 28 18:56:43 EEST 2022>
 
 
 С этого файла начинается моя небольшая справочная система.
@@ -106,6 +106,15 @@
 
 ** git
 
+   #+BEGIN_SRC shell
+
+   git status
+   git add ...
+   git commit -m "..."
+   git push
+
+   #+END_SRC
+
    - [[https://drewdevault.com/2019/12/30/dotfiles.html][Managing my dotfiles as a git repository]] (December 30, 2019, внешняя ссылка)
    - [[https://www.8host.com/blog/upravlenie-konfiguracionnymi-fajlami-s-pomoshhyu-git/][Управление конфигурационными файлами с помощью git]] (9 февраля, 2015, внешняя ссылка)
 
@@ -124,6 +133,38 @@
 
       В этом случае будет открыт редактор, прописанный в переменной ~$EDITOR~ и можно будет всё
       подправить.
+
+
+*** github
+
+    #+BEGIN_SRC shell
+
+    cd ~./emacs.d
+    git init
+    # Создаём .gitignor
+    git add .
+    git remote add origin git@github.com:abunbux/dotemacs.git
+    git push -u origin master
+
+    #+END_SRC
+
+
+    Switching remote URLs from HTTPS to SSH
+
+
+    #+BEGIN_SRC shell
+
+    $ git remote -v
+    > origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+    > origin  https://github.com/USERNAME/REPOSITORY.git (push)
+    # 2. Change your remote's URL from HTTPS to SSH with the git remote set-url command.
+    $ git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+    # 3. Verify that the remote URL has changed.
+    $ git remote -v
+    > origin  git@github.com:abunbux/dotemacs.git (fetch)
+    > origin  git@github.com:abunbux/dotemacs.git (push)
+
+    #+END_SRC
 
 ** shell
 
@@ -309,6 +350,10 @@
 
     [[https://docs.python-guide.org/dev/virtualenvs/][Pipenv & Virtual Environments]] (на английском) (внешняя ссылка)
 
+*** Правила написания кода
+
+    - [[file:python/coding_style_in_Python/README.org][Общепринятый стиль кода на языке Python]]
+
 *** Некоторые ссылки для изучения
 
     - [[https://pyneng.readthedocs.io/ru/latest/contents.html][Python для сетевых инженеров]] (внешняя ссылка)
@@ -335,3 +380,6 @@
     - [[file:python/functions/func_product/README.org][Функция product]]
 
 *** TODO @todo Аннотации типов
+*** Примеры
+
+    - [[file:python/examples/exists/README.org][Проверка наличия объекта по указанному пути]].

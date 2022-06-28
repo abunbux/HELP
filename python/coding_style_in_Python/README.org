@@ -1,0 +1,133 @@
+# -*- mode: org; -*-
+#+TITLE: Общепринятый стиль кода на языке Python
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Tue Jun 28 18:54:53 EEST 2022>
+# Time-stamp: <Последнее обновление -- Tuesday June 28 21:12:4 EEST 2022>
+
+
+** PEP 8 - руководство по написанию кода на Python
+
+   - [[https://peps.python.org/pep-0008/][PEP 8 - Style Guide for Python Code]] (внешняя ссылка на официальную документацию).
+   - [[https://pythonworld.ru/osnovy/pep-8-rukovodstvo-po-napisaniyu-koda-na-python.html][PEP 8 - руководство по написанию кода на Python]] (внешняя ссылка на русскоязычное описание PEP 8).
+   - [[https://pythonist.ru/pep8-chto-eto-takoe-i-kak-primenyat/?utm_source=telegram&utm_medium=pythonist][PEP 8: что это такое и как применять]] (внешняя ссылка, ещё одно пояснение на родном языке).
+
+   - [[https://realpython.com/python-pep8/#code-layout][How to Write Beautiful Python Code With PEP 8]] (статья на английском от Dec 19, 2018 by [[https://realpython.com/team/jfiner/][Jasmine
+     Finer]])
+
+   PEP 8, иногда обозначаемый PEP8 или PEP-8, представляет собой документ, содержащий рекомендации по
+   написанию кода на Python. Он был составлен в 2001 году Гвидо ван Россумом, Барри Варшавой и Ником
+   Когланом. Основная цель PEP 8 – улучшить читабельность и логичность кода на Python.
+
+   PEP расшифровывается как Python Enhancement Proposal («Предложение по усовершенствованию Python»), и
+   их несколько. PEP — это документ для сообщества, который описывает новые функции, предлагаемые для
+   Python, и содержит такие аспекты языка, как дизайн и стиль.
+
+** PEP 8: линтеры и автоформаттеры
+
+   Существует два класса инструментов, которые можно использовать для обеспечения соответствия PEP
+   8: линтеры и автоформаттеры.
+
+   О том, как использовать эти инструменты, хорошо написано в статье [[https://realpython.com/python-code-quality/][Python Code Quality: Tools &
+   Best Practices]] by [[https://realpython.com/team/avantol/][Alexander VanTol]].
+
+*** Линтеры
+
+    Линтеры – это программы, которые анализируют код, помечают ошибки и предлагают способы их
+    исправления. Они особенно полезны как расширения редактора, поскольку выявляют ошибки и
+    стилистические проблемы во время написания кода.
+
+    [[https://pythonist.ru/kachestvo-koda-na-python-sravnenie-linterov-i-sovety-po-ih-primeneniyu/][Качество кода на Python: сравнение линтеров и советы по их применению]] (статья на pythonist.ru)
+
+    Вот наиболее известные линтеры для кода на Python:
+
+**** pycodestyle
+
+     - [[https://pypi.org/project/pycodestyle/][pycodestyle]] (внешняя ссылка на описание проекта).
+     - [[https://pycodestyle.pycqa.org/en/latest/][pycodestyle’s documentation]] (внешняя ссылка на документацию).
+
+     #+BEGIN_SRC shell
+
+     $ pip install pycodestyle
+     $ pip install --upgrade pycodestyle
+     $ pip uninstall pycodestyle
+
+     $ pycodestyle code.py
+     $ pycodestyle --first optparse.py
+
+     # Вы также можете заставить pycodestyle.py показывать исходный код для каждой ошибки
+     # и даже соответствующий текст из PEP 8:
+     $ pycodestyle --show-source --show-pep8 testsuite/E40.py
+
+     # Или вы можете отобразить, как часто обнаруживалась каждая ошибка:
+     $ pycodestyle --statistics -qq Python-2.5/Lib
+
+     #+END_SRC
+
+**** flake8
+
+     - [[https://pypi.org/project/flake8/][flake8]] (внешняя ссылка на описание проекта).
+     - [[https://flake8.pycqa.org/en/latest/][Flake8: Your Tool For Style Guide Enforcement]] (внешняя ссылка на документацию).
+
+     #+BEGIN_SRC shell
+
+     $ pip install flake8
+     $ flake8 code.py
+
+     # Если вы установили Flake8 на определенную версию Python
+     # (или на несколько версий), лучше вместо этого запустить:
+     $ python<версия> -m flake8
+
+     # Если вы хотите видеть только экземпляры определенного предупреждения или ошибки,
+     # вы можете выбрать эту ошибку следующим образом:
+     $ flake8 --select E123,W503 path/to/code/
+
+     # В качестве альтернативы, если вы хотите игнорировать только
+     # одно конкретное предупреждение или ошибку:
+     $ flake8 --ignore E24,W504 path/to/code/
+
+     #+END_SRC
+
+*** Автоформаттеры
+
+    Автоформаттеры – это программы, которые автоматически реорганизуют ваш код для соответствия
+    PEP 8. Одна из таких программ — ~black~. Она автоматически форматирует код для приведения его в
+    соответствие с большинством правил PEP 8.
+
+**** black
+
+    - [[https://pypi.org/project/black/][black - Project description]] (внешняя ссылка на описание проекта).
+    - [[https://black.readthedocs.io/en/stable/usage_and_configuration/index.html][Usage and Configuration]] (внешняя ссылка на документацию).
+
+    #+BEGIN_SRC python
+
+    $ pip install black
+    $ black code.py
+
+    # Вы можете запустить Black как пакет, если запуск его как скрипта не работает:
+    $ python -m black code.py
+
+    #+END_SRC
+
+    Единственное, она ограничивает длину строки до 88 символов, а не до 79, как рекомендовано
+    стандартом. Однако вы можете изменить это, добавив флаг командной строки ~--line-length~, как в
+    примере ниже:
+
+    #+BEGIN_SRC shell
+
+    $ black --line-length=79 code.py
+
+    #+END_SRC
+
+**** autopep8
+
+     - [[https://pypi.org/project/autopep8/][autopep8 - Project description]] (внешняя ссылка на описание проекта).
+
+**** yapf
+
+     - [[https://pypi.org/project/yapf/][yapf - Project description]] (внешняя ссылка на описание проекта).
