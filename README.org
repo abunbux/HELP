@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Tuesday June 28 18:56:43 EEST 2022>
+# Time-stamp: <Последнее обновление -- Wednesday June 29 19:23:10 EEST 2022>
 
 
 С этого файла начинается моя небольшая справочная система.
@@ -309,77 +309,3 @@
 ** vpn
 
    [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]] (внешняя ссылка)
-
-** python
-*** Автономный (оффлаййн) просмотр документации python:
-
-**** pydoc
-
-     Утилита ~pydoc~ устанавливается вместе с ~dev-lang/python-exec~.
-
-     в терминале:
-
-     #+BEGIN_SRC shell
-
-     pydoc -n 127.0.0.1
-     Server ready at http://127.0.0.1:34553/
-     Server commands: [b]rowser, [q]uit
-     >
-
-     #+END_SRC
-
-     В браузере набираем адрес http://127.0.0.1:34553/,
-     изучаем
-
-**** В интерактивной консоли
-
-     В терминале запускаем интерактивную оболочку python - ~python~ или ~ipython~
-     и там вводим функцию ~help()~ или вы можете вызвать её с параметром, о
-     котором вы хотите что-то узнать. Это может быть что угодно (модуль, класс,
-     функция, объект...), например - ~help(os)~, понятное дело, модуль ~os~ нужно
-     сперва импортировать.
-
-     Изучаем.
-
-**** Загрузка документации в PDF или HTML формате
-
-     Идём по адресу [[https://docs.python.org/3/download.html][Download Python 3.10.4 Documentation]] (внешняя ссылка) и выбираем
-     нужный формат.
-
-*** Виртуальное окружение:
-
-    [[https://docs.python-guide.org/dev/virtualenvs/][Pipenv & Virtual Environments]] (на английском) (внешняя ссылка)
-
-*** Правила написания кода
-
-    - [[file:python/coding_style_in_Python/README.org][Общепринятый стиль кода на языке Python]]
-
-*** Некоторые ссылки для изучения
-
-    - [[https://pyneng.readthedocs.io/ru/latest/contents.html][Python для сетевых инженеров]] (внешняя ссылка)
-    - [[https://python-course.readthedocs.io/projects/year1/en/latest/index.html][Программирование на языке Python: год 1]] (внешняя ссылка)
-    - [[https://python-course.readthedocs.io/projects/year2/en/latest/][Программирование на языке Python: год 2]] (внешняя ссылка)
-    - [[https://ps.readthedocs.io/ru/latest/index.html][Конспект по языку программирования Python]] (внешняя ссылка)
-
-*** Модули
-
-    - [[file:python/modules/mod_logging/README.org][модуль logging]] (ведение логов в python)
-    - [[file:python/modules/mod_loguru/README.org][модуль loguru]] (ведение логов в python)
-    - [[file:python/modules/mod_watchdog/README.org][модуль watchdog]] (мониторинг событий файловой системы)
-    - [[file:python/modules/mod_argparse/README.org][модуль argparse]] (обработка аргументов командной строки)
-    - [[file:python/modules/mod_pathlib/README.org][модуль pathlib]] (объектно-ориентированный подход к работе с файлами и каталогами)
-    - [[file:python/modules/mod_os/README.org][модуль os]]
-
-*** Функции
-
-    - [[file:python/functions/func_filter/README.org][Функция filter]]
-    - [[file:python/functions/func_map/README.org][Функция map]]
-    - [[file:python/functions/func_reduce/README.org][Функция reduce]]
-    - [[file:python/functions/func_zip/README.org][Функция zip]]
-    - [[file:python/functions/func_enumerate/README.org][Функция enumerate]]
-    - [[file:python/functions/func_product/README.org][Функция product]]
-
-*** TODO @todo Аннотации типов
-*** Примеры
-
-    - [[file:python/examples/exists/README.org][Проверка наличия объекта по указанному пути]].
