@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday June 29 19:33:19 EEST 2022>
+# Time-stamp: <Последнее обновление -- Sunday February 5 22:6:57 MSK 2023>
 
 
 С этого файла начинается моя небольшая справочная система.
@@ -266,3 +266,258 @@
 ** vpn
 
    [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]] (внешняя ссылка)
+
+** django, nginx, gunicorn, uWSGI и сопутствующее
+*** Нашёл подсказки на ЛОРе
+**** https://www.linux.org.ru/forum/admin/13981687?cid=13982071 (NetSurf, 25.01.18 16:48:39 MSK)
+
+     Вот прямо от души отсылаю тебе рабочую схему.
+     Мой самый первый рабочий деплой Django на Ubuntu Server.
+     Cколько времени я промаялся, чтобы Джанга завелась. Эти конфиги потом еще снились.
+
+     #Установка pip install Django gunicorn
+
+     #создание Django project django-admin startproject myproject cd myproject
+
+     #Тест gunicorn gunicorn myproject.wsgi:application --bind тут_ip_сервера:8000
+
+     #Настройка nginx cd /etc/nginx/sites-available nano default
+
+     #+begin_src conf
+
+         server {
+         listen 80;
+         server_name ip_моего_сервера; #либо ip, либо доменное имя
+         access_log  /var/log/nginx/example.log;
+
+         location /static/ {
+         root /opt/myenv/myproject/;
+         expires 30d;
+         }
+
+         location / {
+         proxy_pass http://127.0.0.1:8000;
+         proxy_set_header Host $server_name;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+         }
+         }
+
+     #+end_src
+
+     #переход в папку с Django проектом /var/www/projects/my_site
+
+     #перезагрузка nginx sudo /etc/init.d/nginx restart
+
+     #Запуск gunicorn gunicorn myproject.wsgi:application в браузере открыть ip адресс сервера(загрузится стартовая страница Django)
+
+     #Установим supervisor apt-get install supervisor
+
+     #Создадим конфиг файл для gunicorn
+
+     cd /opt/myenv/myproject/myproject #лучше делать именно в каталоге с settings.py touch gunicorn.conf.py
+
+     bind = '127.0.0.1:8000' workers = 3 user = «nobody»
+
+     #создадим конфиг файл для супервизора (например для приложения emailcollector)
+
+     в /etc/supervisor/conf.d/ создать name_project.conf
+
+     [program:emailcollector]
+
+     command=/var/www/projects/env/bin/gunicorn emailcollector.wsgi:application -c /var/www/projects/emailcollector/emailcollector/gunicorn.conf.py
+
+     directory=/var/www/projects/emailcollector user=nobody autorestart=true redirect_stderr=true
+
+     #команды супервизора: supervisorctl reread supervisorctl update supervisorctl status my_project supervisorctl restart my_app
+
+     #перезагрузка сервера shutdown -r now
+
+**** https://www.linux.org.ru/forum/admin/13981687?cid=13982204 (NetSurf, 25.01.18 17:29:34 MSK)
+
+     Попробуй запустить из корня и посмотреть, откроется ли в браузере сайт
+
+     gunicorn my_project.wsgi:application --bind тут_ip_сервера:8000
+
+     Если норм, то создай конфиг гуникорна
+
+     gunicorn.conf.py
+
+     bind = '127.0.0.1:8000' workers = 3 user = «nobody»
+
+     #конфиг супервизора
+
+     в /etc/supervisor/conf.d/ создать name_project.conf
+
+     [program:emailcollector]
+
+     command=/var/www/projects/env/bin/gunicorn emailcollector.wsgi:application -c /var/www/projects/emailcollector/emailcollector/gunicorn.conf.py
+
+     directory=/var/www/projects/emailcollector user=nobody autorestart=true redirect_stderr=true
+
+     #выполнить команды супервизора и перезагрузить сервер supervisorctl reread supervisorctl update
+     #supervisorctl status my_project supervisorctl restart my_app
+
+**** Добрый человек NetSurf выложил алгоритм действий (запись JAN 25TH, 2018)
+
+     #+begin_src conf
+
+         1) обновление пакетов ubuntu
+         sudo apt-get update
+
+
+         2) соединение с сервером
+         ssh root@tut_ip_adress_servera
+         password
+         =================================
+
+         3) установка
+         sudo apt-get install nginx
+         sudo apt-get install python3-setuptools
+         sudo apt install python-virtualenv
+
+         4) переход в /var/www и создание папки projects
+
+         5) Создание виртуального окружения
+         virtualenv -p python3 env
+         source ./env/bin/activate
+
+         6) Ставим django и gunicorn.
+         pip install django gunicorn
+
+         7) создание Django project
+         django-admin startproject myproject
+         cd myproject
+
+         8) Тест gunicorn
+
+         gunicorn myproject.wsgi:application --bind 111.222.333.44:8000  #пишете ваш ip
+
+         9) Подключение статических файлов
+         nano settings.py
+
+         STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+         python manage.py collectstatic
+
+         10) Настройка nginx
+         cd /etc/nginx/sites-available/
+
+         nano default
+
+         уддалить все и записать:
+
+         server {
+             listen 80;
+             server_name 111.222.333.44; #либо ip, либо доменное имя
+             access_log  /var/log/nginx/example.log;
+
+             location /static/ {
+                 root /opt/myenv/myproject/;
+                 expires 30d;
+             }
+
+             location / {
+                 proxy_pass http://127.0.0.1:8000;
+                 proxy_set_header Host $server_name;
+                 proxy_set_header X-Real-IP $remote_addr;
+                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             }
+           }
+
+         11) переход в папку с Django проектом
+         /var/www/projects/tds
+
+         12)перезагрузка nginx
+         sudo /etc/init.d/nginx restart
+
+         13)Запуск gunicorn
+         gunicorn myproject.wsgi:application
+         в браузере открыть ip адресс сервера(загрузится стартовая страница Django)
+
+         14)Установим supervisor
+
+         apt-get install supervisor
+         =====================================
+         15)Создадим конфиг файл для gunicorn
+
+         cd /opt/myenv/myproject/myproject #лучше делать именно в каталоге с settings.py
+         touch gunicorn.conf.py
+
+         bind = '127.0.0.1:8000'
+         workers = 3
+         user = "nobody"
+         =====================================
+         16)создадим конфиг файл для супервизора
+
+         в /etc/supervisor/conf.d/ создать name_project.conf
+
+         [program:emailcollector]
+         command=/var/www/projects/env/bin/gunicorn emailcollector.wsgi:application -c /var/www/projects/emailcollector/emailcollector/gunicorn.conf.py
+         directory=/var/www/projects/emailcollector
+         user=nobody
+         autorestart=true
+         redirect_stderr=true
+         =====================================
+         команды супервизора:
+         supervisorctl reread
+         supervisorctl update
+         supervisorctl status myproject
+         supervisorctl restart firstsite
+
+         17) перезагрузка сервера
+         shutdown -r now
+         =====================================
+         Установка MySQL
+         sudo apt-get install mysql-server
+         inter password
+
+         #start
+         sudo /etc/init.d/mysql start
+
+         mysql -u root -p -h localhost
+         password
+
+         #Создание базы данных
+         CREATE DATABASE `djangodb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+         #Отображение всех баз
+         show databases;
+
+         #Создание пользователя! GRANT ALL PRIVILEGES(доверяем все привилегии), ON djangodb.*(на базой данных, *(все таблицы)
+         #c паролем IDENTIFIED BY 'alex';
+         GRANT ALL PRIVILEGES ON djangodb.* TO 'alex'@'localhost' IDENTIFIED BY 'alex';
+
+         #Выход из консоли root ctrl + d
+
+         #Вход в базу данных
+         mysql -u alex -p -h localhost
+
+         #Выбрать нужную базу(например djangodb)
+         use djangodb
+
+         show tables;
+
+         #Подключение Django к Mysql
+         sudo apt-get install python-dev python3-dev
+         sudo apt-get install libmysqlclient-dev
+         pip install pymysql
+         pip install mysqlclient
+
+     #+end_src
+
+*** Официальная документация uWSGI
+    [[https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html][Setting up Django and your web server with uWSGI and nginx]]
+
+*** nginx
+    [[https://nginx.org/ru/docs/beginners_guide.html][Руководство для начинающих]]
+    [[https://nginx.org/ru/docs/http/configuring_https_servers.html][Настройка HTTPS-серверов]]
+*** Django
+    [[https://metanit.com/python/django/1.1.php][Введение в Django]] - простым языком для начинающих
+*** apache и mod_wsgi для django
+    [[https://www.8host.com/blog/obsluzhivanie-prilozhenij-django-s-pomoshhyu-apache-i-mod_wsgi-v-debian-8/][ОБСЛУЖИВАНИЕ ПРИЛОЖЕНИЙ DJANGO С ПОМОЩЬЮ APACHE И MOD_WSGI В DEBIAN 8]]
+*** nginx и gunicorn
+    [[https://pythonworld.ru/web/django-ubuntu1604.html][Настраиваем Django + virtualenv + nginx + gunicorn + PostgreSQL + memcached + letsencrypt на
+    Ubuntu 16.04]]
+*** Алексей Голобурдин - канал «Диджитализируй!» на youtube
+    [[https://www.youtube.com/watch?v=uXTZMurM0FY&list=TLPQMzEwMTIwMjNrFl9qPcK7Ew&index=11][Шаблон Django проекта с конфигами для быстрого разворачивания сервера]] (Диджитализируй!)
+    Это ссылка на шаблон на github [[https://github.com/alexey-goloburdin/django-clean-template][alexey-goloburdin/django-clean-template]].
