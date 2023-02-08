@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Sunday February 5 22:6:57 MSK 2023>
+# Time-stamp: <Последнее обновление -- Wednesday February 8 23:25:38 MSK 2023>
 
 
 С этого файла начинается моя небольшая справочная система.
@@ -267,9 +267,76 @@
 
    [[https://ip-calculator.ru/blog/ask/kak-nastroit-klient-wireguard-vpn-s-graficheskim-interfejsom-networkmanager/][Как настроить клиент WireGuard VPN с графическим интерфейсом NetworkManager]] (внешняя ссылка)
 
-** django, nginx, gunicorn, uWSGI и сопутствующее
-*** Нашёл подсказки на ЛОРе
-**** https://www.linux.org.ru/forum/admin/13981687?cid=13982071 (NetSurf, 25.01.18 16:48:39 MSK)
+** веб-разработка
+*** Django
+    [[https://metanit.com/python/django/1.1.php][Введение в Django]] - простым языком для начинающих
+*** Подготовка к работе сервера и базы данных
+**** nginx
+    [[https://nginx.org/ru/docs/beginners_guide.html][Руководство для начинающих]]
+    [[https://nginx.org/ru/docs/http/configuring_https_servers.html][Настройка HTTPS-серверов]]
+
+**** apache и mod_wsgi для django
+     Вообще собирался работать с *nginx*, но мало ли что, вдруг пригодится:
+
+    [[https://www.8host.com/blog/obsluzhivanie-prilozhenij-django-s-pomoshhyu-apache-i-mod_wsgi-v-debian-8/][ОБСЛУЖИВАНИЕ ПРИЛОЖЕНИЙ DJANGO С ПОМОЩЬЮ APACHE И MOD_WSGI В DEBIAN 8]]
+**** mysql
+***** Установка в gentoo
+
+     #+begin_src shell
+
+     emerge -av dev-db/mysql
+     emerge --config dev-db/mysql
+     rc-update add mysql default
+     rc-service mysql start
+
+     #+end_src
+
+     Чтобы убрать анонимных пользователей и тестовые базы данных из установки, запустите
+     mysql_secure_installation после предварительной настройки:
+
+     #+begin_src shell
+
+     mysql_secure_installation
+
+     #+end_src
+
+     [[https://wiki.gentoo.org/wiki/MySQL/Startup_Guide][Начальный гайд по MySQL (язык буржуйский).]]
+
+***** Работа с mysql
+
+     #+begin_src shell
+
+     mysql -u root -p
+
+     # вместо (wpdata) придумываем название своей базы:
+     CREATE DATABASE (wpdata);
+
+     # вместо (wpuser) придумываем пользователя;
+     # вместо (MyStrongPassword) фантазируем пароль:
+     CREATE USER '(wpuser)'@'localhost' IDENTIFIED BY '(MyStrongPassword)';
+
+     # дать wpuser все разрешения для базы данных wpdata:
+     GRANT ALL PRIVILEGES ON wpdata.* TO wpuser@localhost;
+
+     # применить изменения в базе данных:
+     FLUSH PRIVILEGES;
+
+     exit
+
+     #+end_src
+
+     Это было краткое изложение следующего по ссылке топика
+     https://www.cloudhosting.lv/rus/faq/Kak-ustanovit-WordPress-na-Ubuntu
+**** nginx и gunicorn
+    [[https://pythonworld.ru/web/django-ubuntu1604.html][Настраиваем Django + virtualenv + nginx + gunicorn + PostgreSQL + memcached + letsencrypt на
+    Ubuntu 16.04]]
+**** Алексей Голобурдин - канал «Диджитализируй!» на youtube
+    [[https://www.youtube.com/watch?v=uXTZMurM0FY&list=TLPQMzEwMTIwMjNrFl9qPcK7Ew&index=11][Шаблон Django проекта с конфигами для быстрого разворачивания сервера]] (Диджитализируй!)
+    Это ссылка на шаблон на github [[https://github.com/alexey-goloburdin/django-clean-template][alexey-goloburdin/django-clean-template]].
+**** Официальная документация uWSGI
+    [[https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html][Setting up Django and your web server with uWSGI and nginx]]
+**** Нашёл подсказки на ЛОРе
+***** https://www.linux.org.ru/forum/admin/13981687?cid=13982071 (NetSurf, 25.01.18 16:48:39 MSK)
 
      Вот прямо от души отсылаю тебе рабочую схему.
      Мой самый первый рабочий деплой Django на Ubuntu Server.
@@ -333,7 +400,7 @@
 
      #перезагрузка сервера shutdown -r now
 
-**** https://www.linux.org.ru/forum/admin/13981687?cid=13982204 (NetSurf, 25.01.18 17:29:34 MSK)
+***** https://www.linux.org.ru/forum/admin/13981687?cid=13982204 (NetSurf, 25.01.18 17:29:34 MSK)
 
      Попробуй запустить из корня и посмотреть, откроется ли в браузере сайт
 
@@ -358,7 +425,7 @@
      #выполнить команды супервизора и перезагрузить сервер supervisorctl reread supervisorctl update
      #supervisorctl status my_project supervisorctl restart my_app
 
-**** Добрый человек NetSurf выложил алгоритм действий (запись JAN 25TH, 2018)
+***** Добрый человек NetSurf выложил алгоритм действий (запись JAN 25TH, 2018)
 
      #+begin_src conf
 
@@ -504,20 +571,3 @@
          pip install mysqlclient
 
      #+end_src
-
-*** Официальная документация uWSGI
-    [[https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html][Setting up Django and your web server with uWSGI and nginx]]
-
-*** nginx
-    [[https://nginx.org/ru/docs/beginners_guide.html][Руководство для начинающих]]
-    [[https://nginx.org/ru/docs/http/configuring_https_servers.html][Настройка HTTPS-серверов]]
-*** Django
-    [[https://metanit.com/python/django/1.1.php][Введение в Django]] - простым языком для начинающих
-*** apache и mod_wsgi для django
-    [[https://www.8host.com/blog/obsluzhivanie-prilozhenij-django-s-pomoshhyu-apache-i-mod_wsgi-v-debian-8/][ОБСЛУЖИВАНИЕ ПРИЛОЖЕНИЙ DJANGO С ПОМОЩЬЮ APACHE И MOD_WSGI В DEBIAN 8]]
-*** nginx и gunicorn
-    [[https://pythonworld.ru/web/django-ubuntu1604.html][Настраиваем Django + virtualenv + nginx + gunicorn + PostgreSQL + memcached + letsencrypt на
-    Ubuntu 16.04]]
-*** Алексей Голобурдин - канал «Диджитализируй!» на youtube
-    [[https://www.youtube.com/watch?v=uXTZMurM0FY&list=TLPQMzEwMTIwMjNrFl9qPcK7Ew&index=11][Шаблон Django проекта с конфигами для быстрого разворачивания сервера]] (Диджитализируй!)
-    Это ссылка на шаблон на github [[https://github.com/alexey-goloburdin/django-clean-template][alexey-goloburdin/django-clean-template]].
