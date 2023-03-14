@@ -1,0 +1,194 @@
+# -*- mode: org; -*-
+#+TITLE: index
+#+DESCRIPTION:
+#+KEYWORDS:
+#+AUTHOR:
+#+email:
+#+INFOJS_OPT:
+#+STARTUP:  content
+
+#+DATE: CREATED: <Fri Feb 10 19:47:55 MSK 2023>
+# Time-stamp: <Последнее обновление -- Monday February 13 20:59:21 MSK 2023>
+
+
+useradd -m -G adm -s /bin/bash {user}
+#+BEGIN_SRC conf
+
+# меняем в /etc/ssh/sshd_config некоторые настройки:
+Port {-----} # извините, светить не буду
+# при настройке сервера на https://timeweb.com/ru/ я добавил ключи для доступа,
+# а поэтому доступ по паролю отключаем:
+PasswordAuthentication no
+# Чтобы сервер слишком быстро не обрывал соединение:
+ClientAliveInterval 60
+ClientAliveCountMax 5
+
+# и на всякий случай у себя на клиенте в /etc/ssh/sshd_config в конце файла пишем:
+ServerAliveInterval 60
+ServerAliveCountMax 10
+
+
+
+# меняем пароль для root:
+passwd
+
+# добавляем нового пользователя:
+useradd -m -G adm -s /bin/bash {name}
+
+# забыл добавить пользователя в группу sudo:
+gpasswd -a abunbux sudo
+
+# делаем ему пароль:
+passwd {name}
+
+# ставим необходимые программы:
+apt install emacs vim git fail2ban nginx ufw screen grc aptitude
+
+# без привычных редакторов и своих к ним настроек довольно тяжко:
+git clone https://github.com/abunbux/emacs-config.git ~/.emacs.d
+git clone https://github.com/abunbux/vim-config.git ~/.vim
+cd .vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
+
+
+# настраиваем fail2ban:
+mv /etc/fail2ban/jail.d/defaults-debian.conf /etc/fail2ban/jail.d/sshd.conf
+
+emacs /etc/fail2ban/jail.d/sshd.conf
+[sshd]
+enabled = true
+bantime = 2h
+findtime = 1h
+maxretry = 2
+
+systemctl restart fail2ban
+systemctl status fail2ban
+fail2ban-client status sshd
+# добавляет IP 192.168.0.101 в список исключений:
+fail2ban-client set sshd addignoreip {192.168.0.101}
+#разблокирует указанный IP-адрес
+fail2ban-client set sshd unbanip {192.168.0.101}
+fail2ban-client get sshd ignoreip
+fail2ban-client set sshd delignoreip {192.168.0.101}
+
+# украсим немного shell:
+mkdir opt
+cd opt/
+git clone https://github.com/chris-marsh/pureline.git
+cd ~
+cp ~/opt/pureline/configs/powerline_full_256col.conf ~/.pureline.conf
+# и добавляем в .bashrc строчку:
+source ~/opt/pureline/pureline ~/.pureline.conf
+
+# следующая команда для grc,
+# вывод заносим в .bashrc (под свои нужды):
+cat /etc/grc.conf | grep "conf\." | cut -d "." -f2 | awk '{print ("alias "$1"=\"grc --colour=auto "$1"\"")}'
+
+# настройка UFW:
+# в файле /etc/default/ufw меняем строчку IPV6=yes на no,
+# с ipv6 я пока ещё не работал:
+IPV6=no
+# далее в консоли:
+ufw disable
+ufw default deny incoming
+ufw default allow outgoing
+# указать порт, на котором работаю по SSH:
+ufw allow {port}
+# нет смысла открывать https, ещё не настраивал:
+ufw allow 'Nginx HTTP'
+ufw enable
+ufw status verbose
+
+
+# отключение ipv6.
+# так-как с ipv6 я пока не работаю, отключаем на уровне системы.
+# в файл /etc/sysctl.conf в конец дописываем:
+# IPv6
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+
+# и в консоли перечитываем конфигурацию sysctl:
+sysctl -p
+
+# в настройках sshd (/etc/ssh/sshd_config) пишем строчку:
+AddressFamily inet
+
+ln -sf /usr/share/zoneinfo/Europe/{gorod} /etc/localtime
+
+
+# устанавливаем репозиторий mysql.
+# переходим по адресу: https://dev.mysql.com/downloads/repo/apt/
+# скачиваем mysql-apt-config_0.8.24-1_all.deb и
+# перемещаем на сервер любым удобным способом (scp, ftp и так далее),
+# затем устанавливаем сам репозиторий:
+dpkg -i mysql-apt-config_0.8.24-1_all.deb
+apt update
+apt-get install mysql-server php-fpm php php-cgi
+# проверяем работу сервера:
+systemctl status mysql
+
+mysql_secure_installation
+VALIDATE PASSWORD COMPONENT — использовать компонент VALIDATE PASSWORD? (No)
+Изменить пароль от root? (No)
+Удалить анонимных пользователей? (y)
+Запретить удалённый логин под root? (y)
+Удалить тестовую базу и доступ к ней? (y)
+Обновить таблицу привилегий? (y)
+
+# создаём виртуальный сервер с простенькой настройкой:
+emacs /etc/nginx/sites-available/test
+server {
+    listen 80;
+    server_name test.ix;
+    root /var/www/test_wordpress;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+
+        fastcgi_index index.php;
+        include fastcgi_params;
+        include fastcgi.conf;
+
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+
+    }
+}
+
+# не забываем создать пару тестовых страничек .php и .html
+# по адресу /var/www/test_wordpress.
+
+ln -s /etc/nginx/sites-available/test /etc/nginx/sites-enabled/test
+nginx -t
+systemctl restart nginx.service
+
+# Для доступа к сайту со своего компа (если нет пока желания купить DNS-адрес)
+# в файлик /etc/hosts добавляем необходимые записи типа
+# 111.111.111.111 test.ix
+
+# ставим wordpress
+wget https://wordpress.org/latest.tar.gz
+# архив будет извлечён в папку wordpress:
+tar -xzvf latest.tar.gz
+# содержимое папки перемещаем в корень будущего сайта
+# в данном случае это /var/www/test_wordpress.
+
+chown -R www-data:www-data /var/www/test_wordpress/
+
+# вместо данных в фигурных скобках нужно ставить своё,
+# то есть придумать:
+mysql -u root -p
+CREATE DATABASE {wpdata};
+CREATE USER '{wpuser}'@'localhost' IDENTIFIED BY '{MyStrongPassword}';
+GRANT ALL PRIVILEGES ON {wpdata}.* TO {wpuser}@localhost;
+FLUSH PRIVILEGES;
+exit
+
+# заходим по адресу (сейчас это http://test.ix) и устанавливаем wordpress.
+
+#+END_SRC

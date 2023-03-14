@@ -8,7 +8,7 @@
 #+STARTUP:  content
 
 #+DATE: CREATED: <Thu Jun 26 08:49:17 EEST 2021>
-# Time-stamp: <Последнее обновление -- Wednesday February 8 23:25:38 MSK 2023>
+# Time-stamp: <Последнее обновление -- Tuesday March 14 19:18:1 MSK 2023>
 
 
 С этого файла начинается моя небольшая справочная система.
@@ -34,11 +34,7 @@
 
    [[https://github.com/edwardtufte/et-book][et-book ]] (внешняя ссылка)
 
-   [[file:PS1/powerline.org::*powerline-symbols, powerline fonts (\[\[https://github.com/powerline/fonts\]\[powerline fonts на github\]\])][powerline, powerline-gitstatus, powerline-symbols, powerline-fonts]]
-
-** прочее
-
-   [[file:other/scripts.org][скрипты для различных нужд]]
+   powerline
 
 ** полезные приложения
 
@@ -309,14 +305,14 @@
      mysql -u root -p
 
      # вместо (wpdata) придумываем название своей базы:
-     CREATE DATABASE (wpdata);
+     CREATE DATABASE {wpdata};
 
-     # вместо (wpuser) придумываем пользователя;
-     # вместо (MyStrongPassword) фантазируем пароль:
-     CREATE USER '(wpuser)'@'localhost' IDENTIFIED BY '(MyStrongPassword)';
+     # вместо {wpuser} придумываем пользователя;
+     # вместо {MyStrongPassword} фантазируем пароль:
+     CREATE USER '{wpuser}'@'localhost' IDENTIFIED BY '{MyStrongPassword}';
 
      # дать wpuser все разрешения для базы данных wpdata:
-     GRANT ALL PRIVILEGES ON wpdata.* TO wpuser@localhost;
+     GRANT ALL PRIVILEGES ON {wpdata}.* TO {wpuser}@localhost;
 
      # применить изменения в базе данных:
      FLUSH PRIVILEGES;
@@ -571,3 +567,12 @@
          pip install mysqlclient
 
      #+end_src
+
+** Мои развлечения с удалённой системой
+   Купил недавно (февраль 2023 года) виртуальный выделенный сервер (VPS) на https://timeweb.com/ru/
+   для развлечений и отработки навыков, возможно нужных впоследствии. А так-как память лучше не
+   становится со временем, кажется уже где-то выше об этом писал, решил проводить запись моих
+   действий при работе с удалённой системой. Короче, далее краткое изложение, через время, надеюсь
+   пойму смысл записей.
+
+   [[file:remote_server/index.org][А здесь, собственно, располагаются сами записи]].
